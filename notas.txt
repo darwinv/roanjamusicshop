@@ -1,0 +1,6 @@
+     
+    {if $associated_mp3}
+	{foreach from=$associated_mp3 item=items} 
+            <li><a href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}"><b>{$items.mp3_title|truncate:10}</b> <span class="label">{$items.mp3_title|truncate:10}</span></a></li>
+        {/foreach}
+    {/if}
