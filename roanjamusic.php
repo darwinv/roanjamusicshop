@@ -29,6 +29,7 @@ class RoanjaMusic extends ObjectModel
 	public $mp3_title;
 	public $author;
 	public $genero;
+	public $url_youtube;
 	public $linked_digital_id;
 	public $active;
 	public $position;
@@ -49,6 +50,7 @@ class RoanjaMusic extends ObjectModel
 			'mp3_title' =>		array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCleanHtml', 'required' => true, 'size' => 255),
 			'author' =>			array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCleanHtml', 'required' => true, 'size' => 255),
 			'genero' =>			array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCleanHtml', 'required' => true, 'size' => 255),
+			'url_youtube' =>	array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCleanHtml', 'size' => 255),
 			'id_product' =>     array('type' => self::TYPE_INT, 'lang' => true, 'validate' => 'isUnsignedId', 'required' => true),
 			'linked_digital_id' =>	array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCleanHtml', 'required' => true, 'size' => 255),
 		)

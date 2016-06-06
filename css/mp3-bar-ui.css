@@ -1011,3 +1011,9 @@
 #back-top {
   left: 30px;
 }
+.sm2-playlist-wrapper ul li span.assoc_price  {
+    padding: 0px 0px 0px 10px;
+}
+div.pos-init{
+  position:initial;
+}

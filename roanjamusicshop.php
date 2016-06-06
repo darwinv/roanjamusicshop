@@ -27,7 +27,7 @@
 
 
 
-if (!defined('_PS_VERSION_')) 
+if (!defined('_PS_VERSION_'))
 exit;
 
 include_once(_PS_MODULE_DIR_.'roanjamusicshop/roanjamusic.php');
@@ -37,6 +37,7 @@ class RoanjaMusicShop extends Module
 	protected $position = 1;
     protected $timeCookie = 2592000;
 	public $_html = '';
+	public $show_footer_bar = true;
 	public function __construct()
 	{
 		$this->name = 'roanjamusicshop';
@@ -46,9 +47,9 @@ class RoanjaMusicShop extends Module
 		$this->need_instance = 0;
 		$this->secure_key = Tools::encrypt($this->name);
 		$this->bootstrap = true;
-		
+
 		parent::__construct();
-		
+
 		$this->displayName = $this->l('Roanja Music Shop');
 		$this->description = $this->l('Module for adding mp3 preview on your products page.');
 		$this->ps_versions_compliancy = array('min' => '1.6.0.4', 'max' => _PS_VERSION_);
@@ -56,20 +57,20 @@ class RoanjaMusicShop extends Module
 
 	public function install()
 	{
-		if (parent::install() && 			
-			$this->registerHook('ActionProductDelete') && 
-			$this->registerHook('displayAdminProductsExtra') && 
+		if (parent::install() &&
+			$this->registerHook('ActionProductDelete') &&
+			$this->registerHook('displayAdminProductsExtra') &&
 			$this->registerHook('displayRightColumnProduct') &&
-			$this->registerHook('displayProductListReviews') && //Cuando lista las vista de los productos
-			$this->registerHook('displayProductTabContent') && 
-			$this->registerHook('actionProductUpdate') && 
-			$this->registerHook('displayFooter') && 
-			$this->registerHook('displayHeader') 
+			$this->registerHook('displayProductListReviews') &&
+			$this->registerHook('displayProductTabContent') &&
+			$this->registerHook('actionProductUpdate') &&
+			$this->registerHook('displayFooter') &&
+			$this->registerHook('displayHeader')
 			)
 		{
 			$shops = Shop::getContextListShopID();
 			$shop_groups_list = array();
-			
+
 			foreach ($shops as $shop_id)
 			{
 				$shop_group_id = (int)Shop::getGroupFromShop($shop_id, true);
@@ -91,35 +92,36 @@ class RoanjaMusicShop extends Module
 
 			/* Creates tables */
 			$res &= $this->createTable();
-			
+
 			/* Adds samples */
-			//if ($res)
-			//	$this->installSamples();
+			if ($res)
+				$this->installSamples();
 
 			// Disable on mobiles and tablets
 			$this->disableDevice(Context::DEVICE_MOBILE);
 
 			return (bool)$res;
-		}	
+		}
 		return false;
 	}
 
 	protected function installSamples()
 	{
 		$languages = Language::getLanguages(false);
-		for ($i = 201; $i <= 203; ++$i) 
+		for ($i = 1; $i <= 3; ++$i)
 		{
 			$music = new RoanjaMusic();
             $music->position = $i;
             $music->active = 1;
             foreach ($languages as $language)
-            {				
+            {
                 $music->mp3_name[$language['id_lang']] = 'sample-'.$i.'.mp3';
                 $music->mp3_title[$language['id_lang']] = 'Sample-'.$i;
                 $music->author[$language['id_lang']] = 'Roanja';
-                $music->genero[$language['id_lang']] = 'Sample';				
+                $music->genero[$language['id_lang']] = 'Sample';
                 $music->id_product[$language['id_lang']] = $i;
                 $music->linked_digital_id[$language['id_lang']] = $i;
+                $music->url_youtube[$language['id_lang']] = 'fLexgOxsZu0';
             }
             $music->add();
 		}
@@ -131,7 +133,7 @@ class RoanjaMusicShop extends Module
 
 		if (parent::uninstall())
 		{
-			$res &= Db::getInstance()->execute('DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'rj_music_shop`,`'._DB_PREFIX_.'rj_music`, `'._DB_PREFIX_.'rj_music_urlyt`,`'._DB_PREFIX_.'rj_music_lang`');
+			$res &= Db::getInstance()->execute('DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'rj_music_shop`,`'._DB_PREFIX_.'rj_music`, `'._DB_PREFIX_.'rj_music_lang`');
 			$res &= Configuration::deleteByName('MUSIC_POSITION');
 			return (bool)$res;
 		}
@@ -140,7 +142,6 @@ class RoanjaMusicShop extends Module
 
 	protected function createTable()
 	{
-		/* Music prew */
 
 		$res = (bool)Db::getInstance()->execute('
 			CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'rj_music_shop` (
@@ -169,18 +170,8 @@ class RoanjaMusicShop extends Module
 			`genero` varchar(255) NOT NULL,
 			`id_product` int(10) unsigned NOT NULL,
 			`linked_digital_id` varchar(255) NOT NULL,
+			`url_youtube` varchar(255) NOT NULL,
 			PRIMARY KEY (`id_music`,`id_lang`)
-			)ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=UTF8;
-		');
-		$res &= Db::getInstance()->execute('
-			CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'rj_music_urlyt` (
-			`id_url` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			`id_product` int(10) NOT NULL,
-			`url_music` varchar(255) NOT NULL,
-			`id_lang` int(10) NOT NULL,
-                        `id_employer` int(10) NOT NULL,
-			`status_url` int(1) NOT NULL,
-			PRIMARY KEY (`id_url`)
 			)ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=UTF8;
 		');
 
@@ -197,17 +188,17 @@ class RoanjaMusicShop extends Module
 		}*/
 
 		return Db::getInstance()->execute('
-			DROP TABLE IF EXISTS `'._DB_PREFIX_.'rj_music_shop`, `'._DB_PREFIX_.'rj_music_urlyt`, `'._DB_PREFIX_.'rj_music`, `'._DB_PREFIX_.'rj_music_lang`;
+			DROP TABLE IF EXISTS `'._DB_PREFIX_.'rj_music_shop`, `'._DB_PREFIX_.'rj_music`, `'._DB_PREFIX_.'rj_music_lang`;
 		');
 	}
 
 	public function getContent()
 	{
-		$this->_html .= $this->headerHTML();
+		//$this->_html .= $this->headerHTML();
 
-		if (Tools::getValue('submitMusicSettings')) 
+		if (Tools::getValue('submitMusicSettings'))
 			Configuration::updateValue('MUSIC_POSITION', Tools::getValue('MUSIC_POSITION'));
-		
+
 
 		/* Validate & process */
 		if (Tools::isSubmit('submitMusic') || Tools::isSubmit('deleteroanjamusicshop') ||
@@ -218,7 +209,7 @@ class RoanjaMusicShop extends Module
 			{
 				$this->_postProcess();
 				$this->_html .= $this->renderForm();
-			}			
+			}
 
 			$this->clearCache();
 		}
@@ -237,7 +228,7 @@ class RoanjaMusicShop extends Module
 				'legend' => array(
 					'title' => $this->l('Settings') ,
 					'icon' => 'icon-cogs'
-				) ,				
+				) ,
 				'input' => array(
 					array(
 						'type' => 'select',
@@ -277,8 +268,8 @@ class RoanjaMusicShop extends Module
 		$helper->submit_action = 'submitMusicSettings';
 		$helper->currentIndex = $this->context->link->getAdminLink('AdminModules', false).'&configure='.$this->name.'&tab_module='.$this->tab.'&module_name='.$this->name;
 		$helper->token = Tools::getAdminTokenLite('AdminModules');
-		
-		/*$helper->shopLinkType = '';		
+
+		/*$helper->shopLinkType = '';
 		$helper->module = $this;*/
 
 		$helper->tpl_vars = array(
@@ -286,7 +277,7 @@ class RoanjaMusicShop extends Module
 			'languages' => $this->context->controller->getLanguages(),
 			'id_language' => $this->context->language->id
 		);
-		
+
 		return $helper->generateForm(array($fields_form));
 	}
 
@@ -299,29 +290,18 @@ class RoanjaMusicShop extends Module
 		);
 	}
 
-	public function hookDisplayHeader()	
+	public function hookDisplayHeader()
 	{
-			$this->context->controller->addCSS($this->_path.'css/mp3-player-button.css', 'all');			
-			$this->context->controller->addCSS($this->_path.'css/mp3-bar-ui.css', 'all');			
+			$this->context->controller->addCSS($this->_path.'css/mp3-player-button.css', 'all');
+			$this->context->controller->addCSS($this->_path.'css/mp3-bar-ui.css', 'all');
 			$this->context->controller->addCSS($this->_path.'css/mp3-player-ui.css', 'all');
-		  	$this->context->controller->addJS($this->_path.'js/soundmanager2.js'); 
-        	$this->context->controller->addJS($this->_path.'js/mp3-bar-ui.js'); 
+		  	$this->context->controller->addJS($this->_path.'js/soundmanager2.js');
+        	$this->context->controller->addJS($this->_path.'js/mp3-bar-ui.js');
             $this->context->controller->addJS($this->_path.'js/funciones.js');
-//        	$this->context->controller->addJS($this->_path.'js/mp3-ui.js');
-//        	$this->context->controller->addJS($this->_path.'js/mp3-player-button.js');         	    	
 	}
 
 	public function hookDisplayFooter()
-        {
-//		$associated_mp3_sql = 'SELECT a.*, b.* , c.reduction, c.reduction_type FROM `' 
-//		. _DB_PREFIX_ . 'rj_music_lang` AS a INNER JOIN `' 
-//		. _DB_PREFIX_ . 'product` AS b ON a.linked_digital_id != "" '
-//                . ' AND b.id_product = a.linked_digital_id LEFT JOIN `' 
-//		. _DB_PREFIX_ . 'specific_price` AS c ON c.id_product = b.id_product';
-//		$associated_mp3 = Db::getInstance()->ExecuteS($associated_mp3_sql);
-//		$this->context->smarty->assign(array(
-//			'associated_mp3' => $associated_mp3,
-//		));
+    {
         if(isset($_COOKIE['lista'])){
             $lista=unserialize($_COOKIE['lista']);
             $oculto="";
@@ -329,24 +309,22 @@ class RoanjaMusicShop extends Module
             $lista=array();
             $oculto="hidden";
         }
-		$this->context->smarty->assign(array('lista' => $lista,'oculto' => $oculto));
-		return $this->display(__FILE__, 'bar-ui.tpl');
+
+        if($this->show_footer_bar){
+        	$this->context->smarty->assign(array('lista' => $lista,'oculto' => $oculto));
+			return $this->display(__FILE__, 'bar-ui.tpl');
+        }
+
 	}
+	
 	public function hookdisplayRightColumnProduct()
 	{
 		if (Tools::getValue('MUSIC_POSITION', Configuration::get('MUSIC_POSITION')) == 1)
 		{
-                        $id_lang=$this->context->language->id;
-                        $id_shop=$this->context->shop->id;
-//			$mp3_sql = 'SELECT a.*, b.* , c.reduction, c.reduction_type FROM `' 
-//			. _DB_PREFIX_ . 'rj_music_lang` AS a INNER JOIN `' 
-//			. _DB_PREFIX_ . 'product` AS b ON a.linked_digital_id = "" AND a.id_product = ' 
-//			. (int)Tools::getValue('id_product') . ' AND b.id_product = ' 
-//			. (int)Tools::getValue('id_product') . ' LEFT JOIN `' 
-//			. _DB_PREFIX_ . 'specific_price` AS c ON c.id_product = ' 
-//			. (int)Tools::getValue('id_product') . ' AND a.id_lang=' . $id_lang;
-//			$mp3 = Db::getInstance()->ExecuteS($mp3_sql);
-                        $id_product=Tools::getValue('id_product');
+            $id_lang=$this->context->language->id;
+            $id_shop=$this->context->shop->id;
+
+            $id_product=Tools::getValue('id_product');
 			$associated_mp3_sql = 'SELECT a.*, b.* , c.reduction, c.reduction_type FROM `' 
 			. _DB_PREFIX_ . 'rj_music_lang` AS a INNER JOIN `' 
 			. _DB_PREFIX_ . 'product` AS b ON (a.linked_digital_id = ' . (int)$id_product .' OR (a.id_product = '
@@ -354,31 +332,26 @@ class RoanjaMusicShop extends Module
 			. _DB_PREFIX_ . 'specific_price` AS c ON c.id_product = b.id_product,`' . _DB_PREFIX_ .'rj_music_shop` as d'
                         . '  where a.id_lang=' . (int)$id_lang . ' AND a.id_music=d.id_music AND d.id_shop=' . (int)$id_shop;
 			$associated_mp3 = Db::getInstance()->ExecuteS($associated_mp3_sql);
-			if (version_compare(_PS_VERSION_, '1.5.6.2', '<') == 1)
-			{
-				$this->context->smarty->assign(array(
-					'associated_mp3' => $associated_mp3,
-				));
-			}
-		    else
-			{
-				$this->smarty->assign(array(
-					'associated_mp3' => $associated_mp3,
-				));
-			}
 
-			if (version_compare(_PS_VERSION_, '1.5.6.2', '>') == 1){				
-                            return $this->display(__FILE__, 'views/templates/front/column.tpl');
+			$this->context->smarty->assign(array(
+				'associated_mp3' => $associated_mp3,
+			));
+
+			if (version_compare(_PS_VERSION_, '1.5.6.2', '>') == 1){
+				$this->show_footer_bar=false;
+                return $this->display(__FILE__, 'views/templates/front/column.tpl');
 			}else{
-                            return $this->display(__FILE__, 'views/templates/front/column15.tpl');
+                return $this->display(__FILE__, 'views/templates/front/column15.tpl');
 			}
 		}
 	}
 
 	public function hookDisplayProductTabContent()
 	{
+	
+
 		if (Tools::getValue('MUSIC_POSITION', Configuration::get('MUSIC_POSITION')) == 2)
-		{
+		{ 
 			$mp3_sql = 'SELECT a.*, b.* , c.reduction, c.reduction_type FROM `' 
 			. _DB_PREFIX_ . 'rj_music_lang` AS a INNER JOIN `' 
 			. _DB_PREFIX_ . 'product` AS b ON a.linked_digital_id = "" AND a.id_product = ' 
@@ -393,23 +366,17 @@ class RoanjaMusicShop extends Module
 			. (int)Tools::getValue('id_product') . ' AND b.id_product = a.linked_digital_id LEFT JOIN `' 
 			. _DB_PREFIX_ . 'specific_price` AS c ON c.id_product = b.id_product';
 			$associated_mp3 = Db::getInstance()->ExecuteS($associated_mp3_sql);
-			if (version_compare(_PS_VERSION_, '1.5.6.2', '<') == 1)
-			{
-				$this->context->smarty->assign(array(
-					'product_mp3' => $mp3,
-					'associated_mp3' => $associated_mp3,
-				));
-			}
-		    else
-			{
-				$this->smarty->assign(array(
-					'product_mp3' => $mp3,
-					'associated_mp3' => $associated_mp3,
-				));
-			}
+
+			$this->context->smarty->assign(array(
+				'product_mp3' => $mp3,
+				'associated_mp3' => $associated_mp3,
+			));
+
+		  
 
 			if (version_compare(_PS_VERSION_, '1.5.6.2', '>') == 1)
 			{
+				$this->show_footer_bar=false;
 				return $this->display(__FILE__, 'views/templates/front/product_tab_content.tpl');
 			}
 		    else
@@ -420,6 +387,15 @@ class RoanjaMusicShop extends Module
 		}
 	}
 
+	public function  array_columns( array $input, $column_key, $index_key = null ) {
+
+				$result = array();
+				foreach( $input as $k => $v )
+						$result[ $index_key ? $v[ $index_key ] : $k ] = $v[ $column_key ];
+
+				return $result;
+		}
+
 	public function hookDisplayProductListReviews($params)
 	{
 		$id_product = (int)$params['product']['id_product'];
@@ -427,67 +403,39 @@ class RoanjaMusicShop extends Module
 		$id_shop = $this->context->shop->id;
 		$id_lang = $this->context->language->id;
 
-
-		/*if (!$this->isCached('list.tpl', $this->getCacheId($id_product)))
-		{*/
-//			$mp3_sql = 'SELECT a.*, b.* , c.reduction, c.reduction_type FROM `' 
-//			. _DB_PREFIX_ . 'rj_music_lang` AS a INNER JOIN `' 
-//			. _DB_PREFIX_ . 'product` AS b ON a.linked_digital_id = "" AND a.id_product = ' 
-//			. $id_product . ' AND b.id_product = '.(int)$id_product.' LEFT JOIN `' 
-//			. _DB_PREFIX_ . 'specific_price` AS c ON c.id_product = '.(int)$id_product;
-//			$mp3 = Db::getInstance()->ExecuteS($mp3_sql);
-
-//			$associated_mp3_sql = 'SELECT a.*, b.* , c.reduction, c.reduction_type FROM `' 
-//			. _DB_PREFIX_ . 'rj_music_lang` AS a INNER JOIN `' 
-//			. _DB_PREFIX_ . 'product` AS b ON a.linked_digital_id != "" AND a.id_product = ' 
-//			. (int)$id_product .' AND b.id_product = a.linked_digital_id LEFT JOIN `' 
-//			. _DB_PREFIX_ . 'specific_price` AS c ON c.id_product = b.id_product';
-//        			$associated_mp3 = Db::getInstance()->ExecuteS($associated_mp3_sql);
-
-		// $id_sql='SELECT c.`mp3_name`,c.`mp3_title`,c.`id_product`
-		 // FROM '._DB_PREFIX_.'rj_music_shop a
-		 // LEFT JOIN '._DB_PREFIX_.'rj_music b ON (a.id_music = b.id_music)
-		 // LEFT JOIN '._DB_PREFIX_.'rj_music_lang c ON (b.id_music = c.id_music)
-		 // WHERE c.id_product = ' . $id_product . ' AND  a.id_shop = '.(int)$id_shop.'	
-			// AND c.id_lang = '.(int)$id_lang. ' '.Shop::addSqlRestrictionOnLang().(null ? ' AND b.`active` = 1' : ' ');	
-
-
-//        $id_sql = 'SELECT a.id_product,a.price,b.mp3_name,b.mp3_title from `' . _DB_PREFIX_ . 'product` as a,`'
-//        . _DB_PREFIX_ . 'rj_music_lang` as b,`' ._DB_PREFIX_ . 'rj_music_shop` as c where (a.id_product=b.linked_digital_id or a.id_product=b.id_product)'
-//        . ' and a.id_product=' . (int)$id_product
-//  	.' AND b.id_lang = '.(int)$id_lang .' AND b.id_music=c.id_music AND c.id_shop=' . (int)$id_shop;
-        
-        $id_sql='SELECT a.* from `' . _DB_PREFIX_ . 'rj_music_lang` as a,`' . _DB_PREFIX_ . 'rj_music_shop` as b where linked_digital_id=' . (int)$id_product        
-        . ' or (linked_digital_id!="" and id_product=' . (int)$id_product . ') AND id_lang=' . (int)$id_lang 
+        $id_sql='SELECT a.* from `' . _DB_PREFIX_ . 'rj_music_lang` as a,`' . _DB_PREFIX_ . 'rj_music_shop` as b where linked_digital_id=' . (int)$id_product
+        . ' or (linked_digital_id!="" and id_product=' . (int)$id_product . ') AND id_lang=' . (int)$id_lang
         . ' AND a.id_music=b.id_music and b.id_shop=' . (int)$id_shop . ' limit 1';
-        $id=Db::getInstance()->ExecuteS($id_sql);
-        if(!empty($id)){
-	        $sql_youtube="SELECT url_music FROM " . _DB_PREFIX_ . "rj_music_urlyt WHERE id_product=" . $id_product
-	        . " AND id_lang=" . (int)$id_lang;
-	        $id_url=Db::getInstance()->getValue($sql_youtube);
-	        if($id_url){
-				$btnyt="youtube-btn";
-	        }else{
-				$btnyt="";
-	        }        	
+        $item_mp3=Db::getInstance()->ExecuteS($id_sql);
+
+             $this->product = new Product($id_product, false,$this->context->language->id);
+                $precioconv=Tools::convertPrice($this->product->price, $this->context->currency);
+                $arrdata["price"]=number_format($precioconv, 2, ",", "");
+                $arrdata['sign']=$this->context->currency->sign;
+
+        if(!empty($item_mp3)){
+
             if(isset($_COOKIE['lista'])){
                $lista=unserialize($_COOKIE['lista']);
-               $lista=array_column($lista,"id");
+               $lista=$this->array_columns($lista,"id");
 	           if(in_array($id_product,$lista)){
 	  				$clase="quitar-lista";
                }else{
 			   		$clase="agregar-lista";
                }
-	        }else{	    
+	        }else{
                $clase="agregar-lista";
         	}
             $this->context->smarty->assign(array(
-                        'id_product' => $id_product,
-                        'mp3_name' => $id[0]["mp3_name"],
-                        'mp3_title' => $id[0]["mp3_title"],
+            	//'item_mp3' => $item_mp3,
+
+                       'id_product' => $id_product,
+                        'mp3_name' => $item_mp3[0]["mp3_name"],
+                        'mp3_title' => $item_mp3[0]["mp3_title"],
+						'url_youtube' => $item_mp3[0]["url_youtube"],
+						'precio' => $arrdata["price"].$arrdata['sign'] ,
                         'clase' => $clase,
-                        'btnyt' =>$btnyt,
-                        'id_url' =>$id_url,
+
             ));
             return $this->display(__FILE__, 'mp3_button.tpl');
         }
@@ -497,15 +445,15 @@ class RoanjaMusicShop extends Module
 	{
 		return parent::getCacheId().'|'.(int)$id_product;
 	}
-	
+
 	public function headerHTML()
 	{
-	
+
 		if (Tools::getValue('controller') != 'AdminModules' && Tools::getValue('configure') != $this->name)
 			return;
 
 		$this->context->controller->addJqueryUI('ui.sortable');
-		
+
 		$html = '<script type="text/javascript">
 					$(function() {
 						var $myMusics = $("#musics");
@@ -525,7 +473,7 @@ class RoanjaMusicShop extends Module
 						});
 					});
 				</script>';
-		
+
 
 		return $html;
 	}
@@ -540,7 +488,7 @@ class RoanjaMusicShop extends Module
 
 		return (++$row['next_position']);
 	}
-	
+
 	protected function _postValidation()
 	{
 		$errors = array();
@@ -550,15 +498,15 @@ class RoanjaMusicShop extends Module
 			if (!Validate::isInt(Tools::getValue('id_mp3')))
 				$errors[] = $this->l('Invalid music');
 		}
-	
+
 		if (Tools::isSubmit('submitMusic'))
 		{
 			if (!Validate::isInt(Tools::getValue('active_music')) || (Tools::getValue('active_music') != 0 && Tools::getValue('active_music') != 1))
 				$errors[] = $this->l('Invalid music state.');
-			
+
 			if (!Validate::isInt(Tools::getValue('position')) || (Tools::getValue('position') < 0))
 				$errors[] = $this->l('Invalid music position.');
-			
+
 			if (Tools::isSubmit('id_mp3'))
 			{
 
@@ -576,6 +524,8 @@ class RoanjaMusicShop extends Module
 					$errors[] = $this->l('The caption is too long.');
 				if (Tools::strlen(Tools::getValue('genero_'.$language['id_lang'])) > 255)
 					$errors[] = $this->l('The URL is too long.');
+				if (Tools::strlen(Tools::getValue('url_youtube_'.$language['id_lang'])) > 255)
+					$errors[] = $this->l('The URL is too long.');
 				if (Tools::getValue('mp3_name_'.$language['id_lang']) != null && !Validate::isFileName(Tools::getValue('mp3_name_'.$language['id_lang'])))
 					$errors[] = $this->l('Invalid filename.');
 				if (Tools::getValue('mp3_name_old_'.$language['id_lang']) != null && !Validate::isFileName(Tools::getValue('mp3_name_old_'.$language['id_lang'])))
@@ -589,6 +539,8 @@ class RoanjaMusicShop extends Module
 			if (Tools::strlen(Tools::getValue('author_'.$id_lang_default)) == 0)
 				$errors[] = $this->l('The caption is not set.');
 			if (Tools::strlen(Tools::getValue('genero_'.$id_lang_default)) == 0)
+				$errors[] = $this->l('The URL is not set.');
+			if (Tools::strlen(Tools::getValue('url_youtube_'.$id_lang_default)) == 0)
 				$errors[] = $this->l('The URL is not set.');
 			if (!Tools::isSubmit('has_music') && (!isset($_FILES['mp3_name_'.$id_lang_default]) || empty($_FILES['mp3_name_'.$id_lang_default]['tmp_name'])))
 				$errors[] = $this->l('The music is not set.');
@@ -628,7 +580,7 @@ class RoanjaMusicShop extends Module
 
 			if (!$res){
 				$this->_html .= $this->displayError('The configuration could not be updated');
-			}				
+			}
 			else{
 				$this->_html .= ($res ? $this->displayConfirmation($this->l('Configuration updated')) : $this->displayError($this->l('The configuration could not be updated.')));
 				Tools::redirectAdmin($this->context->link->getAdminLink('AdminProducts',false).'&id_product='.(int)Tools::getValue('id_product').'&updateproduct&key_tab=ModuleRoanjamusicshop&conf=1&token='.Tools::getAdminTokenLite('AdminProducts'));
@@ -652,28 +604,29 @@ class RoanjaMusicShop extends Module
 			$music->position = (int)Tools::getValue('position');
 			/* Sets active */
 			$music->active = (int)Tools::getValue('active_music');
-			
+
 			/* Sets each langue fields */
 			$languages = Language::getLanguages(false);
 
-			if (!isset($_FILES['mp3_name'])) 
+			if (!isset($_FILES['mp3_name']))
 					return $this->displayError($this->l('Invalid MP3 file or you did not complete all the fields'));
 			else
-			{					
+			{
 				$file_name = $_FILES['mp3_name'];
-				if (!move_uploaded_file($_FILES['mp3_name']['tmp_name'], dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mp3' . DIRECTORY_SEPARATOR . $file_name['name'])) 
-					return $this->displayError($this->l('An error occurred while attempting to upload the file.'));									
-			}	
+				if (!move_uploaded_file($_FILES['mp3_name']['tmp_name'], dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mp3' . DIRECTORY_SEPARATOR . $file_name['name']))
+					return $this->displayError($this->l('An error occurred while attempting to upload the file.'));
+			}
 
 			foreach ($languages as $language)
-			{				
+			{
 				//$salt = sha1(microtime());
 				$music->mp3_name[$language['id_lang']] = $_FILES['mp3_name']['name'];//$file_name;
 				$music->mp3_title[$language['id_lang']] = Tools::getValue('mp3_title_'.$language['id_lang']);
 				$music->author[$language['id_lang']] = Tools::getValue('author_'.$language['id_lang']);
 				$music->genero[$language['id_lang']] = Tools::getValue('genero_'.$language['id_lang']);
+				$music->url_youtube[$language['id_lang']] = Tools::getValue('url_youtube_'.$language['id_lang']);
 				$music->id_product[$language['id_lang']] = (int)Tools::getValue('id_product');
-				$music->linked_digital_id[$language['id_lang']] = Tools::getValue('virtual_prod_assoc');							
+				$music->linked_digital_id[$language['id_lang']] = Tools::getValue('virtual_prod_assoc');
 			}
 
 
@@ -690,21 +643,21 @@ class RoanjaMusicShop extends Module
 					$errors[] = $this->displayError($this->l('The music could not be updated.'));
 				$this->clearCache();
 			}
-		} /* Deletes */	//elseif (Tools::isSubmit('delete_id_music'))	
-		elseif(Tools::isSubmit('deleteroanjamusicshop')) 	
-		{			
+		} /* Deletes */	//elseif (Tools::isSubmit('delete_id_music'))
+		elseif(Tools::isSubmit('deleteroanjamusicshop'))
+		{
 			$music = new RoanjaMusic((int)Tools::getValue('deleteroanjamusicshop'));
 			$res = $music->delete();
 			$this->clearCache();
 			if (!$res){
 				$this->_html .= $this->displayError('Could not delete.');
-			}				
+			}
 			else{
 				Tools::redirectAdmin($this->context->link->getAdminLink('AdminProducts',false).'&id_product='.(int)Tools::getValue('id_product').'&updateproduct&key_tab=ModuleRoanjamusicshop&conf=1&token='.Tools::getAdminTokenLite('AdminProducts'));
 			}
-				
+
 		}
-		
+
 		/* Display errors if needed */
 		if (count($errors))
 			$this->_html .= $this->displayError(implode('<br />', $errors));
@@ -718,7 +671,7 @@ class RoanjaMusicShop extends Module
 	{
 		$errors = array();
 		$shop_context = Shop::getContext();
-		
+
 		if (Tools::isSubmit('submitMusic'))
 		{
 
@@ -733,50 +686,51 @@ class RoanjaMusicShop extends Module
 			}
 			else
 				$music = new RoanjaMusic();
-		
+
 			$music->position = (int)Tools::getValue('position');
-			
+
 			$music->active = (int)Tools::getValue('active_music');
-			
-			
+
+
 			$languages = Language::getLanguages(false);
 
-			if (!isset($_FILES['mp3_name'])) 
+			if (!isset($_FILES['mp3_name']))
 					return $this->displayError($this->l('Invalid MP3 file or you did not complete all the fields'));
 			else
-			{					
+			{
 				$file_name = $_FILES['mp3_name'];
-				if (!move_uploaded_file($_FILES['mp3_name']['tmp_name'], dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mp3' . DIRECTORY_SEPARATOR . $file_name['name'])) 
-					return $this->displayError($this->l('An error occurred while attempting to upload the file.'));									
-			}	
+				if (!move_uploaded_file($_FILES['mp3_name']['tmp_name'], dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mp3' . DIRECTORY_SEPARATOR . $file_name['name']))
+					return $this->displayError($this->l('An error occurred while attempting to upload the file.'));
+			}
 
 			foreach ($languages as $language)
-			{			
+			{
 				$music->mp3_name[$language['id_lang']] = $_FILES['mp3_name']['name'];
 				$music->mp3_title[$language['id_lang']] = Tools::getValue('mp3_title_'.$language['id_lang']);
 				$music->author[$language['id_lang']] = Tools::getValue('author_'.$language['id_lang']);
 				$music->genero[$language['id_lang']] = Tools::getValue('genero_'.$language['id_lang']);
+				$music->url_youtube[$language['id_lang']] = Tools::getValue('url_youtube_'.$language['id_lang']);
 				$music->id_product[$language['id_lang']] = (int)Tools::getValue('id_product');
-				$music->linked_digital_id[$language['id_lang']] = Tools::getValue('virtual_prod_assoc');							
+				$music->linked_digital_id[$language['id_lang']] = Tools::getValue('virtual_prod_assoc');
 			}
 
 
 			if (!$errors)
 			{
-				
+
 				if (!Tools::getValue('id_mp3'))
 				{
 					if (!$music->add())
 						$errors[] = $this->displayError($this->l('The music could not be added.'));
 				}
-				
+
 				elseif (!$music->update())
 					$errors[] = $this->displayError($this->l('The music could not be updated.'));
 				$this->clearCache();
 			}
 		}
-		
-	
+
+
 		if (count($errors))
 			$this->_html .= $this->displayError(implode('<br />', $errors));
 		elseif (Tools::isSubmit('submitMusic') && Tools::getValue('id_mp3'))
@@ -785,37 +739,18 @@ class RoanjaMusicShop extends Module
 			Tools::redirectAdmin($this->context->link->getAdminLink('AdminProducts').'&id_product='.(int)Tools::getValue('id_product').'&updateproduct&conf=3&key_tab=ModuleRoanjamusicshop'.$this->token);
 	}
 
- 	
 	public function hookDisplayAdminProductsExtra()
-	{	
-		echo "<script src='" . $this->_path . "js/admin.js'></script>"; 
+	{
+		//echo "<script src='" . $this->_path . "js/admin.js'></script>"; //ojo cambiar
 		$this->_html .= $this->headerHTML();
-		return $this->_html .= $this->prepareForm()  .  $this->getYoutubeLink() . $this->renderList();
+		return $this->_html .= $this->prepareForm()  . $this->renderList();
 	}
 
 	public function prepareForm()
 	{
-		/*$default_lang = new Language((int)Configuration::get('PS_LANG_DEFAULT'));
-		if (Validate::isLoadedObject($product = new Product((int)Tools::getValue('id_product'))))
-		{				
-			$virtual_products = $this->getVirtualProducts ();
-			
-				$this->context->smarty->assign(array(
-					'id_product' => (int)Tools::getValue('id_product') ,					
-					'virtual_products' => $virtual_products,
-					'max_mp3_size' => ini_get('upload_max_filesize') ,
-					'db_prefix' => _DB_PREFIX_,
-					'languages' => $this->context->controller->_languages,
-        			'default_language' => (int)Configuration::get('PS_LANG_DEFAULT')
-				));
-				
-			return $this->display(__FILE__, 'views/templates/admin/admintemplatefront.tpl');
-		}*/
-
 
 		$virtual_products = $this->getVirtualProducts ();
 		$product = new Product((int)Tools::getValue('id_product'));
-		
 
 		$fields_form = array(
 			'form' => array(
@@ -825,7 +760,7 @@ class RoanjaMusicShop extends Module
 
 				),
 				'input' => array(
-					
+
 					array(
 			            'type' => 'select',
 			            'lang' => true,
@@ -834,7 +769,7 @@ class RoanjaMusicShop extends Module
 			            'desc' => $this->l('Associate Mp3 file with other Virtual Products'),
 			            'options' => array(
 			              'query' => $virtual_products,
-			              'id' => 'id_product', 
+			              'id' => 'id_product',
 			              'name' => 'name'
 			            ),
 			        ),
@@ -851,7 +786,6 @@ class RoanjaMusicShop extends Module
 						'name' => 'mp3_title',
 						'required' => true,
 						'lang' => true,
-						
 					),
 					array(
 						'type' => 'text',
@@ -866,7 +800,13 @@ class RoanjaMusicShop extends Module
 						'name' => 'genero',
 						'required' => true,
 						'lang' => true,
-						
+					),
+					array(
+						'type' => 'text',
+						'label' => $this->l('Url Youtube'),
+						'name' => 'url_youtube',
+						'desc' => $this->l('Id url youtube https://www.youtube.com/watch?v=   (fLexgOxsZu0)'),
+						'lang' => true,
 					),
 					array(
 						'type' => 'switch',
@@ -892,49 +832,6 @@ class RoanjaMusicShop extends Module
 				)
 			),
 		);
-
-//		 $you_form=array(
-//                'form' =>array(
-//                        'legend'=>array(
-//                                'title'=>$this->l('youtubeLink'),
-//                                'icon'=>'icon-list-ul'                
-//                                 ),
-                
-//                         'input' =>array(
-//                                     	array(
-//										'type' => 'switch',
-//										'label' => $this->l('Enabled'),
-//										'name' => 'active_youtube',
-//										'is_bool' => true,
-//										'values' => array(
-//											array(
-//												'id' => 'active_youtube_on',
-//												'value' => 1,
-//												'label' => $this->l('Yes')
-//											),
-//											array(
-//												'id' => 'active_youtube_off',
-//												'value' => 0,
-//												'label' => $this->l('No')
-//											)
-//										),
-//									),
-  //                                   array(
-//                                     'type'=>'text',
-//                                     'label'=>$this->l('Description'),
-//                                     'name'=>'yt_url',
-//                                     'desc'=>$this->l('Text visualize'),   
-//                                     ),
-                             
-//                                ),
-//                         'submit' =>array(
-//                                    'title' => $this->l('Save'),                        
-//                                     )
-//                         )
-
-//        );
-		
-
 		if (Tools::isSubmit('id_music') && $this->musicExists((int)Tools::getValue('id_music')))
 		{
 			$music = new RoanjaMusic((int)Tools::getValue('id_music'));
@@ -986,7 +883,6 @@ class RoanjaMusicShop extends Module
 			return $this->getMultiLanguageInfoMsg().$helper->generateForm(array($fields_form));
 		else
 			return $helper->generateForm(array($fields_form));
-	
 	}
 
 	public function getFormValues()
@@ -996,7 +892,7 @@ class RoanjaMusicShop extends Module
 		foreach (Language::getLanguages(false) as $lang)
 			if ($id_music)
 			{
-				$music = new RoanjaMusic((int)$id_music);				
+				$music = new RoanjaMusic((int)$id_music);
 				$fields_value['mp3_title'][(int)$lang['id_lang']] = $music->mp3_title[(int)$lang['id_lang']];
 			}
 			else
@@ -1007,27 +903,26 @@ class RoanjaMusicShop extends Module
 		return $fields_value;
 	}
 
-	// Get All Virtual Products and assign them to variables
 	public function getVirtualProducts ()
 	{
 		$this->context = Context::getContext();
 		$id_shop = $this->context->shop->id;
 		$id_lang = $this->context->language->id;
-		
+
 		// Get All Virtual Products and assign them to variables
-	
-		$get_virtual_products = 'SELECT wp.`id_product`, pl.`name`, pl.`id_product` 
+
+		$get_virtual_products = 'SELECT wp.`id_product`, pl.`name`, pl.`id_product`
 								 FROM `'._DB_PREFIX_.'product_download` wp
 								 LEFT JOIN `'._DB_PREFIX_.'product` p ON p.`id_product` = wp.`id_product`
 								 '.Shop::addSqlAssociation('product', 'p').'
 								 LEFT JOIN `'._DB_PREFIX_.'product_lang` pl ON pl.`id_product` = wp.`id_product`'.Shop::addSqlRestrictionOnLang('pl').'
 								 WHERE pl.`id_lang` = '.(int)($id_lang);
-				
-		return Db::getInstance(_PS_USE_SQL_SLAVE_)->ExecuteS($get_virtual_products);		
+
+		return Db::getInstance(_PS_USE_SQL_SLAVE_)->ExecuteS($get_virtual_products);
 	}
-	
+
 	public function renderList()
-	{		
+	{
 		$musics = $this->getMusic();
 		foreach ($musics as $key => $music)
 		{
@@ -1040,8 +935,8 @@ class RoanjaMusicShop extends Module
 		}
 
 		$this->context->smarty->assign(
-			array(	
-				'id_product' => (int)Tools::getValue('id_product'),			
+			array(
+				'id_product' => (int)Tools::getValue('id_product'),
 				'link' => $this->context->link,
 				'musics' => $musics,
 				'music_baseurl' => $this->_path.'mp3/'
@@ -1049,12 +944,12 @@ class RoanjaMusicShop extends Module
 		);
 
 		return $this->display(__FILE__, 'list.tpl');
-		
+
 
 
 
 		/*$get_list_sql = $this->getMusic();
-							
+
 		$default_lang = new Language((int)Configuration::get('PS_LANG_DEFAULT'));
 		if ($list_result = $get_list_sql)
 		{
@@ -1067,18 +962,18 @@ class RoanjaMusicShop extends Module
 				'mp3_title' => array(
 					'title' => $this->l('Mp3 Title') ,
 					'width' => 140,
-					'type' => 'text',					
+					'type' => 'text',
 				) ,
-				
+
 				'mp3_name' => array(
 					'title' => $this->l('Mp3 Name') ,
 					'width' => 140,
-					'type' => 'text',					
+					'type' => 'text',
 				) ,
 				'genero' => array(
 					'title' => $this->l('Genero') ,
 					'width' => 140,
-					'type' => 'text',					
+					'type' => 'text',
 				) ,
 				'linked_digital_id' => array(
 					'title' => $this->l('Associated Product ID') ,
@@ -1087,7 +982,7 @@ class RoanjaMusicShop extends Module
 				) ,
 			);
 		 }
-	
+
 		$helper_list = new HelperList();
 		$helper_list->shopLinkType = '';
 		$helper_list->simple_header = false;
@@ -1106,16 +1001,16 @@ class RoanjaMusicShop extends Module
 		$helper_list->table = $this->name;
 		$helper_list->token = Tools::getAdminTokenLite('AdminProducts');
 		$helper_list->currentIndex = AdminController::$currentIndex.'&id_product='.(int)Tools::getValue('id_product').'&updateproduct&key_tab=ModuleRoanjaMusicshop&conf=1';*/
-	
+
 
 		/*$languages = Language::getLanguages(false);
 
-		if (count($languages) > 1)	
+		if (count($languages) > 1)
 			return $this->getMultiLanguageInfoMsg().$helper_list->generateList($list_result, $this->fields_list);
 		else
 			return $helper_list->generateList($list_result, $this->fields_list);*/
-	}	
-	
+	}
+
 	public function getMusic($id_product=null,$active = null)
 	{
 		if(is_null($id_product)){
@@ -1124,15 +1019,15 @@ class RoanjaMusicShop extends Module
 		$this->context = Context::getContext();
 		$id_shop = $this->context->shop->id;
 		$id_lang = $this->context->language->id;
-  		
+
 		return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
 			SELECT a.`id_music` as id_mp3, b.`position`, b.`active`, c.`id_music`, c.`mp3_name`,
-		 c.`mp3_title`, c.`author`, c.`genero`, c.`linked_digital_id`,c.`id_product`
+		 c.`mp3_title`, c.`author`, c.`genero`, c.`url_youtube`,c.`linked_digital_id`,c.`id_product`
 		 FROM '._DB_PREFIX_.'rj_music_shop a
 		 LEFT JOIN '._DB_PREFIX_.'rj_music b ON (a.id_music = b.id_music)
 		 LEFT JOIN '._DB_PREFIX_.'rj_music_lang c ON (b.id_music = c.id_music)
-		 WHERE c.id_product = ' . $id_product . ' AND  a.id_shop = '.(int)$id_shop.'	
-			AND c.id_lang = '.(int)$id_lang. ' '.Shop::addSqlRestrictionOnLang().($active ? ' AND b.`active` = 1' : ' ').'	
+		 WHERE c.id_product = ' . $id_product . ' AND  a.id_shop = '.(int)$id_shop.'
+			AND c.id_lang = '.(int)$id_lang. ' '.Shop::addSqlRestrictionOnLang().($active ? ' AND b.`active` = 1' : ' ').'
 			ORDER BY b.position'
 		);
 
@@ -1148,7 +1043,7 @@ class RoanjaMusicShop extends Module
 			ORDER BY b.position'
 		);*/
 	}
-	
+
 	public function getAddFieldsValues()
 	{
 		$fields = array();
@@ -1168,37 +1063,15 @@ class RoanjaMusicShop extends Module
 
 		foreach ($languages as $lang)
 		{
-			$fields['mp3_name'][$lang['id_lang']] = Tools::getValue('mp3_name_'.(int)$lang['id_lang']);			
+			$fields['mp3_name'][$lang['id_lang']] = Tools::getValue('mp3_name_'.(int)$lang['id_lang']);
 			$fields['mp3_title'][$lang['id_lang']] = Tools::getValue('mp3_title_'.(int)$lang['id_lang'], $music->mp3_title[$lang['id_lang']]);
 			$fields['author'][$lang['id_lang']] = Tools::getValue('author_'.(int)$lang['id_lang'], $music->author[$lang['id_lang']]);
-			$fields['genero'][$lang['id_lang']] = Tools::getValue('genero_'.(int)$lang['id_lang'], $music->genero[$lang['id_lang']]);	
+			$fields['genero'][$lang['id_lang']] = Tools::getValue('genero_'.(int)$lang['id_lang'], $music->genero[$lang['id_lang']]);
+			$fields['url_youtube'][$lang['id_lang']] = Tools::getValue('url_youtube_'.(int)$lang['id_lang'], $music->genero[$lang['id_lang']]);
 			$fields['id_product'] = (int)Tools::getValue('id_product');
 			$fields['linked_digital_id'] = Tools::getValue('virtual_prod_assoc');
-//			$fields['yt_url'][$lang['id_lang']]="ABCDE";			
 		}
 		return $fields;
-	}
-
-	public function getYoutubeLink(){					
-                $id_product=Tools::getValue("id_product");
-                $id_lang=(int)$this->context->language->id;
-                $id_employer=(int)$this->context->employee->id;                
-                $sql="SELECT url_music from " . _DB_PREFIX_ . "rj_music_urlyt where id_product=" . (int)$id_product
-                        . " AND id_lang=" . (int)$id_lang;
-                $sql2="SELECT status_url from " . _DB_PREFIX_ . "rj_music_urlyt where id_product=" . (int)$id_product
-                        . " AND id_lang=" . (int)$id_lang;
-//                $sql3="SELECT id_music from " . _DB_PREFIX_ . "rj_music_lang where id_product=" . (int)$id_product;
-                $url_music=Db::getInstance()->getValue($sql);
-                $status_url=Db::getInstance()->getValue($sql2);
-//                $id_music=Db::getInstance()->getValue($sql3);
-                $this->context->smarty->assign("module_dir",_PS_MODULE_DIR_);
-                $this->context->smarty->assign("url_music",$url_music);
-                $this->context->smarty->assign("status_url",$status_url);
-                $this->context->smarty->assign("id_product",$id_product);
-                $this->context->smarty->assign("language",$id_lang);
-                $this->context->smarty->assign("employe",$id_employer);
-//                $this->context->smarty->assign("id_music",$id_music);                
-		return $this->display(__FILE__,'youtubelink.tpl');
 	}
 
 	public function clearCache()
@@ -1227,7 +1100,7 @@ class RoanjaMusicShop extends Module
 		$row = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow($req);
 		return ($row);
 	}
-	
+
 	protected function getMultiLanguageInfoMsg()
 	{
 		return '<p class="alert alert-warning">'.
@@ -1244,7 +1117,7 @@ class RoanjaMusicShop extends Module
 		else
 			return '';
 	}
-	
+
 	protected function getShopContextError($shop_contextualized_name, $mode)
 	{
 		if (is_array($shop_contextualized_name))
@@ -1259,7 +1132,7 @@ class RoanjaMusicShop extends Module
 							sprintf($this->l('You cannot add Musics from a "All Shops" or a "Group Shop" context')).
 					'</p>';
 	}
-	
+
 	protected function getCurrentShopInfoMsg()
 	{
 		$shop_info = null;
@@ -1287,7 +1160,7 @@ class RoanjaMusicShop extends Module
 						sprintf($this->l('Unable to get slide shop association information (id_mp3: %d)'), (int)$id_mp3).
 				'</p>';
 	}
-	
+
 	protected function getSharedMusicWarning()
 	{
 		return '<p class="alert alert-warning">'.
