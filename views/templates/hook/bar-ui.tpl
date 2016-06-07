@@ -1,5 +1,5 @@
 <div id="barra" name="barra" class="sm2-bar-ui full-width fixed {$oculto}" data-ruta="{$modules_dir}">
- 
+
  <div class="bd sm2-main-controls">
   <div class="sm2-inline-texture"></div>
   <div class="sm2-inline-gradient"></div>
@@ -81,7 +81,7 @@
      <li class="selected">
       <div class="sm2-row">
        <div class="sm2-col sm2-wide">
-        <a id="playerSound100" href=""><b id="playerSoundTitle"></b><span class="label">Explicit</span></a>
+        <a id="playerSound100" href=""><b id="playerSoundTitle"></b><span class="label ">Explicit</span></a>
        </div>
         <!--
        <div class="sm2-col">

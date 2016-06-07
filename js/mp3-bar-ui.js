@@ -1,4 +1,4 @@
-﻿/*jslint plusplus: true, white: true, nomen: true */
+/*jslint plusplus: true, white: true, nomen: true */
 /*global console, document, navigator, soundManager, window */
 
 (function(window) {
@@ -70,7 +70,7 @@
         players.push(new Player(nodes[i]));
       }
     }
-  
+
   });
 
   /**
@@ -177,15 +177,15 @@
           var progressMaxLeft = 100,
               left,
               width;
-  
+
           left = Math.min(progressMaxLeft, Math.max(0, (progressMaxLeft * (this.position / this.durationEstimate)))) + '%';
           width = Math.min(100, Math.max(0, (100 * this.position / this.durationEstimate))) + '%';
-  
+
           if (this.duration) {
 
             dom.progress.style.left = left;
             dom.progressBar.style.width = width;
-              
+
             // TODO: only write changes
             dom.time.innerHTML = getTime(this.position, true);
 
@@ -267,7 +267,7 @@
           callback('error');
 
           // load next, possibly with delay.
-            
+
           if (navigator.userAgent.match(/mobile/i)) {
             // mobile will likely block the next play() call if there is a setTimeout() - so don't use one here.
             actions.next();
@@ -561,7 +561,7 @@
         }
 
         // update selected offset, too.
-        offset = findOffsetFromItem(item);
+        offset = findOffsetFromItem(liElement);
 
         data.selectedIndex = offset;
 
@@ -574,7 +574,7 @@
         offset = (offset || 0);
 
         item = getItem(offset);
-        
+
         if (item) {
           playLink(item.getElementsByTagName('a')[0]);
         }
@@ -587,7 +587,7 @@
         var item, url;
 
         item = getItem();
-      
+
         if (item) {
           url = item.getElementsByTagName('a')[0].href;
         }
@@ -943,18 +943,22 @@
     actions = {
 
       play: function(offsetOrEvent) {
+
         /**
          * This is an overloaded function that takes mouse/touch events or offset-based item indices.
          * Remember, "auto-play" will not work on mobile devices unless this function is called immediately from a touch or click event.
-         * If you have the link but not the offset, you can also pass a fake event object with a target of an <a> inside the playlist - e.g. { target: someMP3Link }         
+         * If you have the link but not the offset, you can also pass a fake event object with a target of an <a> inside the playlist - e.g. { target: someMP3Link }
          */
+
         var target,
             href,
             e;
+
         if (offsetOrEvent !== undefined && !isNaN(offsetOrEvent)) {
           // smells like a number.
           return playlistController.playItemByOffset(offsetOrEvent);
         }
+
         // DRY things a bit
         e = offsetOrEvent;
 
@@ -965,19 +969,20 @@
           href = target.href;
 
         }
+
         // haaaack - if null due to no event, OR '#' due to play/pause link, get first link from playlist
         if (!href || href.indexOf('#') !== -1) {
           href = dom.playlist.getElementsByTagName('a')[0].href;
         }
 
-//        if (!soundObject) {
+        if (!soundObject) {
           soundObject = makeSound(href);
-//        }
+        }
 
         // edge case: if the current sound is not playing, stop all others.
-//        if (!soundObject.playState) {
+        if (!soundObject.playState) {
           stopOtherSounds();
-//        }
+        }
 
         // TODO: if user pauses + unpauses a sound that had an error, try to play next?
         soundObject.togglePause();
@@ -992,6 +997,7 @@
       },
 
       pause: function() {
+
         if (soundObject && soundObject.readyState) {
           soundObject.pause();
         }
