@@ -36,7 +36,8 @@
 
 <div class="content-bar-musicshop">
 
-<div id="barra" name="barra"  class="sm2-bar-ui playlist-open  pos-init"  data-ruta="{$modules_dir}">
+  
+<div class="sm2-bar-ui playlist-open full-width pos-init">
 
  <div class="bd sm2-main-controls">
 
@@ -45,7 +46,7 @@
 
   <div class="sm2-inline-element sm2-button-element">
    <div class="sm2-button-bd">
-    <a id="playSound" class="sm2-inline-button play-pause" >Play / pause</a>
+    <a href="#play" class="sm2-inline-button play-pause">Play / pause</a>
    </div>
   </div>
 
@@ -113,13 +114,6 @@
     
     <ul class="sm2-playlist-bd">
      
-     <!-- item with "download" link -->
-
-
-
-
-    {assign var="assoc_increment" value=1}
-
     {foreach from=$associated_mp3 item=items}
        <li>
         <div class="sm2-row">
@@ -138,6 +132,7 @@
          </div>
       </li>
     {/foreach}
+    
     </ul>
   
   </div>
@@ -153,7 +148,20 @@
     <div class="sm2-inline-element sm2-button-element">
      <a href="#next" title="Next" class="sm2-inline-button next">&gt; next</a>
     </div>
- 
+
+    <!-- not implemented -->
+    <!--
+    <div class="sm2-inline-element sm2-button-element disabled">
+     <div class="sm2-button-bd">
+      <a href="#repeat" title="Repeat playlist" class="sm2-inline-button repeat">&infin; repeat</a>
+     </div>
+    </div>
+
+    <div class="sm2-inline-element sm2-button-element disabled">
+     <a href="#shuffle" title="Shuffle" class="sm2-inline-button shuffle">shuffle</a>
+    </div>
+    -->
+
    </div>
 
   </div>
