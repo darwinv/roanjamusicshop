@@ -123,14 +123,16 @@ $(document).ready(function(){
 
 
    function playerMusic(song,title,lugar){
+      var mp3btn="playermp3";
       if($("#" + lugar).hasClass("hidden"))
       $("#" + lugar).removeClass("hidden");
       //someSound.play();
+
       if(lugar=="barra"){
           document.getElementById("playerSound100").href = song;
           document.getElementById("playerSoundTitle").innerHTML = title;
           if($("div#barra2").attr("id")==undefined){
-            window.sm2BarPlayers[0].actions.play();
+            window.sm2BarPlayers[0].actions.play(mp3btn);
           }else{
             window.sm2BarPlayers[1].actions.play();
           }

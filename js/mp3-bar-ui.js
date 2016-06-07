@@ -65,6 +65,7 @@
 
     nodes = utils.dom.getAll(playerSelector);
 
+
     if (nodes && nodes.length) {
       for (i=0, j=nodes.length; i<j; i++) {
         players.push(new Player(nodes[i]));
@@ -956,6 +957,7 @@
 
         if (offsetOrEvent !== undefined && !isNaN(offsetOrEvent)) {
           // smells like a number.
+
           return playlistController.playItemByOffset(offsetOrEvent);
         }
 
@@ -975,10 +977,15 @@
           href = dom.playlist.getElementsByTagName('a')[0].href;
         }
 
-        if (!soundObject) {
-          soundObject = makeSound(href);
-        }
-
+          if(offsetOrEvent=='playermp3'){
+            //  if (!soundObject) {
+              soundObject = makeSound(href);
+            //}
+     }else {
+       if (!soundObject) {
+         soundObject = makeSound(href);
+       }
+     }
         // edge case: if the current sound is not playing, stop all others.
         if (!soundObject.playState) {
           stopOtherSounds();
