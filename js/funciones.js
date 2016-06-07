@@ -17,7 +17,9 @@ $(document).ready(function(){
                 var newsong="<li class=" + data[i]['id_product'] + " data-id='" + data[i]['id_music'] + "'>";
                 newsong+="<a href='" + song + "'><b>" + title + "</b> - " + title + "</a><i class='fa fa-remove quitar-lista2'></i></li>";
 //                newsong+="<a href='" + song + "'><b>" + title + "</b> - " + title + "<span class='label'>Explicit</span></a><button class='quitar-lista2'>X</button></li>";
-                $("#barra").find(".sm2-playlist-bd").append(newsong);
+                $("#barra").find(".sm2-playlist-wrapper").find(".sm2-playlist-bd").append(newsong);
+
+
            }
            act.addClass("quitar-lista");
            act.removeClass("agregar-lista");

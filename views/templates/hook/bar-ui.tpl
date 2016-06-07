@@ -1,3 +1,4 @@
+<h1 id=></h1>
 <div id="barra" name="barra" class="sm2-bar-ui full-width fixed {$oculto}" data-ruta="{$modules_dir}">
 
  <div class="bd sm2-main-controls">
@@ -10,7 +11,7 @@
   </div>
   <div class="sm2-inline-element sm2-inline-status">
    <div class="sm2-playlist">
-    <div class="sm2-playlist-target"><ul class="sm2-playlist-bd"><li><b>Title</b> - LA<span class="label">Explicit</span></li></ul></div>
+    <div class="sm2-playlist-target"><ul class="sm2-playlist-bd"><li><b>Title</b> - LA<span class="label"></span></li></ul></div>
    </div>
    <div class="sm2-progress">
     <div class="sm2-row">
