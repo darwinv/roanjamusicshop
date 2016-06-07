@@ -24,7 +24,7 @@
 *}
 
 {*if !isset($priceDisplayPrecision)}
-		{assign var='priceDisplayPrecision' value=2}
+    {assign var='priceDisplayPrecision' value=2}
 {/if}
 {if !$priceDisplay || $priceDisplay == 2}
     {assign var='productPrice' value=$product->getPrice(true, $smarty.const.NULL, $priceDisplayPrecision)}

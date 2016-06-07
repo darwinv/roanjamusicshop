@@ -317,72 +317,48 @@ class RoanjaMusicShop extends Module
 
 	}
 	
+	public function GetSoundsOfProduct()
+	{
+		$id_shop = $this->context->shop->id;
+		$id_lang = $this->context->language->id;
+
+		 $associated_mp3_sql = 'SELECT ml.*, b.* , c.reduction, c.reduction_type FROM `' 
+			. _DB_PREFIX_ . 'rj_music_lang` AS ml INNER JOIN `' 
+			. _DB_PREFIX_ . 'product` AS b ON ml.linked_digital_id != "" AND ml.id_lang='. $id_lang . '  AND ml.id_product = ' 
+			. (int)Tools::getValue('id_product') . ' AND b.id_product = ml.linked_digital_id LEFT JOIN `' 
+			. _DB_PREFIX_ . 'specific_price` AS c ON c.id_product = b.id_product left Join ps_rj_music AS m ON m.id_music = ml.id_music AND m.active = 1 left Join ps_rj_music_shop AS ms ON ms.id_music = ml.id_music AND ms.id_shop = '. $id_shop ;  
+ 
+		return Db::getInstance()->ExecuteS($associated_mp3_sql);
+	}
 	public function hookdisplayRightColumnProduct()
 	{
 		if (Tools::getValue('MUSIC_POSITION', Configuration::get('MUSIC_POSITION')) == 1)
 		{
-            $id_lang=$this->context->language->id;
-            $id_shop=$this->context->shop->id;
+			$associated_mp3 = $this->GetSoundsOfProduct();
 
-            $id_product=Tools::getValue('id_product');
-			$associated_mp3_sql = 'SELECT a.*, b.* , c.reduction, c.reduction_type FROM `' 
-			. _DB_PREFIX_ . 'rj_music_lang` AS a INNER JOIN `' 
-			. _DB_PREFIX_ . 'product` AS b ON (a.linked_digital_id = ' . (int)$id_product .' OR (a.id_product = '
-			. (int)$id_product . ' AND a.linked_digital_id!="")) AND b.id_product = a.id_product LEFT JOIN `' 
-			. _DB_PREFIX_ . 'specific_price` AS c ON c.id_product = b.id_product,`' . _DB_PREFIX_ .'rj_music_shop` as d'
-                        . '  where a.id_lang=' . (int)$id_lang . ' AND a.id_music=d.id_music AND d.id_shop=' . (int)$id_shop;
-			$associated_mp3 = Db::getInstance()->ExecuteS($associated_mp3_sql);
-
-			$this->context->smarty->assign(array(
-				'associated_mp3' => $associated_mp3,
-			));
-
-			if (version_compare(_PS_VERSION_, '1.5.6.2', '>') == 1){
+			if(!empty($associated_mp3)){
+ 				$this->context->smarty->assign(array(
+					'associated_mp3' => $associated_mp3,
+				));
 				$this->show_footer_bar=false;
-                return $this->display(__FILE__, 'views/templates/front/column.tpl');
-			}else{
-                return $this->display(__FILE__, 'views/templates/front/column15.tpl');
-			}
+	            return $this->display(__FILE__, 'views/templates/front/column.tpl');       		
+       		}
+		 
 		}
 	}
-
 	public function hookDisplayProductTabContent()
 	{
-	
-
 		if (Tools::getValue('MUSIC_POSITION', Configuration::get('MUSIC_POSITION')) == 2)
-		{ 
-			$mp3_sql = 'SELECT a.*, b.* , c.reduction, c.reduction_type FROM `' 
-			. _DB_PREFIX_ . 'rj_music_lang` AS a INNER JOIN `' 
-			. _DB_PREFIX_ . 'product` AS b ON a.linked_digital_id = "" AND a.id_product = ' 
-			. (int)Tools::getValue('id_product') . ' AND b.id_product = ' 
-			. (int)Tools::getValue('id_product') . ' LEFT JOIN `' 
-			. _DB_PREFIX_ . 'specific_price` AS c ON c.id_product = ' 
-			. (int)Tools::getValue('id_product');
-			$mp3 = Db::getInstance()->ExecuteS($mp3_sql);
-			$associated_mp3_sql = 'SELECT a.*, b.* , c.reduction, c.reduction_type FROM `' 
-			. _DB_PREFIX_ . 'rj_music_lang` AS a INNER JOIN `' 
-			. _DB_PREFIX_ . 'product` AS b ON a.linked_digital_id != "" AND a.id_product = ' 
-			. (int)Tools::getValue('id_product') . ' AND b.id_product = a.linked_digital_id LEFT JOIN `' 
-			. _DB_PREFIX_ . 'specific_price` AS c ON c.id_product = b.id_product';
-			$associated_mp3 = Db::getInstance()->ExecuteS($associated_mp3_sql);
+		{
+			$associated_mp3 = $this->GetSoundsOfProduct();
 
-			$this->context->smarty->assign(array(
-				'product_mp3' => $mp3,
-				'associated_mp3' => $associated_mp3,
-			));
-
-		  
-
-			if (version_compare(_PS_VERSION_, '1.5.6.2', '>') == 1)
-			{
+			if(!empty($associated_mp3)){
+ 				$this->context->smarty->assign(array(
+					'associated_mp3' => $associated_mp3,
+				));
 				$this->show_footer_bar=false;
-				return $this->display(__FILE__, 'views/templates/front/product_tab_content.tpl');
-			}
-		    else
-			{
-				return $this->display(__FILE__, 'views/templates/front/product_tab_content15.tpl');
-			}
+	            return $this->display(__FILE__, 'views/templates/front/product_tab_content.tpl');
+       		}
 
 		}
 	}

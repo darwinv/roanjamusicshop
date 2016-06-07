@@ -24,7 +24,7 @@
 *}
 <script src='{$modules_dir}prestamusicshop/js/soundmanager2en.js' type='text/javascript'></script>
 {if !isset($priceDisplayPrecision)}
-		{assign var='priceDisplayPrecision' value=2}
+        {assign var='priceDisplayPrecision' value=2}
 {/if}
 {if !$priceDisplay || $priceDisplay == 2}
     {assign var='productPrice' value=$product->getPrice(true, $smarty.const.NULL, $priceDisplayPrecision)}
@@ -33,86 +33,147 @@
     {assign var='productPrice' value=$product->getPrice(false, $smarty.const.NULL, $priceDisplayPrecision)}
     {assign var='productPriceWithoutReduction' value=$product->getPriceWithoutReduct(true, $smarty.const.NULL)}
 {/if}
-<script>
-function checkIfIncluded(file) {
-    var links = document.getElementsByTagName("link");
-    for(var i = 0; i < links.length; i++) {
-        if (links[i].href.substr(-file.length) == file)
-            return true;
-    }
 
-    var scripts = document.getElementsByTagName("script");
-    for(var i = 0; i < scripts.length; i++) {
-        if (scripts[i].src.substr(-file.length) == file)
-            return true;
-    }
+<div class="content-bar-musicshop">
 
-    return false;
-}
-function loadjscssfile(filename, filetype){
- if (filetype=="js"){ //if filename is a external JavaScript file
-  var fileref=document.createElement('script')
-  fileref.setAttribute("type","text/javascript")
-  fileref.setAttribute("src", filename)
- }
- else if (filetype=="css"){ //if filename is an external CSS file
-  var fileref=document.createElement("link")
-  fileref.setAttribute("rel", "stylesheet")
-  fileref.setAttribute("type", "text/css")
-  fileref.setAttribute("href", filename)
- }
- if (typeof fileref!="undefined")
-  document.getElementsByTagName("head")[0].appendChild(fileref)
-}
-$(document).ready(function(){
-	if(checkIfIncluded("soundmanager2.js")){
-		$("script[src='soundmanager2en.js']").remove()
-		loadjscssfile("{$modules_dir}prestamusicshop/css/mp3-player-button-tab.css", "css") //dynamically load and add this .css file
-		loadjscssfile("{$modules_dir}prestamusicshop/js/mp3-player-button.js", "js") //dynamically load and add this .js file
-	}else{
-		//loadjscssfile("{$modules_dir}prestamusicshop/js/soundmanager2.js", "js")
-		loadjscssfile("{$modules_dir}prestamusicshop/css/mp3-player-button-tab.css", "css")
-		loadjscssfile("{$modules_dir}prestamusicshop/js/mp3-player-button.js", "js")
-	}
-})
-</script>
-<h1>product_tab_content</h1>
-<h3 id="" class="idTabHrefShort page-product-heading">{l s='TRACKS'}</h3>
-{assign var="assoc_increment" value=1}
-{foreach from=$associated_mp3 item=items}
-    <p class="music_shop_item">
-       	<a data-href="{$modules_dir}prestamusicshop/mp3/{$items.mp3_name}" title="{$items.author}-{$items.mp3_title}" class="sm2_button">{$items.author}-{$items.mp3_title}</a>
-        <span class="music_title">{$assoc_increment}. {$items.author}-{$items.mp3_title}</span>
-        <a class="button ajax_add_to_cart_button music_cart_add btn btn-default" href="{$link->getPageLink('cart',false, NULL, "add=1&amp;id_product={$items.linked_digital_id|intval}&amp;token={$static_token}", false)|escape:'html':'UTF-8'}" rel="nofollow" title="{l s='Add to cart'}" data-id-product="{$items.linked_digital_id|intval}">
-            <span>{l s='Add to cart'}</span>
-        </a>
-        {if $items.reduction_type == 'amount'}
-        	<span class="assoc_price">{convertPrice price=$items.price - $items.reduction}Product_tab_content.tpl</span>
-        {else}
-        	<span class="assoc_price">{convertPrice price=$items.price - ($items.price * $items.reduction)}</span>
-        {/if}
-    </p>
-{$assoc_increment = $assoc_increment + 1}
-{/foreach}
+<div id="barra" name="barra"  class="sm2-bar-ui playlist-open  pos-init"  data-ruta="{$modules_dir}">
 
-{foreach from=$product_mp3 item=items}
-    <p class="music_shop_item">
-    	<a data-href="{$modules_dir}prestamusicshop/mp3/{$items.mp3_name}" title="{$items.author}-{$items.mp3_title}" class="sm2_button">{$items.author}-{$items.mp3_title}</a>
-        <span class="music_title">{$assoc_increment}. {$items.author}-{$items.mp3_title}</span>
-        <a class="button ajax_add_to_cart_button music_cart_add btn btn-default" href="{$link->getPageLink('cart',false, NULL, "add=1&amp;id_product={$items.product_id|intval}&amp;token={$static_token}", false)|escape:'html':'UTF-8'}" rel="nofollow" title="{l s='Add to cart'}" data-id-product="{$items.product_id|intval}">
-            <span>{l s='Add to cart'}</span>
-        </a>
-        <span class="our_price_display" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-            {if $product->quantity > 0}<link itemprop="availability" href="http://schema.org/InStock"/>{/if}
-            {if $priceDisplay >= 0 && $priceDisplay <= 2}
-                <span id="our_price_display_music" itemprop="price">{convertPrice price=$productPrice}</span>
-                <!--{if $tax_enabled  && ((isset($display_tax_label) && $display_tax_label == 1) || !isset($display_tax_label))}
-                    {if $priceDisplay == 1}{l s='tax excl.'}{else}{l s='tax incl.'}{/if}
-                {/if}-->
-                <meta itemprop="priceCurrency" content="{$currency->iso_code}" />
-                {hook h="displayProductPriceBlock" product=$product type="price"}
-            {/if}
-        </span>
-    </p>
-{$assoc_increment = $assoc_increment + 1}
-{/foreach}
+ <div class="bd sm2-main-controls">
+
+  <div class="sm2-inline-texture"></div>
+  <div class="sm2-inline-gradient"></div>
+
+  <div class="sm2-inline-element sm2-button-element">
+   <div class="sm2-button-bd">
+    <a id="playSound" class="sm2-inline-button play-pause" >Play / pause</a>
+   </div>
+  </div>
+
+  <div class="sm2-inline-element sm2-inline-status">
+
+   <div class="sm2-playlist">
+    <div class="sm2-playlist-target">
+     <!-- playlist <ul> + <li> markup will be injected here -->
+     <!-- if you want default / non-JS content, you can put that here. -->
+     <noscript><p>JavaScript is required.</p></noscript>
+    </div>
+   </div>
+
+   <div class="sm2-progress">
+    <div class="sm2-row">
+    <div class="sm2-inline-time">0:00</div>
+     <div class="sm2-progress-bd">
+      <div class="sm2-progress-track">
+       <div class="sm2-progress-bar"></div>
+       <div class="sm2-progress-ball"><div class="icon-overlay"></div></div>
+      </div>
+     </div>
+     <div class="sm2-inline-duration">0:00</div>
+    </div>
+   </div>
+
+  </div>
+
+  <div class="sm2-inline-element sm2-button-element sm2-volume">
+   <div class="sm2-button-bd">
+    <span class="sm2-inline-button sm2-volume-control volume-shade"></span>
+    <a href="#volume" class="sm2-inline-button sm2-volume-control">volume</a>
+   </div>
+  </div>
+
+  <div class="sm2-inline-element sm2-button-element">
+   <div class="sm2-button-bd">
+    <a href="#prev" title="Previous" class="sm2-inline-button previous">&lt; previous</a>
+   </div>
+  </div>
+
+  <div class="sm2-inline-element sm2-button-element">
+   <div class="sm2-button-bd">
+    <a href="#next" title="Next" class="sm2-inline-button next">&gt; next</a>
+   </div>
+  </div>
+
+  <div class="sm2-inline-element sm2-button-element sm2-menu">
+   <div class="sm2-button-bd">
+     <a href="#menu" class="sm2-inline-button menu">menu</a>
+   </div>
+  </div>
+
+ </div>
+
+ <div class="bd sm2-playlist-drawer sm2-element">
+
+  <div class="sm2-inline-texture">
+   <div class="sm2-box-shadow"></div>
+  </div>
+
+  <!-- playlist content is mirrored here -->
+
+  <div class="sm2-playlist-wrapper">
+    
+    <ul class="sm2-playlist-bd">
+     
+     <!-- item with "download" link -->
+
+
+
+
+    {assign var="assoc_increment" value=1}
+
+    {foreach from=$associated_mp3 item=items}
+       <li>
+        <div class="sm2-row">
+          <div class="sm2-col">
+            <a href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}"><b>{$items.author}</b> - {$items.mp3_title}</a>
+          </div>
+          <div class="sm2-col">
+              {if $items.reduction_type == 'amount'}
+                <span class="assoc_price">{convertPrice price=$items.price - $items.reduction}</span>
+              {else}
+                <span class="assoc_price">{convertPrice price=$items.price - ($items.price * $items.reduction)}</span>
+              {/if}
+          </div>
+          <div class="sm2-col">
+          <a href="{$link->getPageLink('cart',false, NULL, "add=1&amp;id_product={$items.linked_digital_id|intval}&amp;token={$static_token}", false)|escape:'html':'UTF-8'}" rel="nofollow" title="{l s='Add to cart'}" data-id-product="{$items.linked_digital_id|intval}" class="ajax_add_to_cart_button music_cart_add sm2-icon sm2-cart sm2-exclude">&msp;</a> 
+         </div>
+      </li>
+    {/foreach}
+    </ul>
+  
+  </div>
+
+  <div class="sm2-extra-controls">
+
+   <div class="bd">
+
+    <div class="sm2-inline-element sm2-button-element">
+     <a href="#prev" title="Previous" class="sm2-inline-button previous">&lt; previous</a>
+    </div>
+
+    <div class="sm2-inline-element sm2-button-element">
+     <a href="#next" title="Next" class="sm2-inline-button next">&gt; next</a>
+    </div>
+ 
+   </div>
+
+  </div>
+
+ </div>
+
+</div>
+
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+  $(".roanjayt").fancybox({
+    maxWidth  : 800,
+    maxHeight : 600,
+    fitToView : false,
+    width   : '70%',
+    height    : '70%',
+    autoSize  : false,
+    closeClick  : false,
+    openEffect  : 'none',
+    closeEffect : 'none'
+  });
+});</script>

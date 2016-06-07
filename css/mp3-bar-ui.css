@@ -28,7 +28,7 @@
  overflow: hidden;
  /* just for fun (animate normal / full-width) */
  transition: max-width 0.2s ease-in-out;
-
+ text-align: left
 }
 
 .sm2-bar-ui .sm2-playlist li {
@@ -1016,4 +1016,7 @@
 }
 div.pos-init{
   position:initial;
+}
+div.content-bar-musicshop{
+  text-align: center;
 }
