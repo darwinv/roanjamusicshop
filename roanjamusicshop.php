@@ -538,8 +538,10 @@ class RoanjaMusicShop extends Module
 
 		return true;
 	}
+
 	public function _postProcess()
 	{
+
 		$errors = array();
 		$shop_context = Shop::getContext();
 

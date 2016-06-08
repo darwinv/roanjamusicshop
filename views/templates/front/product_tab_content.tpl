@@ -37,7 +37,7 @@
 <div class="content-bar-musicshop">
 
   
-<div class="sm2-bar-ui playlist-open full-width pos-init">
+<div class="sm2-bar-ui playlist-open pos-init">
 
  <div class="bd sm2-main-controls">
 
@@ -93,13 +93,12 @@
     <a href="#next" title="Next" class="sm2-inline-button next">&gt; next</a>
    </div>
   </div>
-
   <div class="sm2-inline-element sm2-button-element sm2-menu">
    <div class="sm2-button-bd">
      <a href="#menu" class="sm2-inline-button menu">menu</a>
    </div>
   </div>
-
+ 
  </div>
 
  <div class="bd sm2-playlist-drawer sm2-element">
@@ -132,7 +131,7 @@
          </div>
       </li>
     {/foreach}
-    
+
     </ul>
   
   </div>
