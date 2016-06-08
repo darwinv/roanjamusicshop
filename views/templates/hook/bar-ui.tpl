@@ -1,4 +1,3 @@
-<h1 id=></h1>
 <div id="barra" name="barra" class="sm2-bar-ui full-width fixed {$oculto}" data-ruta="{$modules_dir}">
 
  <div class="bd sm2-main-controls">
@@ -79,10 +78,10 @@
   <div class="sm2-playlist-wrapper">
     <ul class="sm2-playlist-bd">
      <!-- item with "download" link -->
-     <li class="selected">
+     <li class="selected hidden">
       <div class="sm2-row">
-       <div class="sm2-col sm2-wide">
-        <a id="playerSound100" href=""><b id="playerSoundTitle"></b><span class="label ">Explicit</span></a>
+       <div class="sm2-col sm2-wide ">
+        <a id="playerSound100" href=""><b id="playerSoundTitle"></b></a>
        </div>
         <!--
        <div class="sm2-col">

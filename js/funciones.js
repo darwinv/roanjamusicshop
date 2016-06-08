@@ -25,7 +25,7 @@ $(document).ready(function(){
            act.removeClass("agregar-lista");
            if($("div#barra").hasClass("hidden"))
            $("div#barra").removeClass("hidden");
-           window.sm2BarPlayers[0].actions.play();
+           //window.sm2BarPlayers[0].actions.play();
            $.ajax({
                url:ruta + "roanjamusicshop/ajax_roanjamusicshop.php",
                data:{action:"setCookie",song:data},
