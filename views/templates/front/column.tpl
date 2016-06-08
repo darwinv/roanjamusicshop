@@ -109,14 +109,12 @@
   <!-- playlist content is mirrored here -->
 
   <div class="sm2-playlist-wrapper">
-    
     <ul class="sm2-playlist-bd">
-     
     {foreach from=$associated_mp3 item=items}
        <li>
         <div class="sm2-row">
           <div class="sm2-col">
-            <a href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}"><b>{$items.author}</b> - {$items.mp3_title}</a>
+            <a href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" ><b>{$items.author}</b> - {$items.mp3_title}</a>
           </div>
           <div class="sm2-col">
               {if $items.reduction_type == 'amount'}
@@ -126,11 +124,10 @@
               {/if}
           </div>
           <div class="sm2-col">
-          <a href="{$link->getPageLink('cart',false, NULL, "add=1&amp;id_product={$items.linked_digital_id|intval}&amp;token={$static_token}", false)|escape:'html':'UTF-8'}" rel="nofollow" title="{l s='Add to cart'}" data-id-product="{$items.linked_digital_id|intval}" class="ajax_add_to_cart_button music_cart_add sm2-icon sm2-cart sm2-exclude">&msp;</a> 
+          <a href="{$link->getPageLink('cart',false, NULL, "add=1&amp;id_product={$items.linked_digital_id|intval}&amp;token={$static_token}", false)|escape:'html':'UTF-8'}" rel="nofollow" title="{l s='Add to cart'}" data-id-product="{$items.linked_digital_id|intval}" class="ajax_add_to_cart_button music_cart_add sm2-icon sm2-cart sm2-exclude">&msp;</a>
          </div>
       </li>
     {/foreach}
-    
     </ul>
   
   </div>

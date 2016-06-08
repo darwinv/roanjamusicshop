@@ -573,11 +573,12 @@
  background-image: url(../image/icomoon/entypo-25px-ffffff/PNG/last.png);
  background-image: none, url(../image/icomoon/entypo-25px-ffffff/SVG/last.svg);
 }
-.youtube {
+.youtubeActive {
  background-image: url(../image/youtube.png);
- background-image: none, url(../image/youtube.png);
 }
-
+.youtubeDisable {
+ background-image: url(../image/youtube_disable.png);
+}
 .previous,
 .next {
  background-size: 49.5%;
@@ -1024,12 +1025,12 @@ div.content-bar-musicshop{
 a.quitar-lista2 {
     float: right;
 }
-a.exclusive.ajax_add_to_cart_button {
+a.ajax_add_to_cart_button {
     float: right;
     width: 18%;
     background-color: #13191C;
 }
-a.exclusive.ajax_add_to_cart_button:hover {
+a.ajax_add_to_cart_button:hover {
     background-color: #39444E !important;
 }
 a.dat-list{
