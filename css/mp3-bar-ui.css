@@ -1024,12 +1024,12 @@ div.content-bar-musicshop{
 a.quitar-lista2 {
     float: right;
 }
-a.exclusive.ajax_add_to_cart_button {
+a.ajax_add_to_cart_button {
     float: right;
     width: 18%;
     background-color: #13191C;
 }
-a.exclusive.ajax_add_to_cart_button:hover {
+a.ajax_add_to_cart_button:hover {
     background-color: #39444E !important;
 }
 a.dat-list{
