@@ -88,6 +88,7 @@ $(document).ready(function(){
 //          window.sm2BarPlayers[0].actions.stop();
           //soundManager.stopAll();
           playerMusic(song,title,lugar);
+          
       }else{
           actual.removeClass("sm2_playing");
           //soundManager.stopAll();
