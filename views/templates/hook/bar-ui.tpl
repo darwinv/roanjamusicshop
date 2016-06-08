@@ -80,7 +80,7 @@
      <!-- item with "download" link -->
      <li class="selected hidden">
       <div class="sm2-row">
-       <div class="sm2-col sm2-wide ">
+       <div class="sm2-col sm2-wide">
         <a id="playerSound100" href=""><b id="playerSoundTitle"></b></a>
        </div>
         <!--
@@ -92,16 +92,16 @@
      <!--<span class="label">{$valor.title|truncate:10}</span></a><button class="quitar-lista2">X</button></li>-->
      </li>
         {if !empty($lista)}
-            {foreach $lista as $lis=>$valor}  
-                <li class="{$valor.id}" data-id="{$valor.id_music}">
-                  <a href="{$modules_dir}roanjamusicshop/mp3/{$valor.name}" data-youtube="{if !empty($valor.youtube)}{$valor.youtube}{/if}">
-                      <b>{$valor.name} - {$valor.title}</b>
-                  </a>
-                  <a class="quitar-lista2"><span><i class="fa fa-remove"></i></span></a>
-                  <a class="exclusive ajax_add_to_cart_button" rel="ajax_id_product_{$valor.id}" href="{$link->getPageLink('cart')|escape:'html'}?qty=1&amp;id_product={$valor.id}&amp&amp;add" title="{l s='Add to cart' mod='homefeatured'}" data-id-product="{$valor.id}">&nbsp;&nbsp;
-                  <span>{$valor.price|string_format:"%.2f"}&nbsp;&nbsp;<i class="fa fa-shopping-cart"></i></span>
-                  </a>
-                </li>
+          {foreach $lista as $lis=>$valor}
+            <li class="{$valor.id} item-list" data-id="{$valor.id_music}">
+              <a href="{$modules_dir}roanjamusicshop/mp3/{$valor.name}" class="dat-list" data-youtube="{if !empty($valor.youtube)}{$valor.youtube}{/if}">
+              <p><b>{$valor.title} - {$valor.genero}</b><br><b>{$valor.author}</b></p>
+              </a>
+              <a class="quitar-lista2"><span><i class="fa fa-remove"></i></span></a>
+              <a class="exclusive ajax_add_to_cart_button" rel="ajax_id_product_{$valor.id}" href="{$link->getPageLink('cart')|escape:'html'}?qty=1&amp;id_product={$valor.id}&amp&amp;add" title="{l s='Add to cart' mod='homefeatured'}" data-id-product="{$valor.id}">&nbsp;&nbsp;
+              <span class="price-list">{$valor.price|string_format:"%.2f"}&nbsp;&nbsp;<i class="fa fa-shopping-cart"></i></span>
+              </a>
+            </li>
             {/foreach}
         {/if}
     </ul>

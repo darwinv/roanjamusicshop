@@ -886,9 +886,9 @@
 }
 
 .sm2-playlist-wrapper ul li:hover a {
- background-color: rgba(0,0,0,0.20);
+ /*background-color: rgba(0,0,0,0.20);
  background-image: url(../image/black-20.png);
- background-image: none, none;
+ background-image: none, none;*/
 }
 
 .sm2-bar-ui.dark-text .sm2-playlist-wrapper ul li:hover a {
@@ -898,9 +898,10 @@
 }
 
 .sm2-playlist-wrapper ul li.selected a {
- background-color: rgba(0,0,0,0.25);
+ /*background-color: rgba(0,0,0,0.25);
  background-image: url(../image/black-20.png);
- background-image: none, none;
+ background-image: none, none;*/
+ color: #FFCC00!important;
 }
 
 .sm2-bar-ui.dark-text ul li.selected a {
@@ -1020,4 +1021,29 @@ div.pos-init{
 }
 div.content-bar-musicshop{
   text-align: center;
+}
+a.quitar-lista2 {
+    float: right;
+}
+a.ajax_add_to_cart_button {
+    float: right;
+    width: 18%;
+    background-color: #13191C;
+}
+a.ajax_add_to_cart_button:hover {
+    background-color: #39444E !important;
+}
+a.dat-list{
+  float: left;
+}
+li.item-list{
+  height: 50px;
+}
+i.fa.fa-remove {
+    font-size: 18px;
+}
+span.price-list {
+    font-size: 15px !important;
+    color: white;
+    font-weight: bold;
 }

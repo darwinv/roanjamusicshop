@@ -96,6 +96,8 @@ if(Tools::getValue('action')=='setCookie'){
         $lista[$i]['id_music']=$valor["id_music"];
         $lista[$i]['price']=$valor["price"];
         $lista[$i]['youtube']=$valor["url_youtube"];
+        $lista[$i]['genero']=$valor["genero"];
+        $lista[$i]['author']=$valor["author"];
         $i++;
     }
     setcookie('lista', serialize($lista), time()+3600*24*30,'/');
