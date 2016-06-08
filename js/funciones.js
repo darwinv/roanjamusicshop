@@ -14,8 +14,13 @@ $(document).ready(function(){
           for (i=0;i<data.length;i++) {
                 var song=ruta + "roanjamusicshop/mp3/" + data[i]['mp3_name'];
                 var title=data[i]['mp3_title'];
-                var newsong="<li class=" + data[i]['id_product'] + " data-id='" + data[i]['id_music'] + "'>";
-                newsong+="<a href='" + song + "'><b>" + title + "</b></a><i class='fa fa-remove quitar-lista2'></i></li>";
+                var precio=data[i]['price'];
+                var price = parseFloat(precio).toFixed(2);
+                var newsong="<li class='" + data[i]['id_product'] + " item-list' data-id='" + data[i]['id_music'] + "'>";
+                newsong+="<a href='" + song + "' class='dat-list'><b>" + title + "</b> -" + data[i]['genero'] + "<br>"+ data[i]['author'] + " </a>";
+                newsong+="<a class='quitar-lista2'><span><i class='fa fa-remove'></i></span></a>";
+                newsong+="<a class='exclusive ajax_add_to_cart_button' rel='ajax_id_product_"+ data[i]['id_product'] + "' href='{$link->getPageLink('cart')|escape:'html'}?qty=1&amp;id_product="+ data[i]['id_product'] + "&amp&amp;add' title='Add to cart' data-id-product='"+ data[i]['id_product'] + "'>";
+                newsong+="&nbsp;&nbsp;<span class='price-list'>" + price + "&nbsp;&nbsp;<i class='fa fa-shopping-cart'></i></span></a></li>";
 //                newsong+="<a href='" + song + "'><b>" + title + "</b> - " + title + "<span class='label'>Explicit</span></a><button class='quitar-lista2'>X</button></li>";
                 $("#barra").find(".sm2-playlist-wrapper").find(".sm2-playlist-bd").append(newsong);
 

@@ -311,7 +311,7 @@ class RoanjaMusicShop extends Module
         }
 
         if($this->show_footer_bar){
-        	$this->context->smarty->assign(array('lista' => $lista,'oculto' => $oculto));
+        	$this->context->smarty->assign(array('lista' => $lista,'oculto' => $oculto,));
 			return $this->display(__FILE__, 'bar-ui.tpl');
         }
 
