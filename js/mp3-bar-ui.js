@@ -111,11 +111,9 @@
     };
 
     function stopOtherSounds() {
-
       if (playerOptions.stopOtherSounds) {
         soundManager.stopAll();
       }
-
     }
 
     function callback(method) {
@@ -302,6 +300,10 @@
           // next track?
           item = playlistController.getNext();
 
+          if (item) {
+              setYoutube(item.getElementsByTagName('a')[0].dataset.youtube);
+          }
+
           // don't play the same item over and over again, if at end of playlist etc.
           if (item && playlistController.data.selectedIndex !== lastIndex) {
 
@@ -334,8 +336,17 @@
       return sound;
 
     }
-
+    function setYoutube(youtube_emb) {
+      if (youtube_emb === undefined || youtube_emb=='' || youtube_emb === null) {
+        $('#barra').find('.fancybox.youtube').attr("href",'').addClass('youtubeDisable').removeClass('youtubeActive');      
+      }else{
+        var youtube='https://www.youtube.com/embed/'+youtube_emb+'?autoplay=1';
+        $('#barra').find('.fancybox.youtube').attr("href",youtube).removeClass('youtubeDisable').addClass('youtubeActive');
+      }
+    }
     function playLink(link) {
+
+      setYoutube(link.dataset.youtube);
 
       // if a link is OK, play it.
 
@@ -735,9 +746,10 @@
           handled;
 
       evt = (e || window.event);
-
+      
       target = evt.target || evt.srcElement;
 
+      
       if (target && target.nodeName) {
 
         targetNodeName = target.nodeName.toLowerCase();
@@ -761,6 +773,7 @@
           }
 
         }
+
 
         if (targetNodeName === 'a') {
 
@@ -1028,7 +1041,7 @@
       },
 
       next: function(/* e */) {
-
+   
         var item, lastIndex;
 
         // special case: clear "play next" timeout, if one exists.
@@ -1049,7 +1062,7 @@
       },
 
       prev: function(/* e */) {
-
+ 
         var item, lastIndex;
 
         lastIndex = playlistController.data.selectedIndex;

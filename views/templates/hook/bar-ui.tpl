@@ -49,7 +49,7 @@
   {if !empty($url_youtube)}
       <div class="sm2-inline-element sm2-button-element">
        <div class="sm2-button-bd">
-      <a class="roanjayt fancybox fancybox.iframe youtube sm2-inline-button" href="https://www.youtube.com/embed/{$url_youtube}" >
+      <a class="roanjayt fancybox fancybox.iframe youtube youtubeDisable sm2-inline-button" href="https://www.youtube.com/embed/{$url_youtube}" >
        </a>
        </div>
       </div>
@@ -92,9 +92,9 @@
      <!--<span class="label">{$valor.title|truncate:10}</span></a><button class="quitar-lista2">X</button></li>-->
      </li>
         {if !empty($lista)}
-            {foreach $lista as $lis=>$valor}
+            {foreach $lista as $lis=>$valor}  
                 <li class="{$valor.id}" data-id="{$valor.id_music}">
-                  <a href="{$modules_dir}roanjamusicshop/mp3/{$valor.name}">
+                  <a href="{$modules_dir}roanjamusicshop/mp3/{$valor.name}" data-youtube="{if !empty($valor.youtube)}{$valor.youtube}{/if}">
                       <b>{$valor.name} - {$valor.title}</b>
                   </a>
                   <a class="quitar-lista2"><span><i class="fa fa-remove"></i></span></a>

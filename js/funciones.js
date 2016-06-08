@@ -80,13 +80,31 @@ $(document).ready(function(){
       }else{
           var lugar="barra";
       }
+
       if(!actual.hasClass("sm2_playing")){
           var song=actual.data("href");
           var title=actual.attr("title");
+          
+
+          var youtube_emb=actual.data("youtube");
+          
+          if (youtube_emb === undefined || youtube_emb=='' || youtube_emb === null) {
+             
+            $('#'+lugar).find('.fancybox.youtube').attr("href",'').addClass('youtubeDisable').removeClass('youtubeActive');
+          
+          }else{
+             
+            var youtube='https://www.youtube.com/embed/'+youtube_emb+'?autoplay=1';
+            $('#'+lugar).find('.fancybox.youtube').attr("href",youtube).removeClass('youtubeDisable').addClass('youtubeActive');
+
+
+          }
+         
+
+
+
+
           $("a.sm2_playing").removeClass("sm2_playing");
-          //actual.addClass("sm2_playing");
-//          window.sm2BarPlayers[0].actions.stop();
-          //soundManager.stopAll();
           playerMusic(song,title,lugar);
       }else{
           actual.removeClass("sm2_playing");
