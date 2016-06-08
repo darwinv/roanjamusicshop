@@ -97,9 +97,9 @@
                   <a href="{$modules_dir}roanjamusicshop/mp3/{$valor.name}" class="dat-list">
                       <p><b>{$valor.title} - {$valor.genero}</b><br><b>{$valor.author}</b></p>
                   </a>
-                  <a class="quitar-lista2"><span><i class="fa fa-remove"></i></span></a>
+                  <a class="quitar-lista2"><div class="ico-x"></div></a>
                   <a class="exclusive ajax_add_to_cart_button" rel="ajax_id_product_{$valor.id}" href="{$link->getPageLink('cart')|escape:'html'}?qty=1&amp;id_product={$valor.id}&amp&amp;add" title="{l s='Add to cart' mod='homefeatured'}" data-id-product="{$valor.id}">&nbsp;&nbsp;
-                  <span class="price-list">{$valor.price|string_format:"%.2f"}&nbsp;&nbsp;<i class="fa fa-shopping-cart"></i></span>
+                  <span class="price-list">{$valor.price|string_format:"%.2f"}&nbsp;&nbsp;</span><div class="ico-cart"></div>
                   </a>
                 </li>
             {/foreach}

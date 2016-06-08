@@ -24,15 +24,14 @@
 *}
 <div class="btn-bar-rjm">
 
-	<a data-id="{$id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$mp3_name}"class="sm2_button" title="{$mp3_title}"><div class="btn-rjm"><i class="fa fa-play" aria-hidden="true"></i></div>
+	<a data-id="{$id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$mp3_name}"class="sm2_button" title="{$mp3_title}"><div class="btn-rjm ico-play"></div>
 	</a>
 
-	<a class="{$clase}" title="Agregar a lista" ><div class="btn-rjm"><i class="fa fa-list" aria-hidden="true"></i></div>
+	<a class="{$clase}" title="Agregar a lista" ><div class="btn-rjm ico-addlist"></div>
 	</a>
 
 	{if !empty($url_youtube)}
-	<a class="roanjayt fancybox fancybox.iframe"  title="Ver Video" href="https://www.youtube.com/embed/{$url_youtube}?autoplay=1" ><div class="btn-rjm">
-		<i class="fa fa-play" aria-hidden="true"></i> </div></a>
+	<a class="roanjayt fancybox fancybox.iframe"  title="Ver Video" href="https://www.youtube.com/embed/{$url_youtube}?autoplay=1" ><div class="btn-rjm ico-yt"> </div></a>
 	{/if}
 
 <a title="Precio" >
