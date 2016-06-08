@@ -23,8 +23,7 @@
 *  International Registered Trademark & Property of PrestaShop SA
 *}
 <div class="btn-bar-rjm">
-
-	<a data-id="{$id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$mp3_name}"class="sm2_button" title="{$mp3_title}"><div class="btn-rjm ico-play"></div>
+	<a data-id="{$id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$mp3_name}"class="sm2_button" title="{$mp3_title}" data-youtube="{if !empty($url_youtube)}{$url_youtube}{/if}" ><div class="btn-rjm ico-play"></div>
 	</a>
 
 	<a class="{$clase}" title="Agregar a lista" ><div class="btn-rjm ico-addlist"></div>

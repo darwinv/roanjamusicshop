@@ -573,11 +573,12 @@
  background-image: url(../image/icomoon/entypo-25px-ffffff/PNG/last.png);
  background-image: none, url(../image/icomoon/entypo-25px-ffffff/SVG/last.svg);
 }
-.youtube {
+.youtubeActive {
  background-image: url(../image/youtube.png);
- background-image: none, url(../image/youtube.png);
 }
-
+.youtubeDisable {
+ background-image: url(../image/youtube_disable.png);
+}
 .previous,
 .next {
  background-size: 49.5%;
