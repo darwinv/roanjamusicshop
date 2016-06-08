@@ -22,13 +22,15 @@ $(document).ready(function(){
                 newsong+="<a class='exclusive ajax_add_to_cart_button' rel='ajax_id_product_"+ data[i]['id_product'] + "' href='{$link->getPageLink('cart')|escape:'html'}?qty=1&amp;id_product="+ data[i]['id_product'] + "&amp&amp;add' title='Add to cart' data-id-product='"+ data[i]['id_product'] + "'>";
                 newsong+="&nbsp;&nbsp;<span class='price-list'>" + price + "&nbsp;&nbsp;<i class='fa fa-shopping-cart'></i></span></a></li>";
 //                newsong+="<a href='" + song + "'><b>" + title + "</b> - " + title + "<span class='label'>Explicit</span></a><button class='quitar-lista2'>X</button></li>";
-                $("#barra").find(".sm2-playlist-bd").append(newsong);
+                $("#barra").find(".sm2-playlist-wrapper").find(".sm2-playlist-bd").append(newsong);
+
+
            }
            act.addClass("quitar-lista");
            act.removeClass("agregar-lista");
            if($("div#barra").hasClass("hidden"))
            $("div#barra").removeClass("hidden");
-           window.sm2BarPlayers[0].actions.play();
+           //window.sm2BarPlayers[0].actions.play();
            $.ajax({
                url:ruta + "roanjamusicshop/ajax_roanjamusicshop.php",
                data:{action:"setCookie",song:data},
@@ -128,14 +130,16 @@ $(document).ready(function(){
 
 
    function playerMusic(song,title,lugar){
+      var mp3btn="playermp3";
       if($("#" + lugar).hasClass("hidden"))
       $("#" + lugar).removeClass("hidden");
       //someSound.play();
+
       if(lugar=="barra"){
           document.getElementById("playerSound100").href = song;
           document.getElementById("playerSoundTitle").innerHTML = title;
           if($("div#barra2").attr("id")==undefined){
-            window.sm2BarPlayers[0].actions.play();
+            window.sm2BarPlayers[0].actions.play(mp3btn);
           }else{
             window.sm2BarPlayers[1].actions.play();
           }

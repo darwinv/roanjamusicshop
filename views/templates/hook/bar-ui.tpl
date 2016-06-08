@@ -10,7 +10,7 @@
   </div>
   <div class="sm2-inline-element sm2-inline-status">
    <div class="sm2-playlist">
-    <div class="sm2-playlist-target"><ul class="sm2-playlist-bd"><li><b>Title</b> - LA<span class="label">Explicit</span></li></ul></div>
+    <div class="sm2-playlist-target"><ul class="sm2-playlist-bd"><li><b>Title</b> - LA<span class="label"></span></li></ul></div>
    </div>
    <div class="sm2-progress">
     <div class="sm2-row">
@@ -78,10 +78,10 @@
   <div class="sm2-playlist-wrapper">
     <ul class="sm2-playlist-bd">
      <!-- item with "download" link -->
-     <li class="selected">
+     <li class="selected hidden">
       <div class="sm2-row">
        <div class="sm2-col sm2-wide">
-        <a id="playerSound100" href=""><b id="playerSoundTitle"></b><span class="label ">Explicit</span></a>
+        <a id="playerSound100" href=""><b id="playerSoundTitle"></b></a>
        </div>
         <!--
        <div class="sm2-col">
