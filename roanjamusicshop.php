@@ -316,18 +316,18 @@ class RoanjaMusicShop extends Module
         }
 
 	}
-	
+
 	public function GetSoundsOfProduct()
 	{
 		$id_shop = $this->context->shop->id;
 		$id_lang = $this->context->language->id;
 
-		 $associated_mp3_sql = 'SELECT ml.*, b.* , c.reduction, c.reduction_type FROM `' 
-			. _DB_PREFIX_ . 'rj_music_lang` AS ml INNER JOIN `' 
-			. _DB_PREFIX_ . 'product` AS b ON ml.linked_digital_id != "" AND ml.id_lang='. $id_lang . '  AND ml.id_product = ' 
-			. (int)Tools::getValue('id_product') . ' AND b.id_product = ml.linked_digital_id LEFT JOIN `' 
-			. _DB_PREFIX_ . 'specific_price` AS c ON c.id_product = b.id_product left Join ps_rj_music AS m ON m.id_music = ml.id_music AND m.active = 1 left Join ps_rj_music_shop AS ms ON ms.id_music = ml.id_music AND ms.id_shop = '. $id_shop ;  
- 
+		 $associated_mp3_sql = 'SELECT ml.*, b.* , c.reduction, c.reduction_type FROM `'
+			. _DB_PREFIX_ . 'rj_music_lang` AS ml INNER JOIN `'
+			. _DB_PREFIX_ . 'product` AS b ON ml.linked_digital_id != "" AND ml.id_lang='. $id_lang . '  AND ml.id_product = '
+			. (int)Tools::getValue('id_product') . ' AND b.id_product = ml.linked_digital_id LEFT JOIN `'
+			. _DB_PREFIX_ . 'specific_price` AS c ON c.id_product = b.id_product left Join ps_rj_music AS m ON m.id_music = ml.id_music AND m.active = 1 left Join ps_rj_music_shop AS ms ON ms.id_music = ml.id_music AND ms.id_shop = '. $id_shop ;
+
 		return Db::getInstance()->ExecuteS($associated_mp3_sql);
 	}
 	public function hookdisplayRightColumnProduct()
@@ -341,9 +341,9 @@ class RoanjaMusicShop extends Module
 					'associated_mp3' => $associated_mp3,
 				));
 				$this->show_footer_bar=false;
-	            return $this->display(__FILE__, 'views/templates/front/column.tpl');       		
+	            return $this->display(__FILE__, 'views/templates/front/column.tpl');
        		}
-		 
+
 		}
 	}
 	public function hookDisplayProductTabContent()

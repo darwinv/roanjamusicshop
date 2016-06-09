@@ -27,7 +27,7 @@ include_once('../../config/config.inc.php');
 include_once('../../init.php');
 include_once('roanjamusicshop.php');
 
-$home_music = new RoanjaMusic();
+$home_music = new RoanjaMusicShop();
 $musics = array();
 
 //if (!Tools::isSubmit('secure_key') || Tools::getValue('secure_key') != $home_music->secure_key || !Tools::getValue('action'))
@@ -46,15 +46,15 @@ if(Tools::getValue("action") == "setUrlYoutube"){
                       "url_music"=>$url_music,
                       "id_lang"=>$id_lang,
                       "id_employer"=>$id_employe,
-                      "status_url"=>1,        
+                      "status_url"=>1,
                      );
         $res=Db::getInstance()->insert($table,$insert);
     }else{
         $insert=array("url_music"=>$url_music,
                       "id_lang"=>$id_lang,
                       "id_employer"=>$id_employe,
-                      "status_url"=>1,        
-                     );        
+                      "status_url"=>1,
+                     );
         $res=Db::getInstance()->update($table, $insert,"id_product=" . (int)$id_product);
     }
 }
@@ -76,17 +76,17 @@ if(Tools::getValue('action')=='getSongs'){
     $id_shop=Configuration::get('PS_SHOP_ENABLE');
     $sql_songs="select a.price,b.* from `" . _DB_PREFIX_ . "product` as a,`" . _DB_PREFIX_ . "rj_music_lang` as b,`" . _DB_PREFIX_ . "rj_music_shop` as c
     where (`linked_digital_id`=" . (int)$id . " or b.id_product=" .(int)$id . ") and a.id_product=b.id_product
-    and id_lang=" . $id_lang . " AND b.id_music=c.id_music and c.id_shop=" . (int)$id_shop;    
+    and id_lang=" . $id_lang . " AND b.id_music=c.id_music and c.id_shop=" . (int)$id_shop;
     $res=Db::getInstance()->executeS($sql_songs);
     echo json_encode($res);
 }
 if(Tools::getValue('action')=='setCookie'){
     if(!isset($_COOKIE['lista'])){
-        $i=0;        
+        $i=0;
         $lista=array();
     }else{
         $lista=unserialize($_COOKIE['lista']);
-        $i=count($lista);        
+        $i=count($lista);
     }
     $res=Tools::getValue('song');
     foreach($res as $r=>$valor){
@@ -121,7 +121,7 @@ if(Tools::getValue('action')=='removeSongs'){
 if(Tools::getValue('action')=='removeSong'){
     $id=(int)Tools::getValue('id');
     $lista=unserialize($_COOKIE['lista']);
-    $listaId=array_column($lista,"id_music");
+    $listaId=$home_music->array_columns($lista,"id_music");
     for($i=0;$i<count($listaId);$i++){
         if($listaId[$i]==$id){
             unset($lista[$i]);
