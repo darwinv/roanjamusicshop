@@ -147,12 +147,14 @@
       // given a link, update the "now playing" UI.
 
       // if this is an <li> with an inner link, grab and use the text from that.
-      var links = item.getElementsByTagName('a');
+    //var links = item.getElementsByTagName('a');
+      var links = item.getElementsByClassName('list-titlesound');
 
       if (links.length) {
         item = links[0];
       }
 
+      
       // remove any failed character sequence, also
       dom.playlistTarget.innerHTML = '<ul class="sm2-playlist-bd"><li>' + item.innerHTML.replace(extras.loadFailedCharacter, '') + '</li></ul>';
 
@@ -336,7 +338,7 @@
       return sound;
 
     }
-    function setYoutube(youtube_emb) { console.log(youtube_emb);
+    function setYoutube(youtube_emb) {
       if (youtube_emb === undefined || youtube_emb=='' || youtube_emb === null) {
         $('#barra').find('.fancybox.youtube').attr("href",'').addClass('youtubeDisable').removeClass('youtubeActive roanjayt');      
       }else{

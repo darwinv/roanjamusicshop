@@ -17,7 +17,7 @@ $(document).ready(function(){
                 var precio=data[i]['price'];
                 var price = parseFloat(precio).toFixed(2);
                 var newsong="<li class='" + data[i]['id_product'] + " item-list' data-id='" + data[i]['id_music'] + "'>";
-                newsong+="<a href='" + song + "' class='dat-list' data-youtube='" + data[i]['url_youtube'] + "'><b>" + title + "</b> -" + data[i]['genero'] + "<br>"+ data[i]['author'] + " </a>";
+                newsong+="<a href='" + song + "' class='dat-list' data-youtube='" + data[i]['url_youtube'] + "'><span class='list-titlesound'><b>" + title + "</b></span> -" + data[i]['genero'] + "<br>"+ data[i]['author'] + " </a>";
                 newsong+="<a class='quitar-lista2'><div class='ico-x'></div></a>";
                 newsong+="<a class='exclusive ajax_add_to_cart_button cart-list-ico' rel='ajax_id_product_"+ data[i]['id_product'] + "' href='{$link->getPageLink('cart')|escape:'html'}?qty=1&amp;id_product="+ data[i]['id_product'] + "&amp&amp;add' title='Add to cart' data-id-product='"+ data[i]['id_product'] + "'>";
                 newsong+="&nbsp;&nbsp;<span class='price-list'>" + price + "&nbsp;&nbsp;</span><div class='ico-cart'></div></a></li>";
@@ -145,9 +145,10 @@ $(document).ready(function(){
       $("#" + lugar).removeClass("hidden");
       //someSound.play();
 
-      if(lugar=="barra"){
+      if(lugar=="barra"){ //
           document.getElementById("playerSound100").href = song;
-          document.getElementById("playerSoundTitle").innerHTML = title;
+          $(".sm2-playlist-target").find("li:first-child").html('<b>'+title+'</b>');
+          //document.getElementById("playerSoundTitle").innerHTML = title;
           if($("div#barra2").attr("id")==undefined){
             window.sm2BarPlayers[0].actions.play(mp3btn);
           }else{
