@@ -95,6 +95,8 @@
           {foreach $lista as $lis=>$valor}
             <li class="{$valor.id} item-list" data-id="{$valor.id_music}">
               <a href="{$modules_dir}roanjamusicshop/mp3/{$valor.name}" class="dat-list" data-youtube="{if !empty($valor.youtube)}{$valor.youtube}{/if}">
+     
+
               <p class="p-list"><b>{$valor.title}</b>&nbsp;&nbsp;-&nbsp;&nbsp;<span>{$valor.genero}</span><br><span class="list-author">{$valor.author}</span></p>
               </a>
               <a class="quitar-lista2"><div class="ico-x"></div></span></a>

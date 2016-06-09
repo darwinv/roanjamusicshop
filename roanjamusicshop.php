@@ -302,6 +302,13 @@ class RoanjaMusicShop extends Module
 
 	public function hookDisplayFooter()
     {
+//$id_image = Product::getCover((int)Tools::getValue('id_product'));
+//if (sizeof($id_image) > 0) {
+//	    $image = new Image($id_image['id_image']);
+//	    // get image full URL
+//    $image_url = _PS_BASE_URL_._THEME_PROD_DIR_.$image->getExistingImgPath().".jpg";
+//}
+
         if(isset($_COOKIE['lista'])){
             $lista=unserialize($_COOKIE['lista']);
             $oculto="";
@@ -311,7 +318,7 @@ class RoanjaMusicShop extends Module
         }
 
         if($this->show_footer_bar){
-        	$this->context->smarty->assign(array('lista' => $lista,'oculto' => $oculto,));
+        	$this->context->smarty->assign(array('lista' => $lista,'oculto' => $oculto,'image_url'=>$image_url));
 			return $this->display(__FILE__, 'bar-ui.tpl');
         }
 
