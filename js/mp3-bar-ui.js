@@ -336,12 +336,12 @@
       return sound;
 
     }
-    function setYoutube(youtube_emb) {
+    function setYoutube(youtube_emb) { console.log(youtube_emb);
       if (youtube_emb === undefined || youtube_emb=='' || youtube_emb === null) {
-        $('#barra').find('.fancybox.youtube').attr("href",'').addClass('youtubeDisable').removeClass('youtubeActive');      
+        $('#barra').find('.fancybox.youtube').attr("href",'').addClass('youtubeDisable').removeClass('youtubeActive roanjayt');      
       }else{
         var youtube='https://www.youtube.com/embed/'+youtube_emb+'?autoplay=1';
-        $('#barra').find('.fancybox.youtube').attr("href",youtube).removeClass('youtubeDisable').addClass('youtubeActive');
+        $('#barra').find('.fancybox.youtube').attr("href",youtube).removeClass('youtubeDisable').addClass('youtubeActive roanjayt');
       }
     }
     function playLink(link) {
