@@ -160,7 +160,11 @@
       if (dom.playlistTarget.getElementsByTagName('li')[0].scrollWidth > dom.playlistTarget.offsetWidth) {
         // this item can use <marquee>, in fact.
         dom.playlistTarget.innerHTML = '<ul class="sm2-playlist-bd"><li><marquee>' + item.innerHTML + '</marquee></li></ul>';
+        
+        
       }
+
+      
 
     }
 
