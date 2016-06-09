@@ -19,7 +19,7 @@ $(document).ready(function(){
                 var newsong="<li class='" + data[i]['id_product'] + " item-list' data-id='" + data[i]['id_music'] + "'>";
                 newsong+="<a href='" + song + "' class='dat-list'><b>" + title + "</b> -" + data[i]['genero'] + "<br>"+ data[i]['author'] + " </a>";
                 newsong+="<a class='quitar-lista2'><div class='ico-x'></div></a>";
-                newsong+="<a class='exclusive ajax_add_to_cart_button' rel='ajax_id_product_"+ data[i]['id_product'] + "' href='{$link->getPageLink('cart')|escape:'html'}?qty=1&amp;id_product="+ data[i]['id_product'] + "&amp&amp;add' title='Add to cart' data-id-product='"+ data[i]['id_product'] + "'>";
+                newsong+="<a class='exclusive ajax_add_to_cart_button cart-list-ico' rel='ajax_id_product_"+ data[i]['id_product'] + "' href='{$link->getPageLink('cart')|escape:'html'}?qty=1&amp;id_product="+ data[i]['id_product'] + "&amp&amp;add' title='Add to cart' data-id-product='"+ data[i]['id_product'] + "'>";
                 newsong+="&nbsp;&nbsp;<span class='price-list'>" + price + "&nbsp;&nbsp;</span><div class='ico-cart'></div></a></li>";
 //                newsong+="<a href='" + song + "'><b>" + title + "</b> - " + title + "<span class='label'>Explicit</span></a><button class='quitar-lista2'>X</button></li>";
                 $("#barra").find(".sm2-playlist-wrapper").find(".sm2-playlist-bd").append(newsong);
