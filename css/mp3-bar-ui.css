@@ -1051,6 +1051,7 @@ li.item-list{
 }
 i.fa.fa-remove {
     font-size: 18px;
+    cursor: pointer;
 }
 span.price-list {
     font-size: 15px !important;
