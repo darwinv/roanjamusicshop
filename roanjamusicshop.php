@@ -300,8 +300,11 @@ class RoanjaMusicShop extends Module
             $this->context->controller->addJS($this->_path.'js/funciones.js');
 	}
 
-	public function hookDisplayFooter()
+	public function hookDisplayFooter($params)
     {
+
+    	
+    	
         if(isset($_COOKIE['lista'])){
             $lista=unserialize($_COOKIE['lista']);
             $oculto="";
@@ -311,7 +314,10 @@ class RoanjaMusicShop extends Module
         }
 
         if($this->show_footer_bar){
-        	$this->context->smarty->assign(array('lista' => $lista,'oculto' => $oculto,));
+        	$this->context->smarty->assign(array('lista' => $lista,
+        										'oculto' => $oculto,
+        										'id_image'=>$id_image,
+        										'product'=>$id_product));
 			return $this->display(__FILE__, 'bar-ui.tpl');
         }
 
