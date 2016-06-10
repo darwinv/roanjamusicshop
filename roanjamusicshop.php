@@ -61,9 +61,9 @@ class RoanjaMusicShop extends Module
 			$this->registerHook('ActionProductDelete') &&
 			$this->registerHook('displayAdminProductsExtra') &&
 			$this->registerHook('displayRightColumnProduct') &&
-			$this->registerHook('displayProductListReviews') &&
 			$this->registerHook('displayProductTabContent') &&
 			$this->registerHook('actionProductUpdate') &&
+			$this->registerHook('displayProductListReviews')&&
 			$this->registerHook('displayFooter') &&
 			$this->registerHook('displayHeader')
 			)
@@ -98,7 +98,7 @@ class RoanjaMusicShop extends Module
 				$this->installSamples();
 
 			// Disable on mobiles and tablets
-			$this->disableDevice(Context::DEVICE_MOBILE);
+		//	$this->disableDevice(Context::DEVICE_MOBILE);
 
 			return (bool)$res;
 		}
@@ -372,50 +372,52 @@ class RoanjaMusicShop extends Module
 				return $result;
 		}
 
-	public function hookDisplayProductListReviews($params)
-	{
-		$id_product = (int)$params['product']['id_product'];
-		$this->context = Context::getContext();
-		$id_shop = $this->context->shop->id;
-		$id_lang = $this->context->language->id;
 
-        $id_sql='SELECT a.* from `' . _DB_PREFIX_ . 'rj_music_lang` as a,`' . _DB_PREFIX_ . 'rj_music_shop` as b where linked_digital_id=' . (int)$id_product
-        . ' or (linked_digital_id!="" and id_product=' . (int)$id_product . ') AND id_lang=' . (int)$id_lang
-        . ' AND a.id_music=b.id_music and b.id_shop=' . (int)$id_shop . ' limit 1';
-        $item_mp3=Db::getInstance()->ExecuteS($id_sql);
 
-             $this->product = new Product($id_product, false,$this->context->language->id);
-                $precioconv=Tools::convertPrice($this->product->price, $this->context->currency);
-                $arrdata["price"]=number_format($precioconv, 2, ",", "");
-                $arrdata['sign']=$this->context->currency->sign;
+public function hookDisplayProductListReviews($params){
+	$id_product = (int)$params['product']['id_product'];
+	$this->context = Context::getContext();
+	$id_shop = $this->context->shop->id;
+	$id_lang = $this->context->language->id;
 
-        if(!empty($item_mp3)){
+			$id_sql='SELECT a.* from `' . _DB_PREFIX_ . 'rj_music_lang` as a,`' . _DB_PREFIX_ . 'rj_music_shop` as b where linked_digital_id=' . (int)$id_product
+			. ' or (linked_digital_id!="" and id_product=' . (int)$id_product . ') AND id_lang=' . (int)$id_lang
+			. ' AND a.id_music=b.id_music and b.id_shop=' . (int)$id_shop . ' limit 1';
+			$item_mp3=Db::getInstance()->ExecuteS($id_sql);
 
-            if(isset($_COOKIE['lista'])){
-               $lista=unserialize($_COOKIE['lista']);
-               $lista=$this->array_columns($lista,"id");
-	           if(in_array($id_product,$lista)){
-	  				$clase="quitar-lista";
-               }else{
-			   		$clase="agregar-lista";
-               }
-	        }else{
-               $clase="agregar-lista";
-        	}
-            $this->context->smarty->assign(array(
-            	//'item_mp3' => $item_mp3,
+					 $this->product = new Product($id_product, false,$this->context->language->id);
+							$precioconv=Tools::convertPrice($this->product->price, $this->context->currency);
+							$arrdata["price"]=number_format($precioconv, 2, ",", "");
+							$arrdata['sign']=$this->context->currency->sign;
 
-                       'id_product' => $id_product,
-                        'mp3_name' => $item_mp3[0]["mp3_name"],
-                        'mp3_title' => $item_mp3[0]["mp3_title"],
-						'url_youtube' => $item_mp3[0]["url_youtube"],
-						'precio' => $arrdata["price"].$arrdata['sign'] ,
-                        'clase' => $clase,
+			if(!empty($item_mp3)){
 
-            ));
-            return $this->display(__FILE__, 'mp3_button.tpl');
-        }
-	}
+					if(isset($_COOKIE['lista'])){
+						 $lista=unserialize($_COOKIE['lista']);
+						 $lista=$this->array_columns($lista,"id");
+					 if(in_array($id_product,$lista)){
+					$clase="quitar-lista";
+						 }else{
+					$clase="agregar-lista";
+						 }
+				}else{
+						 $clase="agregar-lista";
+				}
+					$this->context->smarty->assign(array(
+						//'item_mp3' => $item_mp3,
+
+										 'id_product' => $id_product,
+											'mp3_name' => $item_mp3[0]["mp3_name"],
+											'mp3_title' => $item_mp3[0]["mp3_title"],
+					'url_youtube' => $item_mp3[0]["url_youtube"],
+					'precio' => $arrdata["price"].$arrdata['sign'] ,
+											'clase' => $clase,
+
+					));
+					return $this->display(__FILE__, 'mp3_button.tpl');
+			}
+}
+
 
 	public function getCacheId($id_product = null)
 	{
