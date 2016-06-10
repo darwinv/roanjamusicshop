@@ -790,9 +790,21 @@
 .sm2-bar-ui.fixed .bd.sm2-playlist-drawer,
 .sm2-bar-ui.bottom .bd.sm2-playlist-drawer {
  /* show playlist on top */
- bottom: 4em;
- width: 40%;
+ bottom: 4em; 
  right: 0;
+}
+
+@media (min-width: 801px) {
+  .sm2-bar-ui.fixed .bd.sm2-playlist-drawer,
+  .sm2-bar-ui.bottom .bd.sm2-playlist-drawer {
+   width: 40%;
+  }
+}
+@media (max-width: 800px) {
+  .sm2-bar-ui.fixed .bd.sm2-playlist-drawer,
+  .sm2-bar-ui.bottom .bd.sm2-playlist-drawer {
+   width: 100%;
+  }
 }
 
 .sm2-bar-ui .bd.sm2-playlist-drawer {

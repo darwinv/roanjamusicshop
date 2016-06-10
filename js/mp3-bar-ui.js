@@ -1103,6 +1103,7 @@
       },
 
       menu: function(ignoreToggle) {
+        
 
         var isOpen;
 

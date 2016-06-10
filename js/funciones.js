@@ -1,6 +1,6 @@
 var someSound;
 $(document).ready(function(){
-   $(document).on("click",".agregar-lista",function(){
+   $(document).on("click",".agregar-lista",function(){ dom.playlistContainer.style.height = '222px';
       var actual=$(this).parent().find("a").first();
       var act=$(this);
       var id=actual.data("id");
@@ -76,6 +76,12 @@ $(document).ready(function(){
    });
 
    $(document).on("click",".sm2_button",function(e){
+
+
+
+
+
+
       e.preventDefault();
       var actual=$(this);
       if(actual.data("place")!=undefined && $("section#columns").attr("id")==undefined){
