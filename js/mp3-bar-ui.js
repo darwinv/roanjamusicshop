@@ -151,13 +151,13 @@
 
 
       var links = item.getElementsByClassName('list-titlesound');
-       
+
       if (links.length) {
         item = links[0];
       }
 
       dom.playlistTarget.innerHTML = '<ul class="sm2-playlist-bd"><li>' + item.innerHTML.replace(extras.loadFailedCharacter, '') + '</li></ul>';
-      
+
       if (dom.playlistTarget.getElementsByTagName('li')[0].scrollWidth > dom.playlistTarget.offsetWidth) {
         // this item can use <marquee>, in fact.
         dom.playlistTarget.innerHTML = '<ul class="sm2-playlist-bd"><li><marquee>' + item.innerHTML + '</marquee></li></ul>';
@@ -978,7 +978,6 @@
 
         // DRY things a bit
         e = offsetOrEvent;
-
         if (e && e.target) {
 
           target = e.target || e.srcElement;
@@ -986,10 +985,11 @@
           href = target.href;
 
         }
-
+//console.log(dom.playlist.getElementsByTagName("a")[0]);
         // haaaack - if null due to no event, OR '#' due to play/pause link, get first link from playlist
         if (!href || href.indexOf('#') !== -1) {
-          href = dom.playlist.getElementsByTagName('a')[0].href;
+        //  href = dom.playlist.getElementsByTagName('a')[0].href;
+       href = dom.playlist.getElementsByClassName('list-titlesound')[0].href;
         }
 
           if(offsetOrEvent=='playermp3'){
