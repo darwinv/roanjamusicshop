@@ -37,7 +37,6 @@ class RoanjaMusicShop extends Module
 	protected $position = 1;
     protected $timeCookie = 2592000;
 	public $_html = '';
-	public $show_footer_bar = true;
 	public function __construct()
 	{
 		$this->name = 'roanjamusicshop';
@@ -313,14 +312,11 @@ class RoanjaMusicShop extends Module
             $lista=array();
             $oculto="hidden";
         }
-
-        if($this->show_footer_bar){
-        	$this->context->smarty->assign(array('lista' => $lista,
-        										'oculto' => $oculto,
-        										'id_image'=>$id_image,
-        										'product'=>$id_product));
-			return $this->display(__FILE__, 'bar-ui.tpl');
-        }
+        
+    	$this->context->smarty->assign(array('lista' => $lista,
+    										'oculto' => $oculto));
+		return $this->display(__FILE__, 'bar-ui.tpl');
+    
 
 	}
 
@@ -347,7 +343,6 @@ class RoanjaMusicShop extends Module
  				$this->context->smarty->assign(array(
 					'associated_mp3' => $associated_mp3,
 				));
-				$this->show_footer_bar=false;
 	            return $this->display(__FILE__, 'views/templates/front/column.tpl');
        		}
 
@@ -363,7 +358,6 @@ class RoanjaMusicShop extends Module
  				$this->context->smarty->assign(array(
 					'associated_mp3' => $associated_mp3,
 				));
-				$this->show_footer_bar=false;
 	            return $this->display(__FILE__, 'views/templates/front/product_tab_content.tpl');
        		}
 

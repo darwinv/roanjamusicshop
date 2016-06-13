@@ -148,16 +148,18 @@
 
       // if this is an <li> with an inner link, grab and use the text from that.
     //var links = item.getElementsByTagName('a');
-      var links = item.getElementsByClassName('list-titlesound');
 
+
+      var links = item.getElementsByClassName('list-titlesound');
+       
       if (links.length) {
         item = links[0];
       }
 
       
-      // remove any failed character sequence, also
+      // remove any failed character sequence, also      
       dom.playlistTarget.innerHTML = '<ul class="sm2-playlist-bd"><li>' + item.innerHTML.replace(extras.loadFailedCharacter, '') + '</li></ul>';
-
+      
       if (dom.playlistTarget.getElementsByTagName('li')[0].scrollWidth > dom.playlistTarget.offsetWidth) {
         // this item can use <marquee>, in fact.
         dom.playlistTarget.innerHTML = '<ul class="sm2-playlist-bd"><li><marquee>' + item.innerHTML + '</marquee></li></ul>';

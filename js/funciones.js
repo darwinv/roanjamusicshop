@@ -1,6 +1,6 @@
 var someSound;
 $(document).ready(function(){
-   $(document).on("click",".agregar-lista",function(){ dom.playlistContainer.style.height = '222px';
+   $(document).on("click",".agregar-lista",function(){
       var actual=$(this).parent().find("a").first();
       var act=$(this);
       var id=actual.data("id");
@@ -35,7 +35,7 @@ $(document).ready(function(){
                type:"POST",
                dataType:"html",
                success:function(data){
-                   console.log(data);
+                   
                }
            });
           }
@@ -76,24 +76,13 @@ $(document).ready(function(){
    });
 
    $(document).on("click",".sm2_button",function(e){
-
-
-
-
-
-
       e.preventDefault();
       var actual=$(this);
-      if(actual.data("place")!=undefined && $("section#columns").attr("id")==undefined){
-          var lugar="barra2";
-      }else{
-          var lugar="barra";
-      }
+      var lugar="barra";      
 
       if(!actual.hasClass("sm2_playing")){
           var song=actual.data("href");
-          var title=actual.attr("title");
-          
+          var title=actual.attr("title");        
 
           setYoutube(actual.data("youtube"));
 
@@ -103,16 +92,10 @@ $(document).ready(function(){
           
       }else{
           actual.removeClass("sm2_playing");
-          //soundManager.stopAll();
-          if(lugar=="barra2")
-            $("div#barra2").addClass("hidden");
-          if(lugar=="barra"){
-              document.getElementById("playerSound100").href="";
-              document.getElementById("playerSoundTitle").innerHTML = "";
-          }else{
-              document.getElementById("playerSound100-2").href="";
-              document.getElementById("playerSoundTitle-2").innerHTML = "";
-          }
+          //soundManager.stopAll();          
+          document.getElementById("playerSound100").href="";
+          document.getElementById("playerSoundTitle").innerHTML = "";
+         
       }
    });
 
@@ -154,12 +137,9 @@ $(document).ready(function(){
       if(lugar=="barra"){ //
           document.getElementById("playerSound100").href = song;
           $(".sm2-playlist-target").find("li:first-child").html('<b>'+title+'</b>');
-          //document.getElementById("playerSoundTitle").innerHTML = title;
-          if($("div#barra2").attr("id")==undefined){
-            window.sm2BarPlayers[0].actions.play(mp3btn);
-          }else{
-            window.sm2BarPlayers[1].actions.play();
-          }
+          //document.getElementById("playerSoundTitle").innerHTML = title;          
+          window.sm2BarPlayers[0].actions.play(mp3btn);
+          
       }else{
           document.getElementById("playerSound100-2").href = song;
           document.getElementById("playerSoundTitle-2").innerHTML = title;
