@@ -1,4 +1,4 @@
-﻿/**
+/**
  * SoundManager 2: "Bar UI" player - CSS
  * Copyright (c) 2014, Scott Schiller. All rights reserved.
  * http://www.schillmania.com/projects/soundmanager2/
@@ -791,8 +791,20 @@
 .sm2-bar-ui.bottom .bd.sm2-playlist-drawer {
  /* show playlist on top */
  bottom: 4em;
- width: 40%;
  right: 0;
+}
+
+@media (min-width: 801px) {
+  .sm2-bar-ui.fixed .bd.sm2-playlist-drawer,
+  .sm2-bar-ui.bottom .bd.sm2-playlist-drawer {
+   width: 40%;
+  }
+}
+@media (max-width: 800px) {
+  .sm2-bar-ui.fixed .bd.sm2-playlist-drawer,
+  .sm2-bar-ui.bottom .bd.sm2-playlist-drawer {
+   width: 100%;
+  }
 }
 
 .sm2-bar-ui .bd.sm2-playlist-drawer {
@@ -1054,7 +1066,7 @@ span.price-list {
 }
 .btn-rjm.ico-yt:hover {
     background-image: url(../image/icomoon/entypo-25px-000000/PNG/play.png);
-    background-image: none, url(../image/icomoon/entypo-25px-000000/SVG/play.svg);   
+    background-image: none, url(../image/icomoon/entypo-25px-000000/SVG/play.svg);
     background-size: 68.5%;
     background-position: 34% 53%;
 }
@@ -1066,7 +1078,7 @@ span.price-list {
 }
 .btn-rjm.ico-play {
     background-image: url(../image/icomoon/entypo-25px-000000/PNG/play.png);
-    background-image: none, url(../image/icomoon/entypo-25px-000000/SVG/play.svg);   
+    background-image: none, url(../image/icomoon/entypo-25px-000000/SVG/play.svg);
     background-size: 68.5%;
     background-position: 34% 53%;
 }

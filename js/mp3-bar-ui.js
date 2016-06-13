@@ -154,7 +154,7 @@
         item = links[0];
       }
 
-      
+
       // remove any failed character sequence, also
       dom.playlistTarget.innerHTML = '<ul class="sm2-playlist-bd"><li>' + item.innerHTML.replace(extras.loadFailedCharacter, '') + '</li></ul>';
 
@@ -340,7 +340,7 @@
     }
     function setYoutube(youtube_emb) {
       if (youtube_emb === undefined || youtube_emb=='' || youtube_emb === null) {
-        $('#barra').find('.fancybox.youtube').attr("href",'').addClass('youtubeDisable').removeClass('youtubeActive roanjayt');      
+        $('#barra').find('.fancybox.youtube').attr("href",'').addClass('youtubeDisable').removeClass('youtubeActive roanjayt');
       }else{
         var youtube='https://www.youtube.com/embed/'+youtube_emb+'?autoplay=1';
         $('#barra').find('.fancybox.youtube').attr("href",youtube).removeClass('youtubeDisable').addClass('youtubeActive roanjayt');
@@ -748,10 +748,10 @@
           handled;
 
       evt = (e || window.event);
-      
+
       target = evt.target || evt.srcElement;
 
-      
+
       if (target && target.nodeName) {
 
         targetNodeName = target.nodeName.toLowerCase();
@@ -1043,7 +1043,7 @@
       },
 
       next: function(/* e */) {
-   
+
         var item, lastIndex;
 
         // special case: clear "play next" timeout, if one exists.
@@ -1064,7 +1064,7 @@
       },
 
       prev: function(/* e */) {
- 
+
         var item, lastIndex;
 
         lastIndex = playlistController.data.selectedIndex;
@@ -1103,6 +1103,7 @@
       },
 
       menu: function(ignoreToggle) {
+
 
         var isOpen;
 

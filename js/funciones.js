@@ -1,6 +1,6 @@
 var someSound;
 $(document).ready(function(){
-   $(document).on("click",".agregar-lista",function(){
+   $(document).on("click",".agregar-lista",function(){ dom.playlistContainer.style.height = '222px';
       var actual=$(this).parent().find("a").first();
       var act=$(this);
       var id=actual.data("id");
@@ -76,6 +76,12 @@ $(document).ready(function(){
    });
 
    $(document).on("click",".sm2_button",function(e){
+
+
+
+
+
+
       e.preventDefault();
       var actual=$(this);
       if(actual.data("place")!=undefined && $("section#columns").attr("id")==undefined){
@@ -87,14 +93,14 @@ $(document).ready(function(){
       if(!actual.hasClass("sm2_playing")){
           var song=actual.data("href");
           var title=actual.attr("title");
-          
+
 
           setYoutube(actual.data("youtube"));
 
 
           $("a.sm2_playing").removeClass("sm2_playing");
           playerMusic(song,title,lugar);
-          
+
       }else{
           actual.removeClass("sm2_playing");
           //soundManager.stopAll();
@@ -137,7 +143,7 @@ $(document).ready(function(){
 
 
 	});
- 
+
 
    function playerMusic(song,title,lugar){
       var mp3btn="playermp3";
@@ -163,7 +169,7 @@ $(document).ready(function(){
 
    function setYoutube(youtube_emb) {
       if (youtube_emb === undefined || youtube_emb=='' || youtube_emb === null) {
-        $('#barra').find('.fancybox.youtube').attr("href",'').addClass('youtubeDisable').removeClass('youtubeActive roanjayt');      
+        $('#barra').find('.fancybox.youtube').attr("href",'').addClass('youtubeDisable').removeClass('youtubeActive roanjayt');
       }else{
         var youtube='https://www.youtube.com/embed/'+youtube_emb+'?autoplay=1';
         $('#barra').find('.fancybox.youtube').attr("href",youtube).removeClass('youtubeDisable').addClass('youtubeActive roanjayt');
