@@ -76,12 +76,6 @@ $(document).ready(function(){
    });
 
    $(document).on("click",".sm2_button",function(e){
-
-
-
-
-
-
       e.preventDefault();
       var actual=$(this);
       if(actual.data("place")!=undefined && $("section#columns").attr("id")==undefined){
@@ -93,11 +87,7 @@ $(document).ready(function(){
       if(!actual.hasClass("sm2_playing")){
           var song=actual.data("href");
           var title=actual.attr("title");
-
-
           setYoutube(actual.data("youtube"));
-
-
           $("a.sm2_playing").removeClass("sm2_playing");
           playerMusic(song,title,lugar);
 
@@ -150,7 +140,6 @@ $(document).ready(function(){
       if($("#" + lugar).hasClass("hidden"))
       $("#" + lugar).removeClass("hidden");
       //someSound.play();
-
       if(lugar=="barra"){ //
           document.getElementById("playerSound100").href = song;
           $(".sm2-playlist-target").find("li:first-child").html('<b>'+title+'</b>');

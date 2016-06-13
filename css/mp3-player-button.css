@@ -103,6 +103,12 @@ div.btn-rjm-special {
     text-align: center;
     background-color: #eeeeee;
 }
+
+div.rj-music + h5.name{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
 .roanjayt .btn-rjm {
     background-color: red;
     color: white;
