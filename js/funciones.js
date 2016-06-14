@@ -23,6 +23,7 @@ $(document).ready(function(){
                 newsong+="&nbsp;&nbsp;<span class='price-list'>" + price + "&nbsp;&nbsp;<i class='fa fa-shopping-cart'></i></span></a></li>";
 //                newsong+="<a href='" + song + "'><b>" + title + "</b> - " + title + "<span class='label'>Explicit</span></a><button class='quitar-lista2'>X</button></li>";
                 $("#barra").find(".sm2-playlist-wrapper").find(".sm2-playlist-bd").append(newsong);
+                 window.sm2BarPlayers[0].actions.menu(true);
            }
            act.addClass("quitar-lista");
            act.removeClass("agregar-lista");
@@ -53,6 +54,7 @@ $(document).ready(function(){
           dataType:"html",
           success:function(data){
               $("#barra").find(".sm2-playlist-bd>." + id).remove();
+              window.sm2BarPlayers[0].dom.playlistContainer.style.height="auto";
           }
       });
       act.addClass("agregar-lista");
@@ -79,6 +81,9 @@ $(document).ready(function(){
       e.preventDefault();
       var actual=$(this);
       var lugar="barra";
+
+     
+
 
       if(!actual.hasClass("sm2_playing")){
           var song=actual.data("href");
