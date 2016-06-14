@@ -335,6 +335,7 @@ class RoanjaMusicShop extends Module
 	}
 	public function hookdisplayRightColumnProduct()
 	{
+		$this->context->controller->addCSS($this->_path.'css/mp3-productDetail.css', 'all');
 		if (Tools::getValue('MUSIC_POSITION', Configuration::get('MUSIC_POSITION')) == 1)
 		{
 			$associated_mp3 = $this->GetSoundsOfProduct();
@@ -365,15 +366,12 @@ class RoanjaMusicShop extends Module
 	}
 
 	public function  array_columns( array $input, $column_key, $index_key = null ) {
+		$result = array();
+		foreach( $input as $k => $v )
+				$result[ $index_key ? $v[ $index_key ] : $k ] = $v[ $column_key ];
 
-				$result = array();
-				foreach( $input as $k => $v )
-						$result[ $index_key ? $v[ $index_key ] : $k ] = $v[ $column_key ];
-
-				return $result;
-		}
-
-
+		return $result;
+	}
 
 	public function hookDisplayProductListReviews($params){
 		$id_product = (int)$params['product']['id_product'];
