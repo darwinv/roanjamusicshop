@@ -1,6 +1,6 @@
 var someSound;
 $(document).ready(function(){
-   $(document).on("click",".agregar-lista",function(){ dom.playlistContainer.style.height = '222px';
+   $(document).on("click",".agregar-lista",function(){
       var actual=$(this).parent().find("a").first();
       var act=$(this);
       var id=actual.data("id");
@@ -23,6 +23,7 @@ $(document).ready(function(){
                 newsong+="&nbsp;&nbsp;<span class='price-list'>" + price + "&nbsp;&nbsp;<i class='fa fa-shopping-cart'></i></span></a></li>";
 //                newsong+="<a href='" + song + "'><b>" + title + "</b> - " + title + "<span class='label'>Explicit</span></a><button class='quitar-lista2'>X</button></li>";
                 $("#barra").find(".sm2-playlist-wrapper").find(".sm2-playlist-bd").append(newsong);
+                 window.sm2BarPlayers[0].actions.menu(true);
            }
            act.addClass("quitar-lista");
            act.removeClass("agregar-lista");
@@ -35,7 +36,7 @@ $(document).ready(function(){
                type:"POST",
                dataType:"html",
                success:function(data){
-                   console.log(data);
+
                }
            });
           }
@@ -53,6 +54,7 @@ $(document).ready(function(){
           dataType:"html",
           success:function(data){
               $("#barra").find(".sm2-playlist-bd>." + id).remove();
+              window.sm2BarPlayers[0].dom.playlistContainer.style.height="auto";
           }
       });
       act.addClass("agregar-lista");
@@ -76,43 +78,26 @@ $(document).ready(function(){
    });
 
    $(document).on("click",".sm2_button",function(e){
-
-
-
-
-
-
       e.preventDefault();
       var actual=$(this);
-      if(actual.data("place")!=undefined && $("section#columns").attr("id")==undefined){
-          var lugar="barra2";
-      }else{
-          var lugar="barra";
-      }
+      var lugar="barra";
+
+     
+
 
       if(!actual.hasClass("sm2_playing")){
           var song=actual.data("href");
           var title=actual.attr("title");
-          
-
           setYoutube(actual.data("youtube"));
-
-
           $("a.sm2_playing").removeClass("sm2_playing");
           playerMusic(song,title,lugar);
-          
+
       }else{
           actual.removeClass("sm2_playing");
           //soundManager.stopAll();
-          if(lugar=="barra2")
-            $("div#barra2").addClass("hidden");
-          if(lugar=="barra"){
-              document.getElementById("playerSound100").href="";
-              document.getElementById("playerSoundTitle").innerHTML = "";
-          }else{
-              document.getElementById("playerSound100-2").href="";
-              document.getElementById("playerSoundTitle-2").innerHTML = "";
-          }
+          document.getElementById("playerSound100").href="";
+          document.getElementById("playerSoundTitle").innerHTML = "";
+
       }
    });
 
@@ -143,23 +128,19 @@ $(document).ready(function(){
 
 
 	});
- 
+
 
    function playerMusic(song,title,lugar){
       var mp3btn="playermp3";
       if($("#" + lugar).hasClass("hidden"))
       $("#" + lugar).removeClass("hidden");
       //someSound.play();
-
       if(lugar=="barra"){ //
           document.getElementById("playerSound100").href = song;
           $(".sm2-playlist-target").find("li:first-child").html('<b>'+title+'</b>');
           //document.getElementById("playerSoundTitle").innerHTML = title;
-          if($("div#barra2").attr("id")==undefined){
-            window.sm2BarPlayers[0].actions.play(mp3btn);
-          }else{
-            window.sm2BarPlayers[1].actions.play();
-          }
+          window.sm2BarPlayers[0].actions.play(mp3btn);
+
       }else{
           document.getElementById("playerSound100-2").href = song;
           document.getElementById("playerSoundTitle-2").innerHTML = title;
@@ -169,7 +150,7 @@ $(document).ready(function(){
 
    function setYoutube(youtube_emb) {
       if (youtube_emb === undefined || youtube_emb=='' || youtube_emb === null) {
-        $('#barra').find('.fancybox.youtube').attr("href",'').addClass('youtubeDisable').removeClass('youtubeActive roanjayt');      
+        $('#barra').find('.fancybox.youtube').attr("href",'').addClass('youtubeDisable').removeClass('youtubeActive roanjayt');
       }else{
         var youtube='https://www.youtube.com/embed/'+youtube_emb+'?autoplay=1';
         $('#barra').find('.fancybox.youtube').attr("href",youtube).removeClass('youtubeDisable').addClass('youtubeActive roanjayt');

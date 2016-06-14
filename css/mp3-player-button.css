@@ -103,6 +103,12 @@ div.btn-rjm-special {
     text-align: center;
     background-color: #eeeeee;
 }
+
+div.rj-music + h5.name{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
 .roanjayt .btn-rjm {
     background-color: red;
     color: white;
@@ -145,7 +151,7 @@ div.btn-rjm-special:hover {
     color: white;
     font-weight: bold;
     font-size: 14px;
-    width: 40%;
+    width: 23%;
     cursor: text;
 }
 .sm2_button .btn-rjm {

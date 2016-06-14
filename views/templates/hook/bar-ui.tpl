@@ -81,7 +81,7 @@
      <li class="selected hidden">
       <div class="sm2-row">
        <div class="sm2-col sm2-wide">
-        <a id="playerSound100" href=""><b id="playerSoundTitle"></b></a>
+        <a id="playerSound100" class="list-titlesound" href=""><b id="playerSoundTitle"></b></a>
        </div>
         <!--
        <div class="sm2-col">
@@ -95,7 +95,7 @@
           {foreach $lista as $lis=>$valor}
             <li class="{$valor.id} item-list" data-id="{$valor.id_music}">
               <a href="{$modules_dir}roanjamusicshop/mp3/{$valor.name}" class="dat-list" data-youtube="{if !empty($valor.youtube)}{$valor.youtube}{/if}">
-                 
+
               <p class="p-list"><span class="list-titlesound"><b>{$valor.title}</b></span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>{$valor.genero}</span><br><span class="list-author">{$valor.author}</span></p>
 
               </a>

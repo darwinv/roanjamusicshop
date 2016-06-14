@@ -37,7 +37,6 @@ class RoanjaMusicShop extends Module
 	protected $position = 1;
     protected $timeCookie = 2592000;
 	public $_html = '';
-	public $show_footer_bar = true;
 	public function __construct()
 	{
 		$this->name = 'roanjamusicshop';
@@ -313,14 +312,11 @@ class RoanjaMusicShop extends Module
             $lista=array();
             $oculto="hidden";
         }
-
-        if($this->show_footer_bar){
-        	$this->context->smarty->assign(array('lista' => $lista,
-        										'oculto' => $oculto,
-        										'id_image'=>$id_image,
-        										'product'=>$id_product));
-			return $this->display(__FILE__, 'bar-ui.tpl');
-        }
+        
+    	$this->context->smarty->assign(array('lista' => $lista,
+    										'oculto' => $oculto));
+		return $this->display(__FILE__, 'bar-ui.tpl');
+    
 
 	}
 
@@ -339,6 +335,7 @@ class RoanjaMusicShop extends Module
 	}
 	public function hookdisplayRightColumnProduct()
 	{
+		$this->context->controller->addCSS($this->_path.'css/mp3-productDetail.css', 'all');
 		if (Tools::getValue('MUSIC_POSITION', Configuration::get('MUSIC_POSITION')) == 1)
 		{
 			$associated_mp3 = $this->GetSoundsOfProduct();
@@ -347,7 +344,6 @@ class RoanjaMusicShop extends Module
  				$this->context->smarty->assign(array(
 					'associated_mp3' => $associated_mp3,
 				));
-				$this->show_footer_bar=false;
 	            return $this->display(__FILE__, 'views/templates/front/column.tpl');
        		}
 
@@ -363,7 +359,6 @@ class RoanjaMusicShop extends Module
  				$this->context->smarty->assign(array(
 					'associated_mp3' => $associated_mp3,
 				));
-				$this->show_footer_bar=false;
 	            return $this->display(__FILE__, 'views/templates/front/product_tab_content.tpl');
        		}
 
@@ -371,104 +366,97 @@ class RoanjaMusicShop extends Module
 	}
 
 	public function  array_columns( array $input, $column_key, $index_key = null ) {
+		$result = array();
+		foreach( $input as $k => $v )
+				$result[ $index_key ? $v[ $index_key ] : $k ] = $v[ $column_key ];
 
-				$result = array();
-				foreach( $input as $k => $v )
-						$result[ $index_key ? $v[ $index_key ] : $k ] = $v[ $column_key ];
+		return $result;
+	}
 
-				return $result;
+	public function hookDisplayProductListReviews($params){
+		$id_product = (int)$params['product']['id_product'];
+		$this->context = Context::getContext();
+		$id_shop = $this->context->shop->id;
+		$id_lang = $this->context->language->id;
+
+		$id_sql='SELECT a.* from `' . _DB_PREFIX_ . 'rj_music_lang` as a,`' . _DB_PREFIX_ . 'rj_music_shop` as b where linked_digital_id=' . (int)$id_product
+		. ' or (linked_digital_id!="" and id_product=' . (int)$id_product . ') AND id_lang=' . (int)$id_lang
+		. ' AND a.id_music=b.id_music and b.id_shop=' . (int)$id_shop . ' limit 1';
+		$item_mp3=Db::getInstance()->ExecuteS($id_sql);
+
+		$this->product = new Product($id_product, false,$this->context->language->id);
+		$precioconv=Tools::convertPrice($this->product->price, $this->context->currency);
+		$arrdata["price"]=number_format($precioconv, 2, ",", "");
+		$arrdata['sign']=$this->context->currency->sign;
+
+		if(!empty($item_mp3)){
+			if(isset($_COOKIE['lista'])){
+				$lista=unserialize($_COOKIE['lista']);
+				$lista=$this->array_columns($lista,"id");
+				if(in_array($id_product,$lista)){
+					$clase="quitar-lista";
+				}else{
+					$clase="agregar-lista";
+				}
+			}else{
+				$clase="agregar-lista";
+			}
+			$this->context->smarty->assign(array(
+			 	'id_product' => $id_product,
+				'mp3_name' => $item_mp3[0]["mp3_name"],
+				'mp3_title' => $item_mp3[0]["mp3_title"],
+				'url_youtube' => $item_mp3[0]["url_youtube"],
+				'precio' => $arrdata["price"].$arrdata['sign'] ,
+				'clase' => $clase,
+			));
+			return $this->display(__FILE__, 'mp3_button.tpl');
 		}
+	}
 
+	public function hookDisplayProductSpecial($params){
+		$id_product = (int)$params['product']['id_product'];
+		$this->context = Context::getContext();
+		$id_shop = $this->context->shop->id;
+		$id_lang = $this->context->language->id;
 
+				$id_sql='SELECT a.* from `' . _DB_PREFIX_ . 'rj_music_lang` as a,`' . _DB_PREFIX_ . 'rj_music_shop` as b where linked_digital_id=' . (int)$id_product
+				. ' or (linked_digital_id!="" and id_product=' . (int)$id_product . ') AND id_lang=' . (int)$id_lang
+				. ' AND a.id_music=b.id_music and b.id_shop=' . (int)$id_shop . ' limit 1';
+				$item_mp3=Db::getInstance()->ExecuteS($id_sql);
 
-public function hookDisplayProductListReviews($params){
-	$id_product = (int)$params['product']['id_product'];
-	$this->context = Context::getContext();
-	$id_shop = $this->context->shop->id;
-	$id_lang = $this->context->language->id;
+						 $this->product = new Product($id_product, false,$this->context->language->id);
+								$precioconv=Tools::convertPrice($this->product->price, $this->context->currency);
+								$arrdata["price"]=number_format($precioconv, 2, ",", "");
+								$arrdata['sign']=$this->context->currency->sign;
 
-			$id_sql='SELECT a.* from `' . _DB_PREFIX_ . 'rj_music_lang` as a,`' . _DB_PREFIX_ . 'rj_music_shop` as b where linked_digital_id=' . (int)$id_product
-			. ' or (linked_digital_id!="" and id_product=' . (int)$id_product . ') AND id_lang=' . (int)$id_lang
-			. ' AND a.id_music=b.id_music and b.id_shop=' . (int)$id_shop . ' limit 1';
-			$item_mp3=Db::getInstance()->ExecuteS($id_sql);
+				if(!empty($item_mp3)){
 
-					 $this->product = new Product($id_product, false,$this->context->language->id);
-							$precioconv=Tools::convertPrice($this->product->price, $this->context->currency);
-							$arrdata["price"]=number_format($precioconv, 2, ",", "");
-							$arrdata['sign']=$this->context->currency->sign;
+						if(isset($_COOKIE['lista'])){
+							 $lista=unserialize($_COOKIE['lista']);
+							 $lista=$this->array_columns($lista,"id");
+						 if(in_array($id_product,$lista)){
+						$clase="quitar-lista";
+							 }else{
+						$clase="agregar-lista";
+							 }
+					}else{
+							 $clase="agregar-lista";
+					}
+						$this->context->smarty->assign(array(
+							//'item_mp3' => $item_mp3,
 
-			if(!empty($item_mp3)){
+											 'id_product' => $id_product,
+												'mp3_name' => $item_mp3[0]["mp3_name"],
+												'mp3_title' => $item_mp3[0]["mp3_title"],
+						'url_youtube' => $item_mp3[0]["url_youtube"],
+						'precio' => $arrdata["price"].$arrdata['sign'] ,
+												'clase' => $clase,
 
-					if(isset($_COOKIE['lista'])){
-						 $lista=unserialize($_COOKIE['lista']);
-						 $lista=$this->array_columns($lista,"id");
-					 if(in_array($id_product,$lista)){
-					$clase="quitar-lista";
-						 }else{
-					$clase="agregar-lista";
-						 }
-				}else{
-						 $clase="agregar-lista";
+						));
+						return $this->display(__FILE__, 'mp3_button_special.tpl');
 				}
-					$this->context->smarty->assign(array(
-						//'item_mp3' => $item_mp3,
 
-										 'id_product' => $id_product,
-											'mp3_name' => $item_mp3[0]["mp3_name"],
-											'mp3_title' => $item_mp3[0]["mp3_title"],
-					'url_youtube' => $item_mp3[0]["url_youtube"],
-					'precio' => $arrdata["price"].$arrdata['sign'] ,
-											'clase' => $clase,
-
-					));
-					return $this->display(__FILE__, 'mp3_button.tpl');
-			}
-}
-
-public function hookDisplayProductSpecial($params){
-	$id_product = (int)$params['product']['id_product'];
-	$this->context = Context::getContext();
-	$id_shop = $this->context->shop->id;
-	$id_lang = $this->context->language->id;
-
-			$id_sql='SELECT a.* from `' . _DB_PREFIX_ . 'rj_music_lang` as a,`' . _DB_PREFIX_ . 'rj_music_shop` as b where linked_digital_id=' . (int)$id_product
-			. ' or (linked_digital_id!="" and id_product=' . (int)$id_product . ') AND id_lang=' . (int)$id_lang
-			. ' AND a.id_music=b.id_music and b.id_shop=' . (int)$id_shop . ' limit 1';
-			$item_mp3=Db::getInstance()->ExecuteS($id_sql);
-
-					 $this->product = new Product($id_product, false,$this->context->language->id);
-							$precioconv=Tools::convertPrice($this->product->price, $this->context->currency);
-							$arrdata["price"]=number_format($precioconv, 2, ",", "");
-							$arrdata['sign']=$this->context->currency->sign;
-
-			if(!empty($item_mp3)){
-
-					if(isset($_COOKIE['lista'])){
-						 $lista=unserialize($_COOKIE['lista']);
-						 $lista=$this->array_columns($lista,"id");
-					 if(in_array($id_product,$lista)){
-					$clase="quitar-lista";
-						 }else{
-					$clase="agregar-lista";
-						 }
-				}else{
-						 $clase="agregar-lista";
-				}
-					$this->context->smarty->assign(array(
-						//'item_mp3' => $item_mp3,
-
-										 'id_product' => $id_product,
-											'mp3_name' => $item_mp3[0]["mp3_name"],
-											'mp3_title' => $item_mp3[0]["mp3_title"],
-					'url_youtube' => $item_mp3[0]["url_youtube"],
-					'precio' => $arrdata["price"].$arrdata['sign'] ,
-											'clase' => $clase,
-
-					));
-					return $this->display(__FILE__, 'mp3_button_special.tpl');
-			}
-
-}
+	}
 	public function getCacheId($id_product = null)
 	{
 		return parent::getCacheId().'|'.(int)$id_product;
