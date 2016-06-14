@@ -1103,35 +1103,24 @@
       },
 
       menu: function(ignoreToggle) {
-
-
         var isOpen;
-
         isOpen = utils.css.has(dom.o, css.playlistOpen);
-
         // hackish: reset scrollTop in default first open case. odd, but some browsers have a non-zero scroll offset the first time the playlist opens.
         if (playlistController && !playlistController.data.selectedIndex && !firstOpen) {
           dom.playlist.scrollTop = 0;
           firstOpen = true;
         }
-
         // sniff out booleans from mouse events, as this is referenced directly by event handlers.
         if (typeof ignoreToggle !== 'boolean' || !ignoreToggle) {
-
           if (!isOpen) {
             // explicitly set height:0, so the first closed -> open animation runs properly
             dom.playlistContainer.style.height = '0px';
           }
-
           isOpen = utils.css.toggle(dom.o, css.playlistOpen);
-
         }
-
         // playlist
         dom.playlistContainer.style.height = (isOpen ? dom.playlistContainer.scrollHeight : 0) + 'px';
-
       },
-
       adjustVolume: function(e) {
 
         /**
