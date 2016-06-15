@@ -46,14 +46,14 @@
     <a href="#repeat" title="Repeat playlist" class="sm2-inline-button repeat">∞ repeat</a>
    </div>
   </div>
-  {if !empty($url_youtube)}
+  
       <div class="sm2-inline-element sm2-button-element">
        <div class="sm2-button-bd">
-      <a class="roanjayt fancybox fancybox.iframe youtube youtubeDisable sm2-inline-button" href="https://www.youtube.com/embed/{$url_youtube}" >
+      <a class="roanjayt fancybox fancybox.iframe youtube youtubeDisable sm2-inline-button" >
        </a>
        </div>
       </div>
-  {/if}
+   
   <!-- not implemented -->
   <!--
   <div class="sm2-inline-element sm2-button-element disabled">
@@ -81,7 +81,7 @@
      <li class="selected hidden">
       <div class="sm2-row">
        <div class="sm2-col sm2-wide">
-        <a id="playerSound100" href=""><b id="playerSoundTitle"></b></a>
+        <a id="playerSound100" class="list-titlesound" href=""><b id="playerSoundTitle"></b></a>
        </div>
         <!--
        <div class="sm2-col">
@@ -92,16 +92,15 @@
      <!--<span class="label">{$valor.title|truncate:10}</span></a><button class="quitar-lista2">X</button></li>-->
      </li>
         {if !empty($lista)}
-        
           {foreach $lista as $lis=>$valor}
             <li class="{$valor.id} item-list" data-id="{$valor.id_music}">
               <a href="{$modules_dir}roanjamusicshop/mp3/{$valor.name}" class="dat-list" data-youtube="{if !empty($valor.youtube)}{$valor.youtube}{/if}">
-              {assign var='product' value=$valor.id}
+
+               {assign var='product' value=$valor.id}
                   {assign var='img' value=Product::getCover($lista[$lis].id)}
                   
                   <img  class="img-responsive img-list" itemprop="image" src="{$link->getImageLink($product, $img.id_image, 'small_default')|escape:'html':'UTF-8'}" />
 
-                 
               <p class="p-list"><span class="list-titlesound"><b>{$valor.title}</b></span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>{$valor.genero}</span><br><span class="list-author">{$valor.author}</span></p>
 
               </a>

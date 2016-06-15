@@ -94,17 +94,48 @@ div.btn-rjm {
     text-align: center;
     background-color: #eeeeee;
 }
+div.btn-rjm-special {
+    width: 40%;
+    float: left;
+    height: 100%;
+    padding: 7px;
+    cursor: pointer;
+    text-align: center;
+    background-color: #eeeeee;
+}
+
+div.rj-music + h5.name{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
 .roanjayt .btn-rjm {
     background-color: red;
     color: white;
     border-right: solid 1px red;
-    
+
+}
+.roanjayt .btn-rjm-special {
+    background-color: red;
+    color: white;
+    border-right: solid 1px red;
+
 }
 div.btn-rjm:hover {
     background-color: #ccc;
     color: black;
 }
+
+div.btn-rjm-special:hover {
+    background-color: #ccc;
+    color: black;
+}
+
 .roanjayt .btn-rjm:hover {
+    background-color: red;
+}
+
+.roanjayt .btn-rjm-special:hover {
     background-color: red;
 }
 #pricerjm {
@@ -115,7 +146,18 @@ div.btn-rjm:hover {
     width: 40%;
     cursor: text;
 }
+#pricerjm-special {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    width: 23%;
+    cursor: text;
+}
 .sm2_button .btn-rjm {
+    border-right: #ccc solid 1px;
+}
+.sm2_button .btn-rjm-special {
     border-right: #ccc solid 1px;
 }
 .product-block .Buttons {

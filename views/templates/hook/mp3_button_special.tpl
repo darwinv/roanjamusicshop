@@ -22,22 +22,27 @@
 *  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 *}
-<div class="btn-bar-rjm">
-<a data-id="{$id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$mp3_name}"class="sm2_button" title="Reproducir"><div class="btn-rjm"><i class="fa fa-play" aria-hidden="true"></i></div>
-</a>
+	<div class="rj-music" style="display:inline;">
+<div class="btn-bar-rjm" style="width:30%">
+	<a data-id="{$id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$mp3_name}"class="sm2_button" title="{$mp3_title}" data-youtube="{if !empty($url_youtube)}{$url_youtube}{/if}" >
+		<div class="btn-rjm-special"><i class="fa fa-play" aria-hidden="true"></i></div>
+	</a>
 
-<a class="{$clase}" title="Agregar a lista" ><div class="btn-rjm"><i class="fa fa-list" aria-hidden="true"></i></div>
-</a> 
+	<a class="{$clase}" title="Agregar a lista" >
+		<div class="btn-rjm-special"><i class="fa fa-list" aria-hidden="true"></i></div>
+	</a>
+</div>
 
-{if $id_url}
-<a class="roanjayt fancybox fancybox.iframe"  title="Ver Video" href="https://www.youtube.com/embed/{$id_url}?autoplay=1" ><div class="btn-rjm">
-	<i class="fa fa-play" aria-hidden="true"></i> </div></a>
+<div class="" style="width:40%">
+	{if !empty($url_youtube)}
+	<a class="roanjayt fancybox fancybox.iframe"  title="Ver Video" href="https://www.youtube.com/embed/{$url_youtube}?autoplay=1" >
+		<div class="btn-rjm-special" style="width:30%"> <i class="fa fa-play" aria-hidden="true"></i></div></a>
+	{/if}
 
-{/if}
-
-<a title="Precio" ><div class="btn-rjm" id="pricerjm">2.99</div>
-</a> 
-
+	<a title="Precio" >
+		<div class="btn-rjm-special" id="pricerjm-special" style="width:30%">{$precio}</div>
+	</a>
+</div>
 </div>
 <script type="text/javascript">
 $(document).ready(function() {

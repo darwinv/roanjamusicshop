@@ -148,14 +148,14 @@
 
       // if this is an <li> with an inner link, grab and use the text from that.
     //var links = item.getElementsByTagName('a');
+
+
       var links = item.getElementsByClassName('list-titlesound');
 
       if (links.length) {
         item = links[0];
       }
 
-      
-      // remove any failed character sequence, also
       dom.playlistTarget.innerHTML = '<ul class="sm2-playlist-bd"><li>' + item.innerHTML.replace(extras.loadFailedCharacter, '') + '</li></ul>';
 
       if (dom.playlistTarget.getElementsByTagName('li')[0].scrollWidth > dom.playlistTarget.offsetWidth) {
@@ -340,7 +340,7 @@
     }
     function setYoutube(youtube_emb) {
       if (youtube_emb === undefined || youtube_emb=='' || youtube_emb === null) {
-        $('#barra').find('.fancybox.youtube').attr("href",'').addClass('youtubeDisable').removeClass('youtubeActive roanjayt');      
+        $('#barra').find('.fancybox.youtube').attr("href",'').addClass('youtubeDisable').removeClass('youtubeActive roanjayt');
       }else{
         var youtube='https://www.youtube.com/embed/'+youtube_emb+'?autoplay=1';
         $('#barra').find('.fancybox.youtube').attr("href",youtube).removeClass('youtubeDisable').addClass('youtubeActive roanjayt');
@@ -748,10 +748,10 @@
           handled;
 
       evt = (e || window.event);
-      
+
       target = evt.target || evt.srcElement;
 
-      
+
       if (target && target.nodeName) {
 
         targetNodeName = target.nodeName.toLowerCase();
@@ -978,7 +978,6 @@
 
         // DRY things a bit
         e = offsetOrEvent;
-
         if (e && e.target) {
 
           target = e.target || e.srcElement;
@@ -986,10 +985,11 @@
           href = target.href;
 
         }
-
+//console.log(dom.playlist.getElementsByTagName("a")[0]);
         // haaaack - if null due to no event, OR '#' due to play/pause link, get first link from playlist
         if (!href || href.indexOf('#') !== -1) {
-          href = dom.playlist.getElementsByTagName('a')[0].href;
+        //  href = dom.playlist.getElementsByTagName('a')[0].href;
+       href = dom.playlist.getElementsByClassName('list-titlesound')[0].href;
         }
 
           if(offsetOrEvent=='playermp3'){
@@ -1043,7 +1043,7 @@
       },
 
       next: function(/* e */) {
-   
+
         var item, lastIndex;
 
         // special case: clear "play next" timeout, if one exists.
@@ -1064,7 +1064,7 @@
       },
 
       prev: function(/* e */) {
- 
+
         var item, lastIndex;
 
         lastIndex = playlistController.data.selectedIndex;
@@ -1103,34 +1103,24 @@
       },
 
       menu: function(ignoreToggle) {
-
         var isOpen;
-
         isOpen = utils.css.has(dom.o, css.playlistOpen);
-
         // hackish: reset scrollTop in default first open case. odd, but some browsers have a non-zero scroll offset the first time the playlist opens.
         if (playlistController && !playlistController.data.selectedIndex && !firstOpen) {
           dom.playlist.scrollTop = 0;
           firstOpen = true;
         }
-
         // sniff out booleans from mouse events, as this is referenced directly by event handlers.
         if (typeof ignoreToggle !== 'boolean' || !ignoreToggle) {
-
           if (!isOpen) {
             // explicitly set height:0, so the first closed -> open animation runs properly
             dom.playlistContainer.style.height = '0px';
           }
-
           isOpen = utils.css.toggle(dom.o, css.playlistOpen);
-
         }
-
         // playlist
         dom.playlistContainer.style.height = (isOpen ? dom.playlistContainer.scrollHeight : 0) + 'px';
-
       },
-
       adjustVolume: function(e) {
 
         /**

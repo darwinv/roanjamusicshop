@@ -4,7 +4,7 @@
 		 document.getElementById("playerSoundTitle").innerHTML = parm2;
 		 window.sm2BarPlayers[0].actions.play();
 	}
-</script>  
+</script>
 <section class="player-container player-section zero-state">
   <span class="zero-track">
     <svg viewBox="0 0 200 200" class="player-zero-music-icon">
@@ -104,7 +104,7 @@
         </p>
       </div>
       <!-- End Share Drop Down -->
-    
+
     <!-- End Share Button Parent -->
     <div class="stem-button-parent">
       <a href="#">
@@ -127,8 +127,8 @@
       <span class="player-waveform-bpm">124 bpm</span> / <span class="player-waveform-key">C min</span>
     </div>
     <div class="player-scrubbable player-clickzone" style="margin-left: 375.5996382848px; width: 217.029120192298px; height: 45px;"></div>
-    
-    
+
+
     <div class="player-wavelength-mask-right" style="height: 45px; position: absolute; margin-left: 592.628758477098px; width: 346.371241522902px; background-color: rgba(0, 0, 0, 0.4);"></div><div class="player-wavelength-mask-left" style="height: 45px; position: absolute; width: 375.5996382848px; background-color: rgba(0, 0, 0, 0.4);"></div><div class="player-scrubbable player-progress-bar" style="height: 45px; width: 469.971998551137px;"></div>
     <canvas class="track-waveform" width="939" height="45"></canvas>
     <span class="disabled-message">

@@ -22,9 +22,8 @@
 *  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 *}
-<script src='{$modules_dir}prestamusicshop/js/soundmanager2en.js' type='text/javascript'></script>
-{if !isset($priceDisplayPrecision)}
-        {assign var='priceDisplayPrecision' value=2}
+{*if !isset($priceDisplayPrecision)}
+    {assign var='priceDisplayPrecision' value=2}
 {/if}
 {if !$priceDisplay || $priceDisplay == 2}
     {assign var='productPrice' value=$product->getPrice(true, $smarty.const.NULL, $priceDisplayPrecision)}
@@ -32,76 +31,12 @@
 {elseif $priceDisplay == 1}
     {assign var='productPrice' value=$product->getPrice(false, $smarty.const.NULL, $priceDisplayPrecision)}
     {assign var='productPriceWithoutReduction' value=$product->getPriceWithoutReduct(true, $smarty.const.NULL)}
-{/if}
-
+{/if*}
 <div class="content-bar-musicshop">
-
   
-<div class="sm2-bar-ui playlist-open pos-init">
+<div class="sm2-bar-musicshop pos-init full-width">
 
- <div class="bd sm2-main-controls">
-
-  <div class="sm2-inline-texture"></div>
-  <div class="sm2-inline-gradient"></div>
-
-  <div class="sm2-inline-element sm2-button-element">
-   <div class="sm2-button-bd">
-    <a href="#play" class="sm2-inline-button play-pause">Play / pause</a>
-   </div>
-  </div>
-
-  <div class="sm2-inline-element sm2-inline-status">
-
-   <div class="sm2-playlist">
-    <div class="sm2-playlist-target">
-     <!-- playlist <ul> + <li> markup will be injected here -->
-     <!-- if you want default / non-JS content, you can put that here. -->
-     <noscript><p>JavaScript is required.</p></noscript>
-    </div>
-   </div>
-
-   <div class="sm2-progress">
-    <div class="sm2-row">
-    <div class="sm2-inline-time">0:00</div>
-     <div class="sm2-progress-bd">
-      <div class="sm2-progress-track">
-       <div class="sm2-progress-bar"></div>
-       <div class="sm2-progress-ball"><div class="icon-overlay"></div></div>
-      </div>
-     </div>
-     <div class="sm2-inline-duration">0:00</div>
-    </div>
-   </div>
-
-  </div>
-
-  <div class="sm2-inline-element sm2-button-element sm2-volume">
-   <div class="sm2-button-bd">
-    <span class="sm2-inline-button sm2-volume-control volume-shade"></span>
-    <a href="#volume" class="sm2-inline-button sm2-volume-control">volume</a>
-   </div>
-  </div>
-
-  <div class="sm2-inline-element sm2-button-element">
-   <div class="sm2-button-bd">
-    <a href="#prev" title="Previous" class="sm2-inline-button previous">&lt; previous</a>
-   </div>
-  </div>
-
-  <div class="sm2-inline-element sm2-button-element">
-   <div class="sm2-button-bd">
-    <a href="#next" title="Next" class="sm2-inline-button next">&gt; next</a>
-   </div>
-  </div>
-  <div class="sm2-inline-element sm2-button-element sm2-menu">
-   <div class="sm2-button-bd">
-     <a href="#menu" class="sm2-inline-button menu">menu</a>
-   </div>
-  </div>
- 
- </div>
-
- <div class="bd sm2-playlist-drawer sm2-element">
+ <div class="bd sm2-element">
 
   <div class="sm2-inline-texture">
    <div class="sm2-box-shadow"></div>
@@ -109,42 +44,86 @@
 
   <!-- playlist content is mirrored here -->
 
-  <div class="sm2-playlist-wrapper">
-    
+  
+  <div class="sm2-playlist-wrapper list-music-shop">
+    <div class="bd sm2-main-controls">
+      <div class="bucket-track-header-meta">
+        <p class="sm2-inline-element buk-track-title">Título</p>
+        <p class="sm2-inline-element buk-track-artists">Artistas</p>
+        <p class="sm2-inline-element buk-track-genre">Género</p>
+        <p class="sm2-inline-element buk-track-cash"></p>
+      </div>
+    </div>
     <ul class="sm2-playlist-bd">
-     
+    {counter start=0 skip=1 print=false}
     {foreach from=$associated_mp3 item=items}
        <li>
         <div class="sm2-row">
-          <div class="sm2-col">
-            <a href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}"><b>{$items.author}</b> - {$items.mp3_title}</a>
-          </div>
-          <div class="sm2-col">
-              {if $items.reduction_type == 'amount'}
-                <span class="assoc_price">{convertPrice price=$items.price - $items.reduction}</span>
+        
+          <div class="sm2-inline-element buk-track-plus">
+            <span class="buk-track-counter">{counter}</span>
+
+            <span class="sm2-col buk-track-command">
+              <a data-id="{$items.id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}" ><div class="btn-rjm-list btn-action"><i class="fa fa-play" aria-hidden="true"></i></div>
+              </a>
+              <a class="{$items.clase}" title="Agregar a lista" >
+                <div class="btn-rjm-list btn-action"><i class="fa fa-list" aria-hidden="true"></i>
+                </div>
+              </a>
+              {if !empty($items.url_youtube)}
+                  <a class="youtube roanjayt fancybox fancybox.iframe"  title="Ver Video" href="https://www.youtube.com/embed/{$items.url_youtube}?autoplay=1" >
+                    <div class="btn-rjm-list btn-youtube">
+                      <i class="fa fa-play" aria-hidden="true"></i>
+                    </div>
+                  </a>
               {else}
-                <span class="assoc_price">{convertPrice price=$items.price - ($items.price * $items.reduction)}</span>
-              {/if}
+                <a class="youtube noYoutube">
+                  <div class="btn-rjm-list btn-youtube">
+                    <i class="fa fa-play" aria-hidden="true"></i>
+                  </div>
+                </a>
+              {/if}                                   
+            </span>
           </div>
-          <div class="sm2-col">
-          <a href="{$link->getPageLink('cart',false, NULL, "add=1&amp;id_product={$items.linked_digital_id|intval}&amp;token={$static_token}", false)|escape:'html':'UTF-8'}" rel="nofollow" title="{l s='Add to cart'}" data-id-product="{$items.linked_digital_id|intval}" class="ajax_add_to_cart_button music_cart_add sm2-icon sm2-cart sm2-exclude">&msp;</a> 
+          <div class="buk-track-meta-parent">
+            <div class="sm2-inline-element buk-track-title">
+              <a data-id="{$items.id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button pointer" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}">
+               <span class="list-titlesound"  ><b>{$items.mp3_title}</b></span> <b> {$items.author}</b>
+              </a>
+            </div>
+            <div class="sm2-inline-element buk-track-artists">
+              <b>{$items.author}</b>
+            </div>
+            <div class="sm2-inline-element buk-track-genre">
+              <b>{$items.genero}</b>
+            </div>
+            <div href="{$link->getPageLink('cart',false, NULL, "add=1&amp;id_product={$items.linked_digital_id|intval}&amp;token={$static_token}", false)|escape:'html':'UTF-8'}" rel="nofollow" title="{l s='Add to cart'}" data-id-product="{$items.linked_digital_id|intval}" class="sm2-inline-element buk-track-cash btn-rjm-list ajax_add_to_cart_button">
+                {if $items.reduction_type == 'amount'}
+                  <span class="assoc_price">{convertPrice price=$items.price - $items.reduction}</span>
+                {else}
+                  <span class="assoc_price">{convertPrice price=$items.price - ($items.price * $items.reduction)}</span>
+                {/if}
+            <a class="sm2-icon sm2-cart sm2-exclude">&msp;</a>
+           </div>
+          </div>
          </div>
       </li>
+
     {/foreach}
 
     </ul>
-  
+
   </div>
 
   <div class="sm2-extra-controls">
 
    <div class="bd">
 
-    <div class="sm2-inline-element sm2-button-element">
+    <div class="sm2-inline-element sm2-button-element hide">
      <a href="#prev" title="Previous" class="sm2-inline-button previous">&lt; previous</a>
     </div>
 
-    <div class="sm2-inline-element sm2-button-element">
+    <div class="sm2-inline-element sm2-button-element hide">
      <a href="#next" title="Next" class="sm2-inline-button next">&gt; next</a>
     </div>
 
@@ -168,6 +147,7 @@
  </div>
 
 </div>
+
 
 </div>
 <script type="text/javascript">
