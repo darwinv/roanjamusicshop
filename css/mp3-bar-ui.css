@@ -911,7 +911,10 @@
 
 .sm2-playlist-wrapper ul li.selected a p {
 
- color: #FFCC00!important;
+ color: #13191c!important;
+}
+.sm2-playlist-wrapper ul li.selected {
+    background-color: white;
 }
 
 .sm2-bar-ui.dark-text ul li.selected a {
@@ -1049,6 +1052,7 @@ a.cart-list-ico:hover {
 }
 a.dat-list{
   float: left;
+  width: 70%;
 }
 li.item-list{
   height: 60px;
@@ -1111,6 +1115,8 @@ p.p-list {
     padding-left: 5px;
     font-size: 12px;
     color: white;
+    width: 75%;
+    height: 60px;
 }
 p.p-list b {
     font-size: 14px;
@@ -1119,7 +1125,7 @@ p.p-list b {
 
 .sm2-playlist-wrapper ul li.selected a p .list-author {
 
- color: #FFCC00!important;
+ color: #13191c!important;
 }
 .img-list{
 float: left;
