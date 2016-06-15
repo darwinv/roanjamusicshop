@@ -312,11 +312,11 @@ class RoanjaMusicShop extends Module
             $lista=array();
             $oculto="hidden";
         }
-        
+
     	$this->context->smarty->assign(array('lista' => $lista,
     										'oculto' => $oculto));
 		return $this->display(__FILE__, 'bar-ui.tpl');
-    
+
 
 	}
 
@@ -453,7 +453,7 @@ class RoanjaMusicShop extends Module
 												'clase' => $clase,
 
 						));
-						return $this->display(__FILE__, 'mp3_button_special.tpl');
+						return $this->display(__FILE__, 'mp3_button.tpl');
 				}
 
 	}
@@ -877,9 +877,6 @@ class RoanjaMusicShop extends Module
 		$helper->module = $this;
 		$helper->identifier = $this->identifier;
 		$helper->submit_action = 'submitAddproductAndStay';
-		/*$helper->currentIndex = $this->context->link->getAdminLink('AdminModules', false)
-		.'&configure='.$this->name.'&tab_module='.$this->tab.'&module_name='.$this->name;
-		$helper->token = Tools::getAdminTokenLite('AdminModules');*/
 		$language = new Language((int)Configuration::get('PS_LANG_DEFAULT'));
 		$helper->tpl_vars = array(
 			'base_url' => $this->context->shop->getBaseURL(),
@@ -962,71 +959,6 @@ class RoanjaMusicShop extends Module
 		);
 
 		return $this->display(__FILE__, 'list.tpl');
-
-
-
-
-		/*$get_list_sql = $this->getMusic();
-
-		$default_lang = new Language((int)Configuration::get('PS_LANG_DEFAULT'));
-		if ($list_result = $get_list_sql)
-		{
-			$this->fields_list = array(
-				'id_music' => array(
-					'title' => $this->l('ID') ,
-					'width' => 20,
-					'type' => 'text',
-				) ,
-				'mp3_title' => array(
-					'title' => $this->l('Mp3 Title') ,
-					'width' => 140,
-					'type' => 'text',
-				) ,
-
-				'mp3_name' => array(
-					'title' => $this->l('Mp3 Name') ,
-					'width' => 140,
-					'type' => 'text',
-				) ,
-				'genero' => array(
-					'title' => $this->l('Genero') ,
-					'width' => 140,
-					'type' => 'text',
-				) ,
-				'linked_digital_id' => array(
-					'title' => $this->l('Associated Product ID') ,
-					'width' => 50,
-					'type' => 'text',
-				) ,
-			);
-		 }
-
-		$helper_list = new HelperList();
-		$helper_list->shopLinkType = '';
-		$helper_list->simple_header = false;
-				$helper_list->actions = array('edit', 'delete');
-				$helper_list->identifier = 'id_music';
-				$helper_list->show_toolbar = true;
-				$helper_list->title = 'Mp3 songs previews active for this product';
-				$helper_list->table = $this->name;
-				$helper_list->token = Tools::getValue('token');
-				$helper_list->currentIndex = AdminController::$currentIndex;
-
-		/*$helper_list->actions = array('edit', 'delete');
-		$helper_list->identifier = 'id_music';
-		$helper_list->show_toolbar = false;
-		$helper_list->title = 'Mp3 songs previews active for this product';
-		$helper_list->table = $this->name;
-		$helper_list->token = Tools::getAdminTokenLite('AdminProducts');
-		$helper_list->currentIndex = AdminController::$currentIndex.'&id_product='.(int)Tools::getValue('id_product').'&updateproduct&key_tab=ModuleRoanjaMusicshop&conf=1';*/
-
-
-		/*$languages = Language::getLanguages(false);
-
-		if (count($languages) > 1)
-			return $this->getMultiLanguageInfoMsg().$helper_list->generateList($list_result, $this->fields_list);
-		else
-			return $helper_list->generateList($list_result, $this->fields_list);*/
 	}
 
 	public function getMusic($id_product=null,$active = null)
@@ -1048,18 +980,6 @@ class RoanjaMusicShop extends Module
 			AND c.id_lang = '.(int)$id_lang. ' '.Shop::addSqlRestrictionOnLang().($active ? ' AND b.`active` = 1' : ' ').'
 			ORDER BY b.position'
 		);
-
-		/*return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
-			SELECT a.`id_music` , b.`position`, b.`active`,  c.`mp3_name`,
-			  c.`mp3_title`, c.`author`, c.`genero`,c.`id_product`, c.`linked_digital_id`
-			FROM '._DB_PREFIX_.'rj_music_shop a
-			LEFT JOIN '._DB_PREFIX_.'rj_music b ON (a.id_music = b.id_music)
-			LEFT JOIN '._DB_PREFIX_.'rj_music_lang c ON (b.id_music = c.id_music)
-			WHERE id_shop = '.(int)$id_shop.'
-			AND c.id_lang = '.(int)$id_lang.
-			($active ? ' AND b.`active` = 1' : ' ').'
-			ORDER BY b.position'
-		);*/
 	}
 
 	public function getAddFieldsValues()
