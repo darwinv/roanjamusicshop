@@ -300,10 +300,8 @@ class RoanjaMusicShop extends Module
             $this->context->controller->addJS($this->_path.'js/funciones.js');
 	}
 
-	public function hookDisplayFooter($params)
+	public function hookDisplayFooter()
     {
-
-    	
     	
         if(isset($_COOKIE['lista'])){
             $lista=unserialize($_COOKIE['lista']);
@@ -314,10 +312,10 @@ class RoanjaMusicShop extends Module
         }
 
         if($this->show_footer_bar){
+
         	$this->context->smarty->assign(array('lista' => $lista,
         										'oculto' => $oculto,
-        										'id_image'=>$id_image,
-        										'product'=>$id_product));
+        										));
 			return $this->display(__FILE__, 'bar-ui.tpl');
         }
 
@@ -766,21 +764,21 @@ class RoanjaMusicShop extends Module
 					),
 					array(
 						'type' => 'text',
-						'label' => $this->l('Music title'),
+						'label' => $this->l('Music Title'),
 						'name' => 'mp3_title',
 						'required' => true,
 						'lang' => true,
 					),
 					array(
 						'type' => 'text',
-						'label' => $this->l('Target URL'),
+						'label' => $this->l('Author'),
 						'name' => 'author',
 						'required' => true,
 						'lang' => true,
 					),
 					array(
 						'type' => 'text',
-						'label' => $this->l('Caption'),
+						'label' => $this->l('Genero'),
 						'name' => 'genero',
 						'required' => true,
 						'lang' => true,

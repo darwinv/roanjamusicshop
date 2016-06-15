@@ -17,11 +17,12 @@ $(document).ready(function(){
                 var precio=data[i]['price'];
                 var price = parseFloat(precio).toFixed(2);
                 var newsong="<li class='" + data[i]['id_product'] + " item-list' data-id='" + data[i]['id_music'] + "'>";
-                newsong+="<a href='" + song + "' class='dat-list' data-youtube='" + data[i]['url_youtube'] + "'><p class='p-list'><span class='list-titlesound'><b>" + title + "</b></span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>" + data[i]['genero'] + "</span><br><span class='list-author'>"+ data[i]['author'] + " </span></p></a>";
+                newsong+="<a href='" + song + "' class='dat-list' data-youtube='" + data[i]['url_youtube'] + "'>";
+               newsong+="<img class='img-responsive img-list' itemprop='image' src='"+ data[i]['cover'] +"' />";
+               newsong+="<p class='p-list'><span class='list-titlesound'><b>" + title + "</b></span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>" + data[i]['genero'] + "</span><br><span class='list-author'>"+ data[i]['author'] + " </span></p></a>";
                 newsong+="<a class='quitar-lista2'><span><i class='fa fa-remove'></i></span></a>";
                 newsong+="<a class='exclusive ajax_add_to_cart_button cart-list-ico' rel='ajax_id_product_"+ data[i]['id_product'] + "' href='{$link->getPageLink('cart')|escape:'html'}?qty=1&amp;id_product="+ data[i]['id_product'] + "&amp&amp;add' title='Add to cart' data-id-product='"+ data[i]['id_product'] + "'>";
                 newsong+="&nbsp;&nbsp;<span class='price-list'>" + price + "&nbsp;&nbsp;<i class='fa fa-shopping-cart'></i></span></a></li>";
-//                newsong+="<a href='" + song + "'><b>" + title + "</b> - " + title + "<span class='label'>Explicit</span></a><button class='quitar-lista2'>X</button></li>";
                 $("#barra").find(".sm2-playlist-wrapper").find(".sm2-playlist-bd").append(newsong);
            }
            act.addClass("quitar-lista");
