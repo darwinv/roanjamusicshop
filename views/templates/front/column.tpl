@@ -66,14 +66,15 @@
               <b>{$items.genero}</b>
             </div>            
           </div>
-          <div class="sm2-inline-element buk-track-actions">            
+          <div class="sm2-inline-element buk-track-actions">
             <div href="{$link->getPageLink('cart',false, NULL, "add=1&amp;id_product={$items.linked_digital_id|intval}&amp;token={$static_token}", false)|escape:'html':'UTF-8'}" rel="nofollow" title="{l s='Add to cart'}" data-id-product="{$items.linked_digital_id|intval}" class="sm2-inline-element buk-track-cash btn-rjm-list ajax_add_to_cart_button">
+                <span class="assoc_price">
                 {if $items.reduction_type == 'amount'}
-                  <span class="assoc_price">{convertPrice price=$items.price - $items.reduction}</span>
+                  {convertPrice price=$items.price - $items.reduction}
                 {else}
-                  <span class="assoc_price">{convertPrice price=$items.price - ($items.price * $items.reduction)}</span>
+                  {convertPrice price=$items.price - ($items.price * $items.reduction)}
                 {/if}
-              <a class="sm2-icon sm2-cart sm2-exclude">&msp;</a>
+            &nbsp;&nbsp;<i class="fa fa-shopping-cart"></i></span>
             </div>
            <span class="sm2-col buk-track-command">
               <a data-id="{$items.id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}" ><div class="btn-rjm-list btn-action"><i class="fa fa-play" aria-hidden="true"></i></div>
@@ -99,7 +100,7 @@
           </div>
          </div>
       </li>
-    {/foreach}
+    {/foreach}    
     </ul>
   </div>
   <div class="sm2-extra-controls">

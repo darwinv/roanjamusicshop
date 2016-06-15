@@ -120,7 +120,7 @@ $(document).ready(function(){
 
   	});
 
-  $(document).on("click",".youtube",function(e){ alert();
+  $(document).on("click",".youtube",function(e){
     if($(this).hasClass("youtubeDisable, noYoutube")){
        e.preventDefault();
     }

@@ -275,16 +275,30 @@
 
 
 /***RIGHT COLUMN***/
+.content-right-musicshop .sm2-inline-element.buk-track-genre {
+  font-size: 12px;
+}
+.content-right-musicshop .sm2-inline-element.buk-track-title {
+    font-size: 100%;
+}
+.content-right-musicshop .list-music-shop .sm2-playlist-bd span.assoc_price {
+  display: flex;
+}
+div.content-right-musicshop  div.sm2-playlist-wrapper ul {
+    max-height: 27em;
+}
 .content-right-musicshop  .sm2-playlist-wrapper ul li a {
     padding: 0px !important;
 }
 .content-right-musicshop .list-music-shop .buk-track-plus {
   height: 40px;
   width: 40px;
+  display: table-cell;
+  vertical-align: middle;
 }
 .content-right-musicshop .sm2-inline-element.buk-track-actions {
   display: inline-block;
-  width: 110px;
+  min-width: 110px;
   height: 60px;
   float: right;
   padding-top: 0px;
@@ -292,16 +306,25 @@
 }
 .content-right-musicshop .list-music-shop .buk-track-meta-parent {
   display: inline-block;
+  width: calc(100% - 160px);
 }
 div.content-right-musicshop .bd.sm2-main-controls{
   display: none;
 }
-.content-right-musicshop .sm2-bar-musicshop > .bd {
-   width: 100%;
-}
+
 .content-right-musicshop .list-music-shop .buk-track-cash {
   width: auto;
   height: auto;
+}
+@media (min-width: 1150px) {
+  .content-right-musicshop .sm2-bar-musicshop > .bd {
+   width: 90%;
+  }
+}
+@media (max-width: 1150px) {
+  .content-tab-musicshop .sm2-bar-musicshop > .bd {
+   width: 100%;
+  }
 }
 @media (min-width: 980px) {
   .content-right-musicshop .list-music-shop .buk-track-title {
@@ -333,6 +356,12 @@ div.content-right-musicshop .bd.sm2-main-controls{
 /*******************/
 
 /***TAB COLUMN*****/
+.content-tab-musicshop  .list-music-shop .sm2-playlist-bd span.assoc_price {
+  display: block;
+}
+.content-tab-musicshop .list-music-shop span.buk-track-counter {
+  position: absolute;
+}
 .content-tab-musicshop .list-music-shop .buk-track-plus {
   width: 150px;
   float: left;
@@ -351,7 +380,7 @@ div.content-right-musicshop .bd.sm2-main-controls{
     width: 20%;
   }
   .content-tab-musicshop .list-music-shop .buk-track-cash {
-    width: 20%;
+    width: 17%;
   }
 }
 @media (max-width: 980px) {
@@ -401,7 +430,11 @@ div.content-right-musicshop .bd.sm2-main-controls{
 .list-music-shop .bd.sm2-main-controls {
   display: block;
 }
-
+.list-music-shop span.buk-track-counter {
+  font-size: 18px;
+  margin-top: 5px;
+  margin-left: 10px;
+}
 
 
 
@@ -425,12 +458,6 @@ div.content-right-musicshop .bd.sm2-main-controls{
 }
 .pointer{
   cursor: pointer;
-}
-.list-music-shop span.buk-track-counter {
-  position: absolute;
-  font-size: 20px;
-  margin-top: 5px;
-  margin-left: 10px;
 }
 .btn-rjm-list{
   height: 100%;
@@ -458,22 +485,28 @@ div.btn-rjm-list.btn-youtube.disabled,div.btn-rjm-list.btn-youtube[disabled],fie
 .list-music-shop .sm2-playlist-bd .noYoutube div.btn-rjm-list.btn-youtube, .list-music-shop .sm2-playlist-bd .noYoutube div.btn-rjm-list.btn-youtube:hover {
   background-color: rgb(181, 91, 91);
     cursor: initial;}
-.list-music-shop .sm2-playlist-bd span.assoc_price {
-  background: #ff53a0;
-  padding: 5px 8px 6px;
-  height: 28px;
-  margin: 0;
-  float: left;    
-  min-width: 60px;
-}
+
 .list-music-shop .sm2-playlist-bd a.sm2-icon.sm2-cart {
   background-color: #d64988;
   padding: 5px 5px 4px;
   height: 28px;
   float: left;
 }
+.list-music-shop .sm2-playlist-bd span.assoc_price {
+  padding: 0px 3px;
+  font-size: 15px;
+  display: flex;
+  color: white;
+  font-weight: bold;
+}
 .list-music-shop .sm2-playlist-bd .sm2-inline-element.buk-track-cash.btn-rjm-list.ajax_add_to_cart_button, .list-music-shop .sm2-playlist-bd .sm2-inline-element.buk-track-cash.btn-rjm-list.ajax_add_to_cart_button:hover {
-  background: none;
+  background-color: #13191C;
+  padding: 5px 7px 5px;
+  height: 28px;
+  align-items: center;
+  margin: 0px 0px 5px 0px;
+  text-align: center;
+  min-width: 60px;
 }
 .list-music-shop ul.sm2-playlist-bd > li {
    padding: 5px;
