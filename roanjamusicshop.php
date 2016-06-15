@@ -300,25 +300,21 @@ class RoanjaMusicShop extends Module
             $this->context->controller->addJS($this->_path.'js/funciones.js');
 	}
 
-	public function hookDisplayFooter($params)
-    {
+	public function hookDisplayFooter()
+	{
 
+			if(isset($_COOKIE['lista'])){
+					$lista=unserialize($_COOKIE['lista']);
+					$oculto="";
+			}else{
+					$lista=array();
+					$oculto="hidden";
 
-
-        if(isset($_COOKIE['lista'])){
-            $lista=unserialize($_COOKIE['lista']);
-            $oculto="";
-        }else{
-            $lista=array();
-            $oculto="hidden";
-        }
-
-    	$this->context->smarty->assign(array('lista' => $lista,
-    										'oculto' => $oculto));
-		return $this->display(__FILE__, 'bar-ui.tpl');
-
-
-	}
+			}
+		$this->context->smarty->assign(array('lista' => $lista,
+											'oculto' => $oculto));
+	return $this->display(__FILE__, 'bar-ui.tpl');
+}
 
 	public function GetSoundsOfProduct()
 	{
@@ -331,7 +327,28 @@ class RoanjaMusicShop extends Module
 			. (int)Tools::getValue('id_product') . ' AND b.id_product = ml.linked_digital_id LEFT JOIN `'
 			. _DB_PREFIX_ . 'specific_price` AS c ON c.id_product = b.id_product left Join ps_rj_music AS m ON m.id_music = ml.id_music AND m.active = 1 left Join ps_rj_music_shop AS ms ON ms.id_music = ml.id_music AND ms.id_shop = '. $id_shop ;
 
-		return Db::getInstance()->ExecuteS($associated_mp3_sql);
+		$results= Db::getInstance()->ExecuteS($associated_mp3_sql);
+		if($results){
+			$i=0;
+			foreach ($results as $data)
+			{
+				if(isset($_COOKIE['lista'])){
+					$lista=unserialize($_COOKIE['lista']);
+					$lista=$this->array_columns($lista,"id");
+					if(in_array($data['id_product'],$lista)){
+						$clase="quitar-lista";
+					}else{
+						$clase="agregar-lista";
+					}
+				}else{
+					$clase="agregar-lista";
+				}
+				$results[$i]["clase"]=$clase;
+				$i++;
+			}
+		}
+
+		return $results;
 	}
 	public function hookdisplayRightColumnProduct()
 	{
@@ -339,22 +356,21 @@ class RoanjaMusicShop extends Module
 		if (Tools::getValue('MUSIC_POSITION', Configuration::get('MUSIC_POSITION')) == 1)
 		{
 			$associated_mp3 = $this->GetSoundsOfProduct();
-
 			if(!empty($associated_mp3)){
  				$this->context->smarty->assign(array(
 					'associated_mp3' => $associated_mp3,
 				));
-	            return $this->display(__FILE__, 'views/templates/front/column.tpl');
-       		}
 
+       		}
 		}
+
+		return $this->display(__FILE__, 'views/templates/front/column.tpl');
 	}
 	public function hookDisplayProductTabContent()
 	{
 		if (Tools::getValue('MUSIC_POSITION', Configuration::get('MUSIC_POSITION')) == 2)
 		{
 			$associated_mp3 = $this->GetSoundsOfProduct();
-
 			if(!empty($associated_mp3)){
  				$this->context->smarty->assign(array(
 					'associated_mp3' => $associated_mp3,
@@ -464,12 +480,10 @@ class RoanjaMusicShop extends Module
 
 	public function headerHTML()
 	{
-
 		if (Tools::getValue('controller') != 'AdminModules' && Tools::getValue('configure') != $this->name)
 			return;
 
 		$this->context->controller->addJqueryUI('ui.sortable');
-
 		$html = '<script type="text/javascript">
 					$(function() {
 						var $myMusics = $("#musics");
@@ -489,8 +503,6 @@ class RoanjaMusicShop extends Module
 						});
 					});
 				</script>';
-
-
 		return $html;
 	}
 
@@ -800,21 +812,21 @@ class RoanjaMusicShop extends Module
 					),
 					array(
 						'type' => 'text',
-						'label' => $this->l('Music title'),
+						'label' => $this->l('Music Title'),
 						'name' => 'mp3_title',
 						'required' => true,
 						'lang' => true,
 					),
 					array(
 						'type' => 'text',
-						'label' => $this->l('Target URL'),
+						'label' => $this->l('Author'),
 						'name' => 'author',
 						'required' => true,
 						'lang' => true,
 					),
 					array(
 						'type' => 'text',
-						'label' => $this->l('Caption'),
+						'label' => $this->l('Genero'),
 						'name' => 'genero',
 						'required' => true,
 						'lang' => true,

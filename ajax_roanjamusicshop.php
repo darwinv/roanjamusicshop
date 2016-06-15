@@ -78,6 +78,15 @@ if(Tools::getValue('action')=='getSongs'){
     where (`linked_digital_id`=" . (int)$id . " or b.id_product=" .(int)$id . ") and a.id_product=b.id_product
     and id_lang=" . $id_lang . " AND b.id_music=c.id_music and c.id_shop=" . (int)$id_shop;
     $res=Db::getInstance()->executeS($sql_songs);
+    $images = Image::getImages((int)$id_lang, (int)$id);
+    $id_image = Product::getCover($id);
+    // get Image by id
+
+     $image = new Image($id_image['id_image']);
+     // get image full URL
+     $image_url = _PS_BASE_URL_._THEME_PROD_DIR_.$image->getExistingImgPath().".jpg";
+
+    $res[0]['cover']=$image_url;
     echo json_encode($res);
 }
 if(Tools::getValue('action')=='setCookie'){
