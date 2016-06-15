@@ -22,9 +22,8 @@
 *  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 *}
-<script src='{$modules_dir}prestamusicshop/js/soundmanager2en.js' type='text/javascript'></script>
-{if !isset($priceDisplayPrecision)}
-        {assign var='priceDisplayPrecision' value=2}
+{*if !isset($priceDisplayPrecision)}
+    {assign var='priceDisplayPrecision' value=2}
 {/if}
 {if !$priceDisplay || $priceDisplay == 2}
     {assign var='productPrice' value=$product->getPrice(true, $smarty.const.NULL, $priceDisplayPrecision)}
@@ -32,8 +31,7 @@
 {elseif $priceDisplay == 1}
     {assign var='productPrice' value=$product->getPrice(false, $smarty.const.NULL, $priceDisplayPrecision)}
     {assign var='productPriceWithoutReduction' value=$product->getPriceWithoutReduct(true, $smarty.const.NULL)}
-{/if}
-
+{/if*}
 <div class="content-bar-musicshop">
   
 <div class="sm2-bar-musicshop pos-init full-width">
@@ -63,20 +61,28 @@
         <div class="sm2-row">
         
           <div class="sm2-inline-element buk-track-plus">
-            <span>{counter}</span>
+            <span class="buk-track-counter">{counter}</span>
 
             <span class="sm2-col buk-track-command">
-              <a data-id="{$items.id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}" ><div class="btn-rjm"><i class="fa fa-play" aria-hidden="true"></i></div>
+              <a data-id="{$items.id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}" ><div class="btn-rjm-list btn-action"><i class="fa fa-play" aria-hidden="true"></i></div>
               </a>
-              <a class="{$clase}" title="Agregar a lista" >
-                <div class="btn-rjm"><i class="fa fa-list" aria-hidden="true"></i>
+              <a class="{$items.clase}" title="Agregar a lista" >
+                <div class="btn-rjm-list btn-action"><i class="fa fa-list" aria-hidden="true"></i>
                 </div>
               </a>
               {if !empty($items.url_youtube)}
-               <a class="roanjayt fancybox fancybox.iframe"  title="Ver Video" href="https://www.youtube.com/embed/{$items.url_youtube}?autoplay=1" ><div class="btn-rjm"> <i class="fa fa-play" aria-hidden="true"></i></div></a>
-              {/if}
-
-              
+                  <a class="youtube roanjayt fancybox fancybox.iframe"  title="Ver Video" href="https://www.youtube.com/embed/{$items.url_youtube}?autoplay=1" >
+                    <div class="btn-rjm-list btn-youtube">
+                      <i class="fa fa-play" aria-hidden="true"></i>
+                    </div>
+                  </a>
+              {else}
+                <a class="youtube noYoutube">
+                  <div class="btn-rjm-list btn-youtube">
+                    <i class="fa fa-play" aria-hidden="true"></i>
+                  </div>
+                </a>
+              {/if}                                   
             </span>
           </div>
           <div class="buk-track-meta-parent">
@@ -91,13 +97,13 @@
             <div class="sm2-inline-element buk-track-genre">
               <b>{$items.genero}</b>
             </div>
-            <div class="sm2-inline-element buk-track-cash">
+            <div href="{$link->getPageLink('cart',false, NULL, "add=1&amp;id_product={$items.linked_digital_id|intval}&amp;token={$static_token}", false)|escape:'html':'UTF-8'}" rel="nofollow" title="{l s='Add to cart'}" data-id-product="{$items.linked_digital_id|intval}" class="sm2-inline-element buk-track-cash btn-rjm-list ajax_add_to_cart_button">
                 {if $items.reduction_type == 'amount'}
                   <span class="assoc_price">{convertPrice price=$items.price - $items.reduction}</span>
                 {else}
                   <span class="assoc_price">{convertPrice price=$items.price - ($items.price * $items.reduction)}</span>
                 {/if}
-            <a href="{$link->getPageLink('cart',false, NULL, "add=1&amp;id_product={$items.linked_digital_id|intval}&amp;token={$static_token}", false)|escape:'html':'UTF-8'}" rel="nofollow" title="{l s='Add to cart'}" data-id-product="{$items.linked_digital_id|intval}" class="ajax_add_to_cart_button music_cart_add sm2-icon sm2-cart sm2-exclude">&msp;</a>
+            <a class="sm2-icon sm2-cart sm2-exclude">&msp;</a>
            </div>
           </div>
          </div>

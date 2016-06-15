@@ -82,9 +82,6 @@ $(document).ready(function(){
       var actual=$(this);
       var lugar="barra";
 
-     
-
-
       if(!actual.hasClass("sm2_playing")){
           var song=actual.data("href");
           var title=actual.attr("title");
@@ -120,10 +117,10 @@ $(document).ready(function(){
 	   }
 	 }
 
-  $(document).on("click",".youtube",function(e){
-    if($(this).hasClass("youtubeDisable")){
+  $(document).on("click",".youtube",function(e){ console.log("seeeeeeeeeeeeeeeeEEE");alert();
+    if($(this).hasClass("youtubeDisable, noYoutube")){
        e.preventDefault();
-    }
+    } e.preventDefault();
   });
 
 

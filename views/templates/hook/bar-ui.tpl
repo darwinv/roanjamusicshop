@@ -46,14 +46,14 @@
     <a href="#repeat" title="Repeat playlist" class="sm2-inline-button repeat">∞ repeat</a>
    </div>
   </div>
-  {if !empty($url_youtube)}
+  
       <div class="sm2-inline-element sm2-button-element">
        <div class="sm2-button-bd">
-      <a class="roanjayt fancybox fancybox.iframe youtube youtubeDisable sm2-inline-button" href="https://www.youtube.com/embed/{$url_youtube}" >
+      <a class="roanjayt fancybox fancybox.iframe youtube youtubeDisable sm2-inline-button" >
        </a>
        </div>
       </div>
-  {/if}
+   
   <!-- not implemented -->
   <!--
   <div class="sm2-inline-element sm2-button-element disabled">
