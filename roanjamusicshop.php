@@ -469,7 +469,7 @@ class RoanjaMusicShop extends Module
 												'clase' => $clase,
 
 						));
-						return $this->display(__FILE__, 'mp3_button.tpl');
+						return $this->display(__FILE__, 'mp3_button_special.tpl');
 				}
 
 	}
