@@ -32,7 +32,7 @@
     {assign var='productPrice' value=$product->getPrice(false, $smarty.const.NULL, $priceDisplayPrecision)}
     {assign var='productPriceWithoutReduction' value=$product->getPriceWithoutReduct(true, $smarty.const.NULL)}
 {/if*}
-<div class="content-bar-musicshop">
+<div class="content-tab-musicshop">
   
 <div class="sm2-bar-musicshop pos-init full-width">
 
@@ -88,7 +88,7 @@
           <div class="buk-track-meta-parent">
             <div class="sm2-inline-element buk-track-title">
               <a data-id="{$items.id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button pointer" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}">
-               <span class="list-titlesound"  ><b>{$items.mp3_title}</b></span> <b> {$items.author}</b>
+               <span class="list-titlesound"  ><b>{$items.mp3_title}</b></span>
               </a>
             </div>
             <div class="sm2-inline-element buk-track-artists">

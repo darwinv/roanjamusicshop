@@ -1,21 +1,6 @@
 .sm2-bar-musicshop > .bd {
  margin: auto;
 }
-@media (min-width: 1150px) {
-  .sm2-bar-musicshop > .bd {
-   width: 70%; 
-  }
-}
-@media (max-width: 1150px) and (min-width: 780px) {
-  .sm2-bar-musicshop > .bd {
-   width: 90%; 
-  }
-}
-@media (max-width: 780px) {
-  .sm2-bar-musicshop > .bd {
-   width: 100%; 
-  }
-}
 .sm2-bar-musicshop {
  position: absolute;
  display: inline-block;
@@ -219,24 +204,24 @@
 }
 
 
+
+
 /* --- full width stuff --- */
-
-
-.content-bar-musicshop .sm2-inline-element {
+.sm2-inline-element {
  display: table-cell;
 }
 
-.content-bar-musicshop .sm2-inline-element {
+.sm2-inline-element {
  /* collapse */
  width: 1%;
 }
-.content-bar-musicshop .sm2-extra-controls .sm2-inline-element {
+.sm2-extra-controls .sm2-inline-element {
  width: 25px; /* bare minimum */
  min-height: 1.75em;
  min-width: 2.5em;
 }
 
-.content-bar-musicshop .sm2-inline-status {
+.sm2-inline-status {
  line-height: 100%;
  /* how much to allow before truncating song artist / title with ellipsis */
  display: inline-block;
@@ -246,10 +231,10 @@
  padding-left: 0.75em;
  padding-right: 0.75em;
 }
-.content-bar-musicshop .sm2-extra-controls .sm2-inline-element {
+.sm2-extra-controls .sm2-inline-element {
  display: inline-block;
 }
-.content-bar-musicshop .sm2-inline-element {
+.sm2-inline-element {
  position: relative;
  display: inline-block;
  vertical-align: middle;
@@ -257,56 +242,158 @@
  overflow: hidden;
  margin: auto;
 }
-
-.content-bar-musicshop .sm2-inline-element,
-.content-bar-musicshop .sm2-button-element .sm2-button-bd {
+.sm2-inline-element,
+.sm2-button-element .sm2-button-bd {
  position: relative;
- /**
-  * .sm2-button-bd exists because of a Firefox bug from 2000
-  * re: nested relative / absolute elements inside table cells.
-  * https://bugzilla.mozilla.org/show_bug.cgi?id=63895
-  */
 }
-.content-bar-musicshop .sm2-inline-element {
- /* extra-small em scales up nicely, vs. 1px which gets fat */
- /*border-right: 0.075em dotted #666; /* legacy */
- /*border-right: 0.075em solid rgba(0,0,0,0.1);*/
-}
-
-.content-bar-musicshop .sm2-inline-element.noborder {
+.sm2-inline-element.noborder {
  border-right: none;
 }
 
-.content-bar-musicshop .sm2-inline-element.compact {
+.sm2-inline-element.compact {
  min-width: 2em;
  padding: 10px 0.25em;
 }
-
-.content-bar-musicshop .sm2-inline-element:first-of-type {
+.sm2-inline-element:first-of-type {
  border-top-left-radius: 3px;
  border-bottom-left-radius: 3px;
  overflow: hidden;
 }
-
-.content-bar-musicshop .sm2-inline-element:last-of-type {
+.sm2-inline-element:last-of-type {
  border-right: none;
  border-top-right-radius: 3px;
  border-bottom-right-radius: 3px;
 }
-
-.content-bar-musicshop .list-music-shop p.buk-track-counter {
+.list-music-shop p.buk-track-counter {
   margin-top: 6px;
   position: absolute;
   font-size: 20px;
 }
-
-.list-music-shop .bucket-track-header-meta, .list-music-shop .buk-track-meta-parent {
-  margin-left: 150px;
+.list-music-shop p.buk-track-title {
+  padding-left: 10px;
 }
-.list-music-shop .buk-track-plus {
+
+
+/***RIGHT COLUMN***/
+.content-right-musicshop  .sm2-playlist-wrapper ul li a {
+    padding: 0px !important;
+}
+.content-right-musicshop .list-music-shop .buk-track-plus {
+  height: 40px;
+  width: 40px;
+}
+.content-right-musicshop .sm2-inline-element.buk-track-actions {
+  display: inline-block;
+  width: 110px;
+  height: 60px;
+  float: right;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.content-right-musicshop .list-music-shop .buk-track-meta-parent {
+  display: inline-block;
+}
+div.content-right-musicshop .bd.sm2-main-controls{
+  display: none;
+}
+.content-right-musicshop .sm2-bar-musicshop > .bd {
+   width: 100%;
+}
+.content-right-musicshop .list-music-shop .buk-track-cash {
+  width: auto;
+  height: auto;
+}
+@media (min-width: 980px) {
+  .content-right-musicshop .list-music-shop .buk-track-title {
+    width: auto;
+    display: block;
+  }
+  .content-right-musicshop .list-music-shop .buk-track-artists {
+    width: auto;
+  }
+  .content-right-musicshop .list-music-shop .buk-track-genre {
+    width: auto;
+  }
+}
+@media (max-width: 980px) {
+  .content-right-musicshop .list-music-shop .buk-track-title {
+    width: auto;
+  }
+  .content-right-musicshop .list-music-shop .buk-track-artists {
+    width: auto;
+  }
+  .content-right-musicshop .list-music-shop .buk-track-genre {
+    width: auto;
+  }
+  .content-right-musicshop .list-music-shop .buk-track-cash {
+    width: auto;
+  }
+}
+
+/*******************/
+
+/***TAB COLUMN*****/
+.content-tab-musicshop .list-music-shop .buk-track-plus {
   width: 150px;
   float: left;
 }
+.content-tab-musicshop .list-music-shop .bucket-track-header-meta, .content-tab-musicshop .list-music-shop .buk-track-meta-parent {
+  margin-left: 150px;
+}
+@media (min-width: 980px) {
+  .content-tab-musicshop .list-music-shop .buk-track-title {
+    width: 30%;
+  }
+  .content-tab-musicshop .list-music-shop .buk-track-artists {
+    width: 20%;
+  }
+  .content-tab-musicshop .list-music-shop .buk-track-genre {
+    width: 20%;
+  }
+  .content-tab-musicshop .list-music-shop .buk-track-cash {
+    width: 20%;
+  }
+}
+@media (max-width: 980px) {
+  .content-tab-musicshop .list-music-shop .buk-track-title {
+    width: 30%;
+  }
+  .content-tab-musicshop .list-music-shop .buk-track-artists {
+    width: 19%;
+  }
+  .content-tab-musicshop .list-music-shop .buk-track-genre {
+    width: 19%;
+  }
+  .content-tab-musicshop .list-music-shop .buk-track-cash {
+    width: 25%;
+  }
+}
+@media (min-width: 1150px) {
+  .content-tab-musicshop .sm2-bar-musicshop > .bd {
+   width: 70%;
+  }
+}
+@media (max-width: 1150px) and (min-width: 780px) {
+  .content-tab-musicshop .sm2-bar-musicshop > .bd {
+   width: 90%;
+  }
+}
+@media (max-width: 780px) {
+  .content-tab-musicshop .sm2-bar-musicshop > .bd {
+   width: 100%;
+  }
+}
+
+
+/*******************/
+
+
+
+
+
+
+
+
 .list-music-shop .buk-track-command {
   width: 55px;
   float: right;
@@ -314,37 +401,8 @@
 .list-music-shop .bd.sm2-main-controls {
   display: block;
 }
-.content-bar-musicshop .list-music-shop p.buk-track-title {
-  padding-left: 10px;
-}
-@media (min-width: 980px) {
-  .list-music-shop .buk-track-title {
-    width: 30%;
-  }
-  .list-music-shop .buk-track-artists {
-    width: 20%;
-  }
-  .list-music-shop .buk-track-genre {
-    width: 20%;
-  }
-  .list-music-shop .buk-track-cash {
-    width: 20%;
-  }
-}
-@media (max-width: 980px) {
-  .list-music-shop .buk-track-title {
-    width: 30%;
-  }
-  .list-music-shop .buk-track-artists {
-    width: 19%;
-  }
-  .list-music-shop .buk-track-genre {
-    width: 19%;
-  }
-  .list-music-shop .buk-track-cash {
-    width: 25%;
-  }
-}
+
+
 
 
 
@@ -369,20 +427,20 @@
   cursor: pointer;
 }
 .list-music-shop span.buk-track-counter {
-    position: absolute;
-    font-size: 20px;
-    margin-top: 8px;
-    margin-left: 10px;
+  position: absolute;
+  font-size: 20px;
+  margin-top: 5px;
+  margin-left: 10px;
 }
 .btn-rjm-list{
   height: 100%;
-  padding: 7px;
+  padding: 5px 7px;
   cursor: pointer;
   font-size: 14px;
   text-align: center;
   opacity: .55;
   display: inline-block;
-  font-size: 100%;
+  font-size: 90%;
 }
 div.sm2-row:hover div.btn-rjm-list{
   opacity: 1;
@@ -401,11 +459,12 @@ div.btn-rjm-list.btn-youtube.disabled,div.btn-rjm-list.btn-youtube[disabled],fie
   background-color: rgb(181, 91, 91);
     cursor: initial;}
 .list-music-shop .sm2-playlist-bd span.assoc_price {
-    background: #ff53a0;
-    padding: 5px 8px 6px;
-    height: 28px;
-    margin: 0;
-    float: left;
+  background: #ff53a0;
+  padding: 5px 8px 6px;
+  height: 28px;
+  margin: 0;
+  float: left;    
+  min-width: 60px;
 }
 .list-music-shop .sm2-playlist-bd a.sm2-icon.sm2-cart {
   background-color: #d64988;
@@ -414,10 +473,14 @@ div.btn-rjm-list.btn-youtube.disabled,div.btn-rjm-list.btn-youtube[disabled],fie
   float: left;
 }
 .list-music-shop .sm2-playlist-bd .sm2-inline-element.buk-track-cash.btn-rjm-list.ajax_add_to_cart_button, .list-music-shop .sm2-playlist-bd .sm2-inline-element.buk-track-cash.btn-rjm-list.ajax_add_to_cart_button:hover {
-    background: none;
+  background: none;
 }
 .list-music-shop ul.sm2-playlist-bd > li {
-    padding: 5px;
+   padding: 5px;
 }
-
-    
+.marT20{
+  margin-top: 20px;
+}
+.marB20{
+  margin-bottom: 20px;
+}
