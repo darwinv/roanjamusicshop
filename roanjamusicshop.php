@@ -416,6 +416,14 @@ class RoanjaMusicShop extends Module
 			}else{
 				$clase="agregar-lista";
 			}
+
+    if(empty($item_mp3[0]["url_youtube"])){
+			$style_width="width:33.33%";
+			}
+			else {
+			$style_width="";
+			}
+
 			$this->context->smarty->assign(array(
 			 	'id_product' => $id_product,
 				'mp3_name' => $item_mp3[0]["mp3_name"],
@@ -423,6 +431,7 @@ class RoanjaMusicShop extends Module
 				'url_youtube' => $item_mp3[0]["url_youtube"],
 				'precio' => $arrdata["price"].$arrdata['sign'] ,
 				'clase' => $clase,
+				'style_width'=>$style_width
 			));
 			return $this->display(__FILE__, 'mp3_button.tpl');
 		}
@@ -468,7 +477,7 @@ class RoanjaMusicShop extends Module
 												'clase' => $clase,
 
 						));
-						return $this->display(__FILE__, 'mp3_button.tpl');
+						return $this->display(__FILE__, 'mp3_button_special.tpl');
 				}
 
 	}
@@ -1027,6 +1036,7 @@ class RoanjaMusicShop extends Module
 	{
 		$this->_clearCache('bar-ui.tpl');
 		$this->_clearCache('mp3_button.tpl');
+		$this->_clearCache('mp3_button_special.tpl');
 	}
 
 	public function displayStatus($id_mp3, $active)

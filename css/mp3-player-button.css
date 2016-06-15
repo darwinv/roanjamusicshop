@@ -62,7 +62,10 @@ a .btn-tooltip {
 	cursor: pointer;
 }
 
-
+.btn-bar-rjm.text-center.container a {
+	display: inline-block;
+	min-width: 50px;
+}
 button.agregar-lista{
 	background-image:url(../image/list_add-128.png);
 	width:18px;
@@ -82,7 +85,7 @@ i.quitar-lista2{
     cursor:pointer;
 }
 div.btn-bar-rjm {
-    width: 80%;
+    width: 100%;
     height: 35px;
 }
 div.btn-rjm {
