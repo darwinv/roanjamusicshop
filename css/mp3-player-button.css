@@ -82,17 +82,17 @@ i.quitar-lista2{
     cursor:pointer;
 }
 div.btn-bar-rjm {
-    width: 100%;
+    width: 80%;
     height: 35px;
 }
 div.btn-rjm {
-    width: 20%;
-    float: left;
-    height: 100%;
-    padding: 7px;
-    cursor: pointer;
-    text-align: center;
-    background-color: #eeeeee;
+		width: 20%;
+		float: left;
+		height: 80%;
+		padding: 4px;
+		cursor: pointer;
+		text-align: center;
+		background-color: #eeeeee;
 }
 div.btn-rjm-special {
     width: 40%;
@@ -139,12 +139,12 @@ div.btn-rjm-special:hover {
     background-color: red;
 }
 #pricerjm {
-    background-color: black;
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-    width: 40%;
-    cursor: text;
+		background-color: #28343d;
+		color: white;
+		font-weight: bold;
+		font-size: 14px;
+		width: 40%;
+		cursor: text;
 }
 #pricerjm-special {
     background-color: black;
@@ -155,7 +155,7 @@ div.btn-rjm-special:hover {
     cursor: text;
 }
 .sm2_button .btn-rjm {
-    border-right: #ccc solid 1px;
+  border-right: #E8E8E8 solid 1px;
 }
 .sm2_button .btn-rjm-special {
     border-right: #ccc solid 1px;

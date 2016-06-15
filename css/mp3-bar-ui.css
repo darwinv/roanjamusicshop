@@ -99,7 +99,7 @@
 .sm2-bar-ui .bd,
 .sm2-bar-ui .sm2-extra-controls {
  position: relative;
- background-color: #232E35;
+ background-color: #000000;
  /*
  transition: background 0.2s ease-in-out;
  */
@@ -760,7 +760,7 @@
 .sm2-element ul,
 .sm2-element ul li {
  margin: 0px;
- padding: 10px;
+ padding: 0px;
 }
 
 .bd.sm2-playlist-drawer {
@@ -861,7 +861,7 @@
 
 .sm2-playlist-wrapper {
  position: relative;
- padding: 0.5em 0.5em 0.5em 0.25em;
+ padding: 0.5em 0.1em 0.5em 0.1em;
  background-image: none, none;
 }
 
@@ -875,12 +875,12 @@
 }
 
 .sm2-playlist-wrapper ul li:nth-child(odd) {
- background-color: rgba(255,255,255,0.03);
+ /*background-color: rgba(255,255,255,0.03);*/
 }
 
 .sm2-playlist-wrapper ul li a {
  display: inline;
- padding: 0.5em 0.25em 0.5em 0.75em;
+ /*padding: 0.5em 0.25em 0.5em 0.75em;*/
  margin-right: 0px;
  font-size: 90%;
  vertical-align: middle;
@@ -911,7 +911,10 @@
 
 .sm2-playlist-wrapper ul li.selected a p {
 
- color: #FFCC00!important;
+ color: #13191c!important;
+}
+.sm2-playlist-wrapper ul li.selected {
+    background-color: white;
 }
 
 .sm2-bar-ui.dark-text ul li.selected a {
@@ -1034,24 +1037,30 @@ div.content-bar-musicshop{
 }
 a.quitar-lista2 {
     float: right;
+    padding: 20px;
+    padding-left: 2px;
 }
 a.cart-list-ico {
     float: right;
     width: 18%;
     background-color: #13191C;
+    padding: 0.5em 0.25em 0.5em 0.75em;
+    margin: 12px;
 }
 a.cart-list-ico:hover {
     background-color: #39444E !important;
 }
 a.dat-list{
   float: left;
+  width: 70%;
 }
 li.item-list{
-  height: 50px;
+  height: 60px;
 }
 i.fa.fa-remove {
     font-size: 18px;
     cursor: pointer;
+    margin-left: 10px;
 }
 span.price-list {
     font-size: 15px !important;
@@ -1102,18 +1111,30 @@ span.price-list {
 }
 p.p-list {
     float: left;
-    padding: 0px;
-    font-size: 14px;
+    padding: 15px;
+    padding-left: 5px;
+    font-size: 12px;
     color: white;
+    width: 75%;
+    height: 60px;
 }
 p.p-list b {
-    font-size: 16px;
+    font-size: 14px;
 }
-p.p-list:hover {
-    color: #F9B002 !important;
-}
+
 
 .sm2-playlist-wrapper ul li.selected a p .list-author {
 
- color: #FFCC00!important;
+ color: #13191c!important;
+}
+.img-list{
+float: left;
+width: 60px;
+height: 60px;
+margin-left: 5px;
+margin-right: 10px;
+padding-top: 2px;
+}
+.sm2-playlist-wrapper ul li:hover {
+    background-color: #28343d;
 }

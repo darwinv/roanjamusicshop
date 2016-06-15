@@ -96,6 +96,11 @@
             <li class="{$valor.id} item-list" data-id="{$valor.id_music}">
               <a href="{$modules_dir}roanjamusicshop/mp3/{$valor.name}" class="dat-list" data-youtube="{if !empty($valor.youtube)}{$valor.youtube}{/if}">
 
+               {assign var='product' value=$valor.id}
+                  {assign var='img' value=Product::getCover($lista[$lis].id)}
+                  
+                  <img  class="img-responsive img-list" itemprop="image" src="{$link->getImageLink($product, $img.id_image, 'small_default')|escape:'html':'UTF-8'}" />
+
               <p class="p-list"><span class="list-titlesound"><b>{$valor.title}</b></span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>{$valor.genero}</span><br><span class="list-author">{$valor.author}</span></p>
 
               </a>
