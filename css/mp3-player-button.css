@@ -163,3 +163,6 @@ div.btn-rjm-special:hover {
 .product-block .Buttons {
     margin-top: 80px;
 }
+.product-block .product-image-container.image .name {
+    min-height: 52px;
+}
