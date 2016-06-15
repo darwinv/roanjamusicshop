@@ -99,34 +99,32 @@ $(document).ready(function(){
       }
    });
 
-   $(document).on("click",".play-pause",function(e){
-	  //var str=soundManager.soundIDs[0];
-	  //  var res = str.substring(4);
-    var actualID=window.soundManager.soundIDs.length-1
-	if($('#barra').hasClass("playing")){
+     $(document).on("click",".play-pause",function(e){
+  	  //var str=soundManager.soundIDs[0];
+  	  //  var res = str.substring(4);
+      var actualID=window.soundManager.soundIDs.length-1
+  	if($('#barra').hasClass("playing")){
 
-	  soundManager.pause(soundManager.soundIDs[actualID]);
-	//window.sm2BarPlayers[res].actions.pause();
-	$('#barra').removeClass("playing");
-	$('#barra').addClass("paused");
-	}
-	else{
-	    if($('#barra').hasClass("paused")){
-	   soundManager.resume(soundManager.soundIDs[actualID]);
-	   $('#barra').removeClass("paused");
-	   $('#barra').addClass("playing");
-	   }
-	 }
+  	  soundManager.pause(soundManager.soundIDs[actualID]);
+  	//window.sm2BarPlayers[res].actions.pause();
+  	$('#barra').removeClass("playing");
+  	$('#barra').addClass("paused");
+  	}
+  	else{
+  	    if($('#barra').hasClass("paused")){
+  	   soundManager.resume(soundManager.soundIDs[actualID]);
+  	   $('#barra').removeClass("paused");
+  	   $('#barra').addClass("playing");
+  	   }
+  	 }
 
-  $(document).on("click",".youtube",function(e){ console.log("seeeeeeeeeeeeeeeeEEE");alert();
+  	});
+
+  $(document).on("click",".youtube",function(e){ alert();
     if($(this).hasClass("youtubeDisable, noYoutube")){
        e.preventDefault();
-    } e.preventDefault();
+    }
   });
-
-
-	});
-
 
    function playerMusic(song,title,lugar){
       var mp3btn="playermp3";
