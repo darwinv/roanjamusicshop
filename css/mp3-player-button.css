@@ -86,12 +86,12 @@ i.quitar-lista2{
 }
 div.btn-bar-rjm {
     width: 100%;
-    height: 35px;
+    height: 30px;
 }
 div.btn-rjm {
 		width: 20%;
 		float: left;
-		height: 80%;
+		height: 90%;
 		padding: 4px;
 		cursor: pointer;
 		text-align: center;
