@@ -1,6 +1,5 @@
 /*jslint plusplus: true, white: true, nomen: true */
 /*global console, document, navigator, soundManager, window */
-
 (function(window) {
 
   /**
@@ -679,7 +678,7 @@
     function getActionData(target) {
 
       // DOM measurements for volume slider
-
+      console.log("seeeee");
       if (!target) {
         return false;
       }
@@ -800,13 +799,10 @@
 
             // is this one of the action buttons, eg., play/pause, volume, etc.?
             offset = target.href.lastIndexOf('#');
-
             if (offset !== -1) {
 
               methodName = target.href.substr(offset+1);
-
               if (methodName && actions[methodName]) {
-                handled = true;
                 actions[methodName](e);
               }
 
@@ -1104,7 +1100,9 @@
 
       menu: function(ignoreToggle) {
         var isOpen;
+
         isOpen = utils.css.has(dom.o, css.playlistOpen);
+
         // hackish: reset scrollTop in default first open case. odd, but some browsers have a non-zero scroll offset the first time the playlist opens.
         if (playlistController && !playlistController.data.selectedIndex && !firstOpen) {
           dom.playlist.scrollTop = 0;
@@ -1115,11 +1113,14 @@
           if (!isOpen) {
             // explicitly set height:0, so the first closed -> open animation runs properly
             dom.playlistContainer.style.height = '0px';
-          }
-          isOpen = utils.css.toggle(dom.o, css.playlistOpen);
+          }          
+          isOpen = utils.css.toggle(dom.o, css.playlistOpen);//console.log(dom.playlistContainer.scrollHeight);
         }
         // playlist
+         
         dom.playlistContainer.style.height = (isOpen ? dom.playlistContainer.scrollHeight : 0) + 'px';
+        //console.log((isOpen ? dom.playlistContainer.scrollHeight : 0) + 'px');  
+
       },
       adjustVolume: function(e) {
 
@@ -1310,7 +1311,6 @@
           return false; // safety net
         }
         o.className = (o.className ? o.className + ' ' : '') + cStr;
-
       }
 
       function removeClass(o, cStr) {
@@ -1329,7 +1329,6 @@
         };
 
         removeClass(tmpClass, cStr1);
-        addClass(tmpClass, cStr2);
 
         o.className = tmpClass.className;
 
@@ -1343,9 +1342,8 @@
         found = hasClass(o, cStr);
 
         method = (found ? removeClass : addClass);
-
+        
         method(o, cStr);
-
         // indicate the new state...
         return !found;
 

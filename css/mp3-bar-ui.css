@@ -864,20 +864,16 @@
  padding: 0.5em 0.1em 0.5em 0.1em;
  background-image: none, none;
 }
-
 .sm2-playlist-wrapper ul {
- max-height: 20em;
+ max-height: 30em;
  overflow: auto;
 }
-
 .sm2-playlist-wrapper ul li {
  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
-
 .sm2-playlist-wrapper ul li:nth-child(odd) {
  /*background-color: rgba(255,255,255,0.03);*/
 }
-
 .sm2-playlist-wrapper ul li a {
  display: inline;
  /*padding: 0.5em 0.25em 0.5em 0.75em;*/
