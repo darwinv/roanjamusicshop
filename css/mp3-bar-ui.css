@@ -1038,9 +1038,9 @@ a.quitar-lista2 {
 }
 a.cart-list-ico {
     float: right;
-    width: 18%;
+    width: auto;
     background-color: #13191C;
-    padding: 0.5em 0.25em 0.5em 0.75em;
+    padding: 0.5em 1em 0.5em 1em;
     margin: 12px;
 }
 a.cart-list-ico:hover {
