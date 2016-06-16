@@ -65,6 +65,7 @@ a .btn-tooltip {
 .btn-bar-rjm.text-center.container a {
 	display: inline-block;
 	min-width: 50px;
+    margin-left: -4px;
 }
 button.agregar-lista{
 	background-image:url(../image/list_add-128.png);
@@ -167,5 +168,5 @@ div.btn-rjm-special:hover {
     margin-top: 80px;
 }
 .product-block .product-image-container.image .name {
-    min-height: 52px;
+    min-height: 55px;
 }
