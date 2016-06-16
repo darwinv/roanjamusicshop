@@ -362,8 +362,9 @@ class RoanjaMusicShop extends Module
 				));
 
        		}
-       		return $this->display(__FILE__, 'views/templates/front/column.tpl');
 		}
+
+		return $this->display(__FILE__, 'views/templates/front/column.tpl');
 	}
 	public function hookDisplayProductTabContent()
 	{
