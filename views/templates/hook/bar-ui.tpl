@@ -113,44 +113,6 @@
             </li>
             {/foreach}
 
-            {foreach $lista as $lis=>$valor}
-            <li class="{$valor.id} item-list" data-id="{$valor.id_music}">
-              <a href="{$modules_dir}roanjamusicshop/mp3/{$valor.name}" class="dat-list" data-youtube="{if !empty($valor.youtube)}{$valor.youtube}{/if}">
-
-               {assign var='product' value=$valor.id}
-                  {assign var='img' value=Product::getCover($lista[$lis].id)}
-                  
-                  <img  class="img-responsive img-list" itemprop="image" src="{$link->getImageLink($product, $img.id_image, 'small_default')|escape:'html':'UTF-8'}" />
-
-              <p class="p-list"><span class="list-titlesound"><b>{$valor.title}</b></span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>{$valor.genero}</span><br><span class="list-author">{$valor.author}</span></p>
-
-              </a>
-              <a class="quitar-lista2"><span><i class="fa fa-remove"></i></span></a>
-              <a class="exclusive ajax_add_to_cart_button cart-list-ico" rel="ajax_id_product_{$valor.id}" href="{$link->getPageLink('cart')|escape:'html'}?qty=1&amp;id_product={$valor.id}&amp&amp;add" title="{l s='Add to cart' mod='homefeatured'}" data-id-product="{$valor.id}">&nbsp;&nbsp;
-              <span class="price-list">{$valor.price|string_format:"%.2f"}&nbsp;&nbsp;<i class="fa fa-shopping-cart"></i></span>
-              </a>
-            </li>
-            {/foreach}
-
-
-            {foreach $lista as $lis=>$valor}
-            <li class="{$valor.id} item-list" data-id="{$valor.id_music}">
-              <a href="{$modules_dir}roanjamusicshop/mp3/{$valor.name}" class="dat-list" data-youtube="{if !empty($valor.youtube)}{$valor.youtube}{/if}">
-
-               {assign var='product' value=$valor.id}
-                  {assign var='img' value=Product::getCover($lista[$lis].id)}
-                  
-                  <img  class="img-responsive img-list" itemprop="image" src="{$link->getImageLink($product, $img.id_image, 'small_default')|escape:'html':'UTF-8'}" />
-
-              <p class="p-list"><span class="list-titlesound"><b>{$valor.title}</b></span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>{$valor.genero}</span><br><span class="list-author">{$valor.author}</span></p>
-
-              </a>
-              <a class="quitar-lista2"><span><i class="fa fa-remove"></i></span></a>
-              <a class="exclusive ajax_add_to_cart_button cart-list-ico" rel="ajax_id_product_{$valor.id}" href="{$link->getPageLink('cart')|escape:'html'}?qty=1&amp;id_product={$valor.id}&amp&amp;add" title="{l s='Add to cart' mod='homefeatured'}" data-id-product="{$valor.id}">&nbsp;&nbsp;
-              <span class="price-list">{$valor.price|string_format:"%.2f"}&nbsp;&nbsp;<i class="fa fa-shopping-cart"></i></span>
-              </a>
-            </li>
-            {/foreach}
         {/if}
     </ul>
   </div>

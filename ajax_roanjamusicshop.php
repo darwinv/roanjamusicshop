@@ -87,6 +87,9 @@ if(Tools::getValue('action')=='getSongs'){
      $image_url = _PS_BASE_URL_._THEME_PROD_DIR_.$image->getExistingImgPath().".jpg";
 
     $res[0]['cover']=$image_url;
+
+    $res[0]['price']=$home_music->GetPriceFormat($res[0]['price']);
+    
     echo json_encode($res);
 }
 if(Tools::getValue('action')=='setCookie'){
