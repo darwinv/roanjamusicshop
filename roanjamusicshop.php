@@ -368,7 +368,7 @@ class RoanjaMusicShop extends Module
 	}
 	public function hookDisplayProductTabContent()
 	{
-		if (Tools::getValue('MUSIC_POSITION', Configuration::get('MUSIC_POSITION')) == 2)
+		if (Tools::getValue('MUSIC_POSITION', Configuration::get('MUSIC_POSITION')) == 1)
 		{
 			$associated_mp3 = $this->GetSoundsOfProduct();
 			if(!empty($associated_mp3)){
@@ -403,7 +403,7 @@ class RoanjaMusicShop extends Module
 		$this->product = new Product($id_product, false,$this->context->language->id);
 		$precioconv=Tools::convertPrice($this->product->price, $this->context->currency);
 		$arrdata["price"]=number_format($precioconv, 2, ",", "");
-		$arrdata['sign']=$this->context->currency->sign;
+ 
 
 		if(!empty($item_mp3)){
 			if(isset($_COOKIE['lista'])){
@@ -430,7 +430,7 @@ class RoanjaMusicShop extends Module
 				'mp3_name' => $item_mp3[0]["mp3_name"],
 				'mp3_title' => $item_mp3[0]["mp3_title"],
 				'url_youtube' => $item_mp3[0]["url_youtube"],
-				'precio' => $arrdata["price"].$arrdata['sign'] ,
+				'precio' => $arrdata["price"],
 				'clase' => $clase,
 				'style_width'=>$style_width
 			));
