@@ -23,14 +23,14 @@
 *  International Registered Trademark & Property of PrestaShop SA
 *}
 <div class="btn-bar-rjm">
-	<a data-id="{$id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$mp3_name}" class="sm2_button" title="{$mp3_title}" data-youtube="{if !empty($url_youtube)}{$url_youtube}{/if}" >
+	<a data-id="{$id_product}"  data-href="{$modules_dir}roanjamusicshop/mp3/{$mp3_name}" class="sm2_button" title="{$mp3_title}" data-youtube="{if !empty($url_youtube)}{$url_youtube}{/if}" >
 		<div class="btn-rjm" style="{$style_width}" ><i class="fa fa-play" aria-hidden="true"></i></div>
 	</a>
-	<a class="{$clase}" title="Agregar a lista" >
+	<a class="{$clase}" id="playlist{$id_product}" title="Agregar a lista" >
 		<div class="btn-rjm" style="{$style_width}"><i class="fa fa-list" aria-hidden="true"></i></div>
 	</a>
 	{if !empty($url_youtube)}
-	<a class="roanjayt fancybox fancybox.iframe"  title="Ver Video" href="https://www.youtube.com/embed/{$url_youtube}?autoplay=1" >
+	<a class="roanjayt youtube fancybox fancybox.iframe"  title="Ver Video" href="https://www.youtube.com/embed/{$url_youtube}?autoplay=1" >
 		<div class="btn-rjm"> <i class="fa fa-play" aria-hidden="true"></i></div></a>
 	{/if}
 <a title="Precio" >

@@ -46,14 +46,14 @@
     <a href="#repeat" title="Repeat playlist" class="sm2-inline-button repeat">∞ repeat</a>
    </div>
   </div>
-  
+
       <div class="sm2-inline-element sm2-button-element">
        <div class="sm2-button-bd">
       <a class="roanjayt fancybox fancybox.iframe youtube youtubeDisable sm2-inline-button" >
        </a>
        </div>
       </div>
-   
+
   <!-- not implemented -->
   <!--
   <div class="sm2-inline-element sm2-button-element disabled">
@@ -98,13 +98,13 @@
 
                {assign var='product' value=$valor.id}
                   {assign var='img' value=Product::getCover($lista[$lis].id)}
-                  
+
                   <img  class="img-responsive img-list" itemprop="image" src="{$link->getImageLink($product, $img.id_image, 'small_default')|escape:'html':'UTF-8'}" />
 
               <p class="p-list"><span class="list-titlesound"><b>{$valor.title}</b></span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>{$valor.genero}</span><br><span class="list-author">{$valor.author}</span></p>
 
               </a>
-              <a class="quitar-lista2"><span><i class="fa fa-remove"></i></span></a>
+              <a class="quitar-lista"><span><i class="fa fa-remove"></i></span></a>
               <a class="exclusive ajax_add_to_cart_button cart-list-ico" rel="ajax_id_product_{$valor.id}" href="{$link->getPageLink('cart')|escape:'html'}?qty=1&amp;id_product={$valor.id}&amp&amp;add" title="{l s='Add to cart' mod='homefeatured'}" data-id-product="{$valor.id}">&nbsp;&nbsp;
               <span class="price-list">
               {convertPrice price=$valor.price}

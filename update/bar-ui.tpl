@@ -47,7 +47,7 @@
   </div>
   {if $id_url}<div class="sm2-inline-element sm2-button-element">
    <div class="sm2-button-bd">
-	<a class="roanjayt fancybox fancybox.iframe youtube sm2-inline-button" href="https://www.youtube.com/embed/{$id_url}" >
+	<a class="roanjayt youtube fancybox fancybox.iframe youtube sm2-inline-button" href="https://www.youtube.com/embed/{$id_url}" >
 	 </a>
    </div>
   </div>{/if}
@@ -89,19 +89,19 @@
      <!--<span class="label">{$valor.title|truncate:10}</span></a><button class="quitar-lista2">X</button></li>-->
      </li>
         {if !empty($lista)}
-            {foreach $lista as $lis=>$valor} 
+            {foreach $lista as $lis=>$valor}
                 <li class="{$valor.id}" data-id="{$valor.id_music}">
                   <a href="{$modules_dir}roanjamusicshop/mp3/{$valor.name}">
                       <b>{$valor.name} - {$valor.title}</b>
-                  </a>    
+                  </a>
                   <a class="quitar-lista2"><span><i class="fa fa-remove"></i></span></a>
                   <a class="exclusive ajax_add_to_cart_button" rel="ajax_id_product_{$valor.id}" href="{$link->getPageLink('cart')|escape:'html'}?qty=1&amp;id_product={$valor.id}&amp&amp;add" title="{l s='Add to cart' mod='homefeatured'}" data-id-product="{$valor.id}">&nbsp;&nbsp;
                   <span>{$valor.price|string_format:"%.2f"}&nbsp;&nbsp;<i class="fa fa-shopping-cart"></i></span>
-                  </a>                  
+                  </a>
                 </li>
             {/foreach}
         {/if}
-    </ul>  
+    </ul>
   </div>
  </div>
 </div>

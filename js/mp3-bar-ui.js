@@ -800,6 +800,7 @@
             if (offset !== -1) {
               methodName = target.href.substr(offset+1);
               if (methodName && actions[methodName]) {
+                   handled = true;
                 actions[methodName](e);
               }
 
@@ -1110,13 +1111,13 @@
           if (!isOpen) {
             // explicitly set height:0, so the first closed -> open animation runs properly
             dom.playlistContainer.style.height = '0px';
-          }          
+          }
           isOpen = utils.css.toggle(dom.o, css.playlistOpen);//console.log(dom.playlistContainer.scrollHeight);
         }
         // playlist
-         
+
         dom.playlistContainer.style.height = (isOpen ? dom.playlistContainer.scrollHeight : 0) + 'px';
-        //console.log((isOpen ? dom.playlistContainer.scrollHeight : 0) + 'px');  
+        //console.log((isOpen ? dom.playlistContainer.scrollHeight : 0) + 'px');
 
       },
       adjustVolume: function(e) {
@@ -1326,6 +1327,7 @@
         };
 
         removeClass(tmpClass, cStr1);
+        addClass(tmpClass, cStr2);
 
         o.className = tmpClass.className;
 
@@ -1339,7 +1341,7 @@
         found = hasClass(o, cStr);
 
         method = (found ? removeClass : addClass);
-        
+
         method(o, cStr);
         // indicate the new state...
         return !found;

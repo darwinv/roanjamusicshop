@@ -117,7 +117,7 @@ if(Tools::getValue('action')=='setCookie'){
 if(Tools::getValue('action')=='removeSongs'){
     $id=(int)Tools::getValue('id');
     $lista=unserialize($_COOKIE['lista']);
-    $listaId=array_column($lista,"id");
+    $listaId=$home_music->array_columns($lista,"id_music");
     for($i=0;$i<count($listaId);$i++){
         if($listaId[$i]==$id){
             unset($lista[$i]);
