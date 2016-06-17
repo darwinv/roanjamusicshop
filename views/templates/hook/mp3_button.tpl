@@ -34,7 +34,7 @@
 		<div class="btn-rjm"> <i class="fa fa-play" aria-hidden="true"></i></div></a>
 	{/if}
 <a title="Precio" >
-	<div class="btn-rjm" id="pricerjm" style="{$style_width}">{$precio}</div>
+	<div class="btn-rjm" id="pricerjm" style="{$style_width}">{convertPrice price=$precio}</div>
 </a>
 </div>
 <script type="text/javascript">

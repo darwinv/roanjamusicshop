@@ -400,9 +400,7 @@ class RoanjaMusicShop extends Module
 		$item_mp3=Db::getInstance()->ExecuteS($id_sql);
 
 		$this->product = new Product($id_product, false,$this->context->language->id);
-		$precioconv=Tools::convertPrice($this->product->price, $this->context->currency);
-		$arrdata["price"]=number_format($precioconv, 2, ",", "");
- 
+ 		$price=$this->product->price;
 
 		if(!empty($item_mp3)){
 			if(isset($_COOKIE['lista'])){
@@ -417,11 +415,11 @@ class RoanjaMusicShop extends Module
 				$clase="agregar-lista";
 			}
 
-    if(empty($item_mp3[0]["url_youtube"])){
-			$style_width="width:33.33%";
+		    if(empty($item_mp3[0]["url_youtube"])){
+				$style_width="width:33.33%";
 			}
 			else {
-			$style_width="";
+				$style_width="";
 			}
 
 			$this->context->smarty->assign(array(
@@ -429,7 +427,7 @@ class RoanjaMusicShop extends Module
 				'mp3_name' => $item_mp3[0]["mp3_name"],
 				'mp3_title' => $item_mp3[0]["mp3_title"],
 				'url_youtube' => $item_mp3[0]["url_youtube"],
-				'precio' => $arrdata["price"],
+				'precio' => $price ,
 				'clase' => $clase,
 				'style_width'=>$style_width
 			));
@@ -485,7 +483,10 @@ class RoanjaMusicShop extends Module
 	{
 		return parent::getCacheId().'|'.(int)$id_product;
 	}
-
+	public function GetPriceFormat($price)
+	{
+		return Tools::displayPrice($price,$this->context->currency);
+	}
 	public function headerHTML()
 	{
 		if (Tools::getValue('controller') != 'AdminModules' && Tools::getValue('configure') != $this->name)

@@ -678,7 +678,6 @@
     function getActionData(target) {
 
       // DOM measurements for volume slider
-      console.log("seeeee");
       if (!target) {
         return false;
       }
@@ -737,7 +736,6 @@
     }
 
     function handleClick(e) {
-
       var evt,
           target,
           offset,
@@ -800,7 +798,6 @@
             // is this one of the action buttons, eg., play/pause, volume, etc.?
             offset = target.href.lastIndexOf('#');
             if (offset !== -1) {
-
               methodName = target.href.substr(offset+1);
               if (methodName && actions[methodName]) {
                 actions[methodName](e);

@@ -794,10 +794,17 @@
  right: 0;
 }
 
-@media (min-width: 801px) {
+
+@media (min-width: 1224px) {
   .sm2-bar-ui.fixed .bd.sm2-playlist-drawer,
   .sm2-bar-ui.bottom .bd.sm2-playlist-drawer {
    width: 40%;
+  }
+}
+@media (max-width: 1224px) and (min-width: 801px) {
+  .sm2-bar-ui.fixed .bd.sm2-playlist-drawer,
+  .sm2-bar-ui.bottom .bd.sm2-playlist-drawer {
+   width: 60%;
   }
 }
 @media (max-width: 800px) {
@@ -1048,7 +1055,8 @@ a.cart-list-ico:hover {
 }
 a.dat-list{
   float: left;
-  width: 70%;
+  /*width: 70%;*/
+  width: calc(100% - 180px);
 }
 li.item-list{
   height: 60px;
