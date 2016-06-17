@@ -303,18 +303,17 @@ class RoanjaMusicShop extends Module
 	public function hookDisplayFooter()
 	{
 
-			if(isset($_COOKIE['lista'])){
-					$lista=unserialize($_COOKIE['lista']);
-					$oculto="";
-			}else{
-					$lista=array();
-					$oculto="hidden";
-
-			}
+		if(isset($_COOKIE['lista'])){
+				$lista=unserialize($_COOKIE['lista']);
+				$oculto="";
+		}else{
+				$lista=array();
+				$oculto="hidden";
+		}
 		$this->context->smarty->assign(array('lista' => $lista,
 											'oculto' => $oculto));
-	return $this->display(__FILE__, 'bar-ui.tpl');
-}
+		return $this->display(__FILE__, 'bar-ui.tpl');
+	}
 
 	public function GetSoundsOfProduct()
 	{
@@ -360,14 +359,13 @@ class RoanjaMusicShop extends Module
  				$this->context->smarty->assign(array(
 					'associated_mp3' => $associated_mp3,
 				));
-
-       		}
-       		return $this->display(__FILE__, 'views/templates/front/column.tpl');
+				return $this->display(__FILE__, 'views/templates/front/column.tpl');
+       		}       		
 		}
 	}
 	public function hookDisplayProductTabContent()
 	{
-		if (Tools::getValue('MUSIC_POSITION', Configuration::get('MUSIC_POSITION')) == 1)
+		if (Tools::getValue('MUSIC_POSITION', Configuration::get('MUSIC_POSITION')) == 2)
 		{
 			$associated_mp3 = $this->GetSoundsOfProduct();
 			if(!empty($associated_mp3)){
