@@ -30,7 +30,7 @@
 		<div class="btn-rjm" style="{$style_width}"><i class="fa fa-list" aria-hidden="true"></i></div>
 	</a>
 	{if !empty($url_youtube)}
-	<a class="roanjayt fancybox fancybox.iframe"  title="Ver Video" href="https://www.youtube.com/embed/{$url_youtube}?autoplay=1" >
+	<a class="roanjayt youtube fancybox fancybox.iframe"  title="Ver Video" href="https://www.youtube.com/embed/{$url_youtube}?autoplay=1" >
 		<div class="btn-rjm"> <i class="fa fa-play" aria-hidden="true"></i></div></a>
 	{/if}
 <a title="Precio" >

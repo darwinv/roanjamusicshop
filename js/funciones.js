@@ -134,6 +134,8 @@ $(document).ready(function(){
   	});
 
   $(document).on("click",".youtube",function(e){
+  var actualID=window.soundManager.soundIDs.length-1
+    soundManager.pause(soundManager.soundIDs[actualID]);
     if($(this).hasClass("youtubeDisable, noYoutube")){
        e.preventDefault();
     }
