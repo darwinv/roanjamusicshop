@@ -403,7 +403,7 @@ class RoanjaMusicShop extends Module
 		$this->product = new Product($id_product, false,$this->context->language->id);
 		$precioconv=Tools::convertPrice($this->product->price, $this->context->currency);
 		$arrdata["price"]=number_format($precioconv, 2, ",", "");
- 
+
 
 		if(!empty($item_mp3)){
 			if(isset($_COOKIE['lista'])){
@@ -434,7 +434,7 @@ class RoanjaMusicShop extends Module
 				'clase' => $clase,
 				'style_width'=>$style_width
 			));
-			return $this->display(__FILE__, 'mp3_button.tpl');
+			return $this->display(__FILE__, 'mp3_button_special.tpl');
 		}
 	}
 
