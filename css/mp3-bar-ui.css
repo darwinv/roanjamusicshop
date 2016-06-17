@@ -1035,7 +1035,7 @@ div.pos-init{
 div.content-bar-musicshop{
   text-align: center;
 }
-a.quitar-lista2 {
+.dat-list + .quitar-lista {
     float: right;
     padding: 20px;
     padding-left: 2px;
