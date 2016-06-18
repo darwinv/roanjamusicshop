@@ -25,8 +25,7 @@ $(document).ready(function(){
             $("#barra").find(".sm2-playlist-wrapper").find(".sm2-playlist-bd").append(newsong);
              window.sm2BarPlayers[0].actions.menu(true);
            }
-           $(".playlist"+id).addClass("quitar-lista");
-           alert("hey");
+           $(".playlist"+id).addClass("quitar-lista")
            $(".playlist"+id).removeClass("agregar-lista");
 
            if($("div#barra").hasClass("hidden"))
