@@ -400,7 +400,9 @@ class RoanjaMusicShop extends Module
 		$item_mp3=Db::getInstance()->ExecuteS($id_sql);
 
 		$this->product = new Product($id_product, false,$this->context->language->id);
- 		$price=$this->product->price;
+			$precioconv=Tools::convertPrice($this->product->price, $this->context->currency);
+		$arrdata["price"]=number_format($precioconv, 2, ",", "");
+		$arrdata['sign']=$this->context->currency->sign;
 
 
 		if(!empty($item_mp3)){
@@ -428,7 +430,7 @@ class RoanjaMusicShop extends Module
 				'mp3_name' => $item_mp3[0]["mp3_name"],
 				'mp3_title' => $item_mp3[0]["mp3_title"],
 				'url_youtube' => $item_mp3[0]["url_youtube"],
-				'precio' => $price ,
+				'precio' => $arrdata["price"].$arrdata['sign'],
 				'clase' => $clase,
 				'style_width'=>$style_width
 			));
@@ -472,7 +474,7 @@ class RoanjaMusicShop extends Module
 												'mp3_name' => $item_mp3[0]["mp3_name"],
 												'mp3_title' => $item_mp3[0]["mp3_title"],
 						'url_youtube' => $item_mp3[0]["url_youtube"],
-						'precio' => $arrdata["price"].$arrdata['sign'] ,
+						'precio' => $arrdata["price"].$arrdata['sign'],
 												'clase' => $clase,
 
 						));

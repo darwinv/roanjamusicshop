@@ -25,8 +25,9 @@ $(document).ready(function(){
             $("#barra").find(".sm2-playlist-wrapper").find(".sm2-playlist-bd").append(newsong);
              window.sm2BarPlayers[0].actions.menu(true);
            }
-           $("#playlist"+id).addClass("quitar-lista");
-           $("#playlist"+id).removeClass("agregar-lista");
+           $(".playlist"+id).addClass("quitar-lista");
+           alert("hey");
+           $(".playlist"+id).removeClass("agregar-lista");
 
            if($("div#barra").hasClass("hidden"))
            $("div#barra").removeClass("hidden");
@@ -65,8 +66,8 @@ $(document).ready(function(){
           }
       });
       //$("#barra").find(actual2).remove();
-        $("#playlist"+id).addClass("agregar-lista");
-        $("#playlist"+id).removeClass("quitar-lista");
+        $(".playlist"+id).addClass("agregar-lista");
+        $(".playlist"+id).removeClass("quitar-lista");
 
    });
 

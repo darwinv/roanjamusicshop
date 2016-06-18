@@ -79,7 +79,7 @@
            <span class="sm2-col buk-track-command">
               <a data-id="{$items.id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}" ><div class="btn-rjm-list btn-action"><i class="fa fa-play" aria-hidden="true"></i></div>
               </a>
-              <a class="{$items.clase}" id="playlist{$items.id_product}" title="Agregar a lista" >
+              <a class="{$items.clase} playlist{$items.id_product}" title="Agregar a lista" >
                 <div class="btn-rjm-list btn-action"><i class="fa fa-list" aria-hidden="true"></i>
                 </div>
               </a>
