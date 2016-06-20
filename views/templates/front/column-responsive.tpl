@@ -32,19 +32,13 @@
     {assign var='productPrice' value=$product->getPrice(false, $smarty.const.NULL, $priceDisplayPrecision)}
     {assign var='productPriceWithoutReduction' value=$product->getPriceWithoutReduct(true, $smarty.const.NULL)}
 {/if*}
-<div id="content-tab-musicshop" class="content-tab-musicshop">
-
+<div class="content-right-musicshop">
 <div class="sm2-bar-musicshop pos-init full-width">
-
  <div class="bd sm2-element">
-
   <div class="sm2-inline-texture">
    <div class="sm2-box-shadow"></div>
   </div>
-
   <!-- playlist content is mirrored here -->
-
-
   <div class="sm2-playlist-wrapper list-music-shop">
     <div class="bd sm2-main-controls">
       <div class="bucket-track-header-meta">
@@ -59,14 +53,33 @@
     {foreach from=$associated_mp3 item=items}
        <li>
         <div class="sm2-row">
-
           <div class="sm2-inline-element buk-track-plus">
             <span class="buk-track-counter">{counter}</span>
-
-            <span class="sm2-col buk-track-command">
-              <a data-idmusic="{$items.id_music}" data-idproduct="{$items.id_product}"  data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}" ><div class="btn-rjm-list btn-action"><i class="fa fa-play" aria-hidden="true"></i></div>
+          </div>
+          <div class="buk-track-meta-parent">
+            <div class="sm2-inline-element buk-track-title">
+              <a data-id="{$items.id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button pointer" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}">
+               <span class="list-titlesound"  ><b>{$items.mp3_title}</b></span> - <b>{$items.author}</b>
               </a>
-              <a class="{$items.clase} playlist{$items.id_music}" title="Agregar a lista" >
+            </div>
+            <div class="sm2-inline-element buk-track-genre">
+              <b>{$items.genero}</b>
+            </div>
+          </div>
+          <div class="sm2-inline-element buk-track-actions">
+            <div href="{$link->getPageLink('cart',false, NULL, "add=1&amp;id_product={$items.linked_digital_id|intval}&amp;token={$static_token}", false)|escape:'html':'UTF-8'}" rel="nofollow" title="{l s='Add to cart'}" data-id-product="{$items.linked_digital_id|intval}" class="sm2-inline-element buk-track-cash btn-rjm-list ajax_add_to_cart_button">
+                <span class="assoc_price">
+                {if $items.reduction_type == 'amount'}
+                  {convertPrice price=$items.price - $items.reduction}
+                {else}
+                  {convertPrice price=$items.price - ($items.price * $items.reduction)}
+                {/if}
+            &nbsp;&nbsp;<i class="fa fa-shopping-cart"></i></span>
+            </div>
+           <span class="sm2-col buk-track-command">
+              <a data-id="{$items.id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}" ><div class="btn-rjm-list btn-action"><i class="fa fa-play" aria-hidden="true"></i></div>
+              </a>
+              <a class="{$items.clase} playlist{$items.id_product}" title="Agregar a lista" >
                 <div class="btn-rjm-list btn-action"><i class="fa fa-list" aria-hidden="true"></i>
                 </div>
               </a>
@@ -85,71 +98,23 @@
               {/if}
             </span>
           </div>
-          <div class="buk-track-meta-parent">
-            <div class="sm2-inline-element buk-track-title">
-              <a data-idmusic="{$items.id_music}" data-idproduct="{$items.id_product}"  data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button pointer" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}">
-               <span class="list-titlesound"  ><b>{$items.mp3_title}</b></span>
-              </a>
-            </div>
-            <div class="sm2-inline-element buk-track-artists">
-              <b>{$items.author}</b>
-            </div>
-            <div class="sm2-inline-element buk-track-genre">
-              <b>{$items.genero}</b>
-            </div>
-            <div href="{$link->getPageLink('cart',false, NULL, "add=1&amp;id_product={$items.linked_digital_id|intval}&amp;token={$static_token}", false)|escape:'html':'UTF-8'}" rel="nofollow" title="{l s='Add to cart'}" data-id-product="{$items.linked_digital_id|intval}" class="sm2-inline-element buk-track-cash btn-rjm-list ajax_add_to_cart_button">
-                <span class="assoc_price">
-                {if $items.reduction_type == 'amount'}
-                  {convertPrice price=$items.price - $items.reduction}
-                {else}
-                  {convertPrice price=$items.price - ($items.price * $items.reduction)}
-                {/if}
-            &nbsp;&nbsp;<i class="fa fa-shopping-cart"></i></span>
-            </div>
-          </div>
          </div>
       </li>
-
     {/foreach}
-
     </ul>
-
   </div>
-
   <div class="sm2-extra-controls">
-
    <div class="bd">
-
     <div class="sm2-inline-element sm2-button-element hide">
      <a href="#prev" title="Previous" class="sm2-inline-button previous">&lt; previous</a>
     </div>
-
     <div class="sm2-inline-element sm2-button-element hide">
      <a href="#next" title="Next" class="sm2-inline-button next">&gt; next</a>
     </div>
-
-    <!-- not implemented -->
-    <!--
-    <div class="sm2-inline-element sm2-button-element disabled">
-     <div class="sm2-button-bd">
-      <a href="#repeat" title="Repeat playlist" class="sm2-inline-button repeat">&infin; repeat</a>
-     </div>
-    </div>
-
-    <div class="sm2-inline-element sm2-button-element disabled">
-     <a href="#shuffle" title="Shuffle" class="sm2-inline-button shuffle">shuffle</a>
-    </div>
-    -->
-
    </div>
-
   </div>
-
  </div>
-
 </div>
-
-
 </div>
 <script type="text/javascript">
 $(document).ready(function() {

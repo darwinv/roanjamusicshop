@@ -33,88 +33,43 @@
     {assign var='productPriceWithoutReduction' value=$product->getPriceWithoutReduct(true, $smarty.const.NULL)}
 {/if*}
 <div class="content-right-musicshop">
-<div class="sm2-bar-musicshop pos-init full-width">
- <div class="bd sm2-element">
-  <div class="sm2-inline-texture">
-   <div class="sm2-box-shadow"></div>
-  </div>
-  <!-- playlist content is mirrored here -->
-  <div class="sm2-playlist-wrapper list-music-shop">
-    <div class="bd sm2-main-controls">
-      <div class="bucket-track-header-meta">
-        <p class="sm2-inline-element buk-track-title">Título</p>
-        <p class="sm2-inline-element buk-track-artists">Artistas</p>
-        <p class="sm2-inline-element buk-track-genre">Género</p>
-        <p class="sm2-inline-element buk-track-cash"></p>
-      </div>
-    </div>
-    <ul class="sm2-playlist-bd">
-    {counter start=0 skip=1 print=false}
-    {foreach from=$associated_mp3 item=items}
-       <li>
-        <div class="sm2-row">
-          <div class="sm2-inline-element buk-track-plus">
-            <span class="buk-track-counter">{counter}</span>
-          </div>
-          <div class="buk-track-meta-parent">
-            <div class="sm2-inline-element buk-track-title">
-              <a data-idmusic="{$items.id_music}" data-idproduct="{$items.id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button pointer" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}">
-               <span class="list-titlesound"  ><b>{$items.mp3_title}</b></span> - <b>{$items.author}</b>
-              </a>
+
+<ul>
+  <li class="interior-release-chart-content-item">
+    <span class="category">
+      {l s='Title' mod='prestasmusicshop'}</span><span class="value">{$associated_mp3.0.mp3_title}</span></li>
+  <li class="interior-release-chart-content-item">
+    <span class="category">
+      {l s='Artists' mod='prestasmusicshop'}</span><span class="value">{$associated_mp3.0.author}</span></li>
+  <li class="interior-release-chart-content-item">
+    <span class="category">
+      {l s='Gender' mod='prestasmusicshop'}</span><span class="value">{$associated_mp3.0.genero}</span></li>
+  <li>
+    <span class="sm2-col buk-track-command">
+      <a data-idmusic="{$associated_mp3.0.id_music}" data-href="{$modules_dir}roanjamusicshop/mp3/{$associated_mp3.0.mp3_name}" class="sm2_button" title="{$associated_mp3.0.mp3_title}" data-youtube="{if !empty($associated_mp3.0.url_youtube)}{$associated_mp3.0.url_youtube}{/if}" ><div class="btn-rjm-list btn-action"><i class="fa fa-play" aria-hidden="true"></i></div>
+      </a>
+      <a class="{$associated_mp3.0.clase} playlist{$associated_mp3.0.id_music}" title="Agregar a lista" >
+        <div class="btn-rjm-list btn-action"><i class="fa fa-list" aria-hidden="true"></i>
+        </div>
+      </a>
+      {if !empty($associated_mp3.0.url_youtube)}
+          <a class="youtube roanjayt fancybox fancybox.iframe"  title="Ver Video" href="https://www.youtube.com/embed/{$associated_mp3.0.url_youtube}?autoplay=1" >
+            <div class="btn-rjm-list btn-youtube">
+              <i class="fa fa-play" aria-hidden="true"></i>
             </div>
-            <div class="sm2-inline-element buk-track-genre">
-              <b>{$items.genero}</b>
-            </div>
+          </a>
+      {else}
+        <a class="youtube noYoutube">
+          <div class="btn-rjm-list btn-youtube">
+            <i class="fa fa-play" aria-hidden="true"></i>
           </div>
-          <div class="sm2-inline-element buk-track-actions">
-            <div href="{$link->getPageLink('cart',false, NULL, "add=1&amp;id_product={$items.linked_digital_id|intval}&amp;token={$static_token}", false)|escape:'html':'UTF-8'}" rel="nofollow" title="{l s='Add to cart'}" data-id-product="{$items.linked_digital_id|intval}" class="sm2-inline-element buk-track-cash btn-rjm-list ajax_add_to_cart_button">
-                <span class="assoc_price">
-                {if $items.reduction_type == 'amount'}
-                  {convertPrice price=$items.price - $items.reduction}
-                {else}
-                  {convertPrice price=$items.price - ($items.price * $items.reduction)}
-                {/if}
-            &nbsp;&nbsp;<i class="fa fa-shopping-cart"></i></span>
-            </div>
-           <span class="sm2-col buk-track-command">
-              <a data-idmusic="{$items.id_music}" data-idproduct="{$items.id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}" ><div class="btn-rjm-list btn-action"><i class="fa fa-play" aria-hidden="true"></i></div>
-              </a>
-              <a class="{$items.clase} playlist{$items.id_music}" title="Agregar a lista" >
-                <div class="btn-rjm-list btn-action"><i class="fa fa-list" aria-hidden="true"></i>
-                </div>
-              </a>
-              {if !empty($items.url_youtube)}
-                  <a class="youtube roanjayt fancybox fancybox.iframe"  title="Ver Video" href="https://www.youtube.com/embed/{$items.url_youtube}?autoplay=1" >
-                    <div class="btn-rjm-list btn-youtube">
-                      <i class="fa fa-play" aria-hidden="true"></i>
-                    </div>
-                  </a>
-              {else}
-                <a class="youtube noYoutube">
-                  <div class="btn-rjm-list btn-youtube">
-                    <i class="fa fa-play" aria-hidden="true"></i>
-                  </div>
-                </a>
-              {/if}
-            </span>
-          </div>
-         </div>
-      </li>
-    {/foreach}
-    </ul>
-  </div>
-  <div class="sm2-extra-controls">
-   <div class="bd">
-    <div class="sm2-inline-element sm2-button-element hide">
-     <a href="#prev" title="Previous" class="sm2-inline-button previous">&lt; previous</a>
-    </div>
-    <div class="sm2-inline-element sm2-button-element hide">
-     <a href="#next" title="Next" class="sm2-inline-button next">&gt; next</a>
-    </div>
-   </div>
-  </div>
- </div>
-</div>
+        </a>
+      {/if}
+    </span>
+  </li>
+</ul>
+
+
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
