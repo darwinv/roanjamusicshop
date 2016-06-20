@@ -3,7 +3,8 @@ $(document).ready(function(){
    $(document).on("click",".agregar-lista",function(){
       var actual=$(this).parent().find("a").first();
       var act=$(this);
-      var id=actual.data("id");
+      var id=actual.data("idproduct");
+      var id_music=actual.data("idmusic");
       var ruta=$("#barra").data("ruta");
       $.ajax({
           url:ruta + "roanjamusicshop/ajax_roanjamusicshop.php",
@@ -15,7 +16,7 @@ $(document).ready(function(){
             var song=ruta + "roanjamusicshop/mp3/" + data[i]['mp3_name'];
             var title=data[i]['mp3_title'];
             var price=data[i]['price'];
-            var newsong="<li class='" + data[i]['id_product'] + " item-list' data-id='" + data[i]['id_music'] + "'>";
+            var newsong="<li class='" + data[i]['id_music'] + " item-list' data-idmusic='" + data[i]['id_music'] + "'>";
             newsong+="<a href='" + song + "' class='dat-list' data-youtube='" + data[i]['url_youtube'] + "'>";
             newsong+="<img class='img-responsive img-list' itemprop='image' src='"+ data[i]['cover'] +"' />";
             newsong+="<p class='p-list'><span class='list-titlesound'><b>" + title + "</b></span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>" + data[i]['genero'] + "</span><br><span class='list-author'>"+ data[i]['author'] + " </span></p></a>";
@@ -25,8 +26,8 @@ $(document).ready(function(){
             $("#barra").find(".sm2-playlist-wrapper").find(".sm2-playlist-bd").append(newsong);
              window.sm2BarPlayers[0].actions.menu(true);
            }
-           $(".playlist"+id).addClass("quitar-lista")
-           $(".playlist"+id).removeClass("agregar-lista");
+           $(".playlist"+id_music).addClass("quitar-lista")
+           $(".playlist"+id_music).removeClass("agregar-lista");
 
            if($("div#barra").hasClass("hidden"))
            $("div#barra").removeClass("hidden");
@@ -48,8 +49,8 @@ $(document).ready(function(){
       var actual2=$(this).parent();
       var actual=$(this).parent().find("a").first();
       var act=$(this);
-      var id2=actual2.data("id");
-      var id=actual.data("id");
+      var id2=actual2.data("idmusic");
+      var id=actual.data("idmusic");
       if (id==undefined || id==""){
       id=id2;
       }

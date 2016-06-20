@@ -360,6 +360,7 @@ class RoanjaMusicShop extends Module
  			return $this->display(__FILE__, 'views/templates/front/column.tpl');
        		}
 	}
+
 	public function hookDisplayProductTabContent()
 	{
 			$associated_mp3 = $this->GetSoundsOfProduct();
@@ -416,6 +417,7 @@ class RoanjaMusicShop extends Module
 
 			$this->context->smarty->assign(array(
 			 	'id_product' => $id_product,
+				'id_music' => $item_mp3[0]["id_music"],
 				'mp3_name' => $item_mp3[0]["mp3_name"],
 				'mp3_title' => $item_mp3[0]["mp3_title"],
 				'url_youtube' => $item_mp3[0]["url_youtube"],
@@ -460,6 +462,7 @@ class RoanjaMusicShop extends Module
 							//'item_mp3' => $item_mp3,
 
 											 'id_product' => $id_product,
+											 'id_music' => $item_mp3[0]["id_music"],
 												'mp3_name' => $item_mp3[0]["mp3_name"],
 												'mp3_title' => $item_mp3[0]["mp3_title"],
 						'url_youtube' => $item_mp3[0]["url_youtube"],
