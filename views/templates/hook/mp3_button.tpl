@@ -24,7 +24,7 @@
 *}
 <div class="btn-bar-rjm text-center container">
 
-	<a data-id="{$id_product}"  data-href="{$modules_dir}roanjamusicshop/mp3/{$mp3_name}" class="sm2_button" title="{$mp3_title}" data-youtube="{if !empty($url_youtube)}{$url_youtube}{/if}" >
+	<a data-idmusic="{$id_music}" data-idproduct="{$id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$mp3_name}" class="sm2_button" title="{$mp3_title}" data-youtube="{if !empty($url_youtube)}{$url_youtube}{/if}" >
 		<div class="btn-rjm" style="{$style_width}" ><i class="fa fa-play" aria-hidden="true"></i></div>
 	</a>
 	<a class="{$clase} playlist{$id_product}"  title="Agregar a lista" >
