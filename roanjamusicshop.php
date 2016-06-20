@@ -352,8 +352,6 @@ class RoanjaMusicShop extends Module
 	public function hookdisplayRightColumnProduct()
 	{
 		$this->context->controller->addCSS($this->_path.'css/mp3-productDetail.css', 'all');
-		if (Tools::getValue('MUSIC_POSITION', Configuration::get('MUSIC_POSITION')) == 1)
-		{
 			$associated_mp3 = $this->GetSoundsOfProduct();
 			if(!empty($associated_mp3)){
  				$this->context->smarty->assign(array(
@@ -361,14 +359,9 @@ class RoanjaMusicShop extends Module
 				));
  			return $this->display(__FILE__, 'views/templates/front/column.tpl');
        		}
-		}
-
-		return $this->display(__FILE__, 'views/templates/front/column.tpl');
 	}
 	public function hookDisplayProductTabContent()
 	{
-		if (Tools::getValue('MUSIC_POSITION', Configuration::get('MUSIC_POSITION')) == 2)
-		{
 			$associated_mp3 = $this->GetSoundsOfProduct();
 			if(!empty($associated_mp3)){
  				$this->context->smarty->assign(array(
@@ -376,15 +369,12 @@ class RoanjaMusicShop extends Module
 				));
 	            return $this->display(__FILE__, 'views/templates/front/product_tab_content.tpl');
        		}
-
-		}
 	}
 
 	public function  array_columns( array $input, $column_key, $index_key = null ) {
 		$result = array();
 		foreach( $input as $k => $v )
 				$result[ $index_key ? $v[ $index_key ] : $k ] = $v[ $column_key ];
-
 		return $result;
 	}
 
@@ -403,7 +393,6 @@ class RoanjaMusicShop extends Module
 			$precioconv=Tools::convertPrice($this->product->price, $this->context->currency);
 		$arrdata["price"]=number_format($precioconv, 2, ",", "");
 		$arrdata['sign']=$this->context->currency->sign;
-
 
 		if(!empty($item_mp3)){
 			if(isset($_COOKIE['lista'])){

@@ -10,7 +10,7 @@
   </div>
   <div class="sm2-inline-element sm2-inline-status">
    <div class="sm2-playlist">
-    <div class="sm2-playlist-target"><ul class="sm2-playlist-bd"><li><b>Title</b> - LA<span class="label"></span></li></ul></div>
+    <div class="sm2-playlist-target"><ul class="sm2-playlist-bd"><li><b></b><span class="label"></span></li></ul></div>
    </div>
    <div class="sm2-progress">
     <div class="sm2-row">
