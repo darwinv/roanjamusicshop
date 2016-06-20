@@ -997,16 +997,13 @@ class RoanjaMusicShop extends Module
 		$id_shop = $this->context->shop->id;
 		$id_lang = $this->context->language->id;
 
-		return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
-			SELECT a.`id_music` as id_mp3, b.`position`, b.`active`, c.`id_music`, c.`mp3_name`,
-		 c.`mp3_title`, c.`author`, c.`genero`, c.`url_youtube`,c.`linked_digital_id`,c.`id_product`
-		 FROM '._DB_PREFIX_.'rj_music_shop a
-		 LEFT JOIN '._DB_PREFIX_.'rj_music b ON (a.id_music = b.id_music)
-		 LEFT JOIN '._DB_PREFIX_.'rj_music_lang c ON (b.id_music = c.id_music)
-		 WHERE c.id_product = ' . $id_product . ' AND  a.id_shop = '.(int)$id_shop.'
-			AND c.id_lang = '.(int)$id_lang. ' '.Shop::addSqlRestrictionOnLang().($active ? ' AND b.`active` = 1' : ' ').'
-			ORDER BY b.position'
-		);
+
+		$sql=
+		"select a.price,b.* from `" . _DB_PREFIX_ . "product` as a,`" . _DB_PREFIX_ . "rj_music_lang` as b,`" . _DB_PREFIX_ . "rj_music_shop` as c
+ 	 where (`linked_digital_id`=" . (int)$id_product . " or b.id_product=" .(int)$id_product . ") and a.id_product=b.id_product
+ 	 and id_lang=" . $id_lang . " AND b.id_music=c.id_music and c.id_shop=" . (int)$id_shop;
+
+		return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
 	}
 
 	public function getAddFieldsValues()
