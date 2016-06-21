@@ -311,7 +311,7 @@
     margin: 0 0 10px;
   }
   .content-right-musicshop .interior-release-chart-content-item .category {
-    margin-right: 3px;
+    margin-right: 7px;
     text-transform: uppercase;
     color: #8c8c8c;
   }
@@ -406,7 +406,7 @@ div.btn-rjm-list.btn-action:hover {
 }
 
 .btn-youtube {
-    border-radius: 4px;
+    border-radius: 0px;
     color: #fff;
     background-color: #DC2725;
     border-color: rgba(0, 0, 0, 0.2)
@@ -480,4 +480,11 @@ fieldset[disabled] div.btn-rjm-list.btn-youtube:focus {
 }
 .marB20 {
     margin-bottom: 20px
+}
+
+div.price > p {
+    display: table-cell;
+    padding-right: 15px;
+    vertical-align: middle;
+    float: none;
 }
