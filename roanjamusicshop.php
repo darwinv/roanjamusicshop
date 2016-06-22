@@ -701,6 +701,21 @@ class RoanjaMusicShop extends Module
 			Tools::redirectAdmin($this->context->link->getAdminLink('AdminProducts').'&id_product='.(int)Tools::getValue('id_product').'&updateproduct&conf=3&key_tab=ModuleRoanjamusicshop'.$this->token);
 	}
 
+	public function getHookController($hook_name)
+		{
+			// Include the controller file
+			require_once(dirname(__FILE__).'/controllers/hook/'. $hook_name.'.php');
+
+			// Build dynamically the controller name
+			$controller_name = $this->name.$hook_name.'Controller';
+
+			// Instantiate controller
+			$controller = new $controller_name($this, __FILE__, $this->_path);
+
+			// Return the controller
+			return $controller;
+		}
+
 	public function hookActionProductUpdate()
 	{
 		$errors = array();
@@ -773,13 +788,27 @@ class RoanjaMusicShop extends Module
 			Tools::redirectAdmin($this->context->link->getAdminLink('AdminProducts').'&id_product='.(int)Tools::getValue('id_product').'&updateproduct&conf=3&key_tab=ModuleRoanjamusicshop'.$this->token);
 	}
 
+
 	public function hookDisplayAdminProductsExtra()
 	{
 		//echo "<script src='" . $this->_path . "js/admin.js'></script>"; //ojo cambiar
-		$this->_html .= $this->headerHTML();
-		return $this->_html .= $this->prepareForm()  . $this->renderList();
+
+			$controller = $this->getHookController('displayAdminProductsExtra');
+			$lista_music=  $controller->run();
+					$this->_html .= $this->headerHTML();
+		return $this->_html .= $this->prepareForm()  . $controller->run();
 	}
 
+/*	public function hookDisplayAdminProductsExtra()
+	{
+		//echo "<script src='" . $this->_path . "js/admin.js'></script>"; //ojo cambiar
+
+		//	$controller = $this->getHookController('displayAdminProductsExtra');
+			//$lista_music=  $controller->run();
+					$this->_html .= $this->headerHTML();
+		return $this->_html .= $this->prepareForm()  . $this->renderList();
+	}
+*/
 	public function prepareForm()
 	{
 
@@ -830,7 +859,7 @@ class RoanjaMusicShop extends Module
 					),
 					array(
 						'type' => 'text',
-						'label' => $this->l('Genero'),
+						'label' => $this->l('Genre'),
 						'name' => 'genero',
 						'required' => true,
 						'lang' => true,
@@ -1034,7 +1063,8 @@ class RoanjaMusicShop extends Module
 
 	public function displayStatus($id_mp3, $active)
 	{
-		$title = ((int)$active == 0 ? $this->l('Disabled') : $this->l('Enabled'));
+
+		$title = ((int)$active == 0 ? $this->module->l('Disabled', 'displayAdminProductsExtra') : $this->module->l('Enabled', 'displayAdminProductsExtra'));
 		$icon = ((int)$active == 0 ? 'icon-remove' : 'icon-check');
 		$class = ((int)$active == 0 ? 'btn-danger' : 'btn-success');
 		$html = '<a class="btn '.$class.'" href="'.$this->context->link->getAdminLink('AdminModules').

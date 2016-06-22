@@ -25,6 +25,7 @@
 
 <div class="panel"><h3><i class="icon-list-ul"></i> {l s='Music list' mod='roanjamusicshop'}
 	</h3>
+	{*$musics|var_dump*}
 	<div id="musicsContent">
 		<div id="musics">
 			{foreach from=$musics item=music}
@@ -38,17 +39,7 @@
 							  <source src="{$music_baseurl}{$music.mp3_name}" type="audio/mpeg">
 							</audio>
 						</div>
-						<div class="col-md-8">
-							<h4 class="pull-left">
-								{$music.id_music} - {$music.mp3_title}
-								{if $music.is_shared}
-									<div>
-										<span class="label color_field pull-left" style="background-color:#108510;color:white;margin-top:5px;">
-											{l s='Shared music' mod='roanjamusicshop'}
-										</span>
-									</div>
-								{/if}
-							</h4>
+
 							<div class="btn-group-action pull-right">
 								{$music.status}
 								<a class="btn btn-default"
@@ -63,6 +54,21 @@
 									{l s='Delete' mod='roanjamusicshop'}
 								</a>
 
+							</div>
+						<div class="row">
+							<div class="col-md-8">
+								<h4 class="pull-left">
+						{l s='Music Title' mod='roanjamusicshop'}	-	{$music.mp3_title}<br/>
+						{l s='Author' mod='roanjamusicshop'} - {$music.author}<br/>
+						{l s='Genre' mod='roanjamusicshop'} - {$music.genero}
+									{if $music.is_shared}
+										<div>
+											<span class="label color_field pull-left" style="background-color:#108510;color:white;margin-top:5px;">
+												{l s='Shared music' mod='roanjamusicshop'}
+											</span>
+										</div>
+									{/if}
+								</h4>
 							</div>
 						</div>
 					</div>

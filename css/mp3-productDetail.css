@@ -481,10 +481,6 @@ fieldset[disabled] div.btn-rjm-list.btn-youtube:focus {
 .marB20 {
     margin-bottom: 20px
 }
-
-div.price > p {
-    display: table-cell;
-    padding-right: 15px;
-    vertical-align: middle;
-    float: none;
+.content-right-musicshop li:last-child {
+    margin: 20px 0px;
 }
