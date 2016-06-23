@@ -347,6 +347,41 @@ class RoanjaMusicShop extends Module
 
 		return $results;
 	}
+
+	public function GetSoundsOfProduct1()
+	{
+		$id_shop = $this->context->shop->id;
+		$id_lang = $this->context->language->id;
+
+		 $associated_mp3_sql = 'SELECT a.* from `' . _DB_PREFIX_ . 'rj_music_lang` as a,`' . _DB_PREFIX_ . 'rj_music_shop` as b where linked_digital_id=' . (int)Tools::getValue('id_product')
+		. ' or (linked_digital_id!="" and id_product=' . (int)Tools::getValue('id_product') . ') AND id_lang=' . (int)$id_lang
+		. ' AND a.id_music=b.id_music and b.id_shop=' . (int)$id_shop . '' ;
+
+		$results= Db::getInstance()->ExecuteS($associated_mp3_sql);
+		if($results){
+			$i=0;
+			foreach ($results as $data)
+			{
+				if(isset($_COOKIE['lista'])){
+					$lista=unserialize($_COOKIE['lista']);
+					$lista=$this->array_columns($lista,"id");
+					if(in_array($data['id_product'],$lista)){
+						$clase="quitar-lista";
+					}else{
+						$clase="agregar-lista";
+					}
+				}else{
+					$clase="agregar-lista";
+				}
+				$results[$i]["clase"]=$clase;
+				$i++;
+			}
+		}
+
+		return $results;
+	}
+
+
 	public function hookdisplayRightColumnProduct()
 	{
 		$this->context->controller->addCSS($this->_path.'css/mp3-productDetail.css', 'all');
@@ -361,7 +396,7 @@ class RoanjaMusicShop extends Module
 
 	public function hookDisplayProductTabContent()
 	{
-			$associated_mp3 = $this->GetSoundsOfProduct();
+			$associated_mp3 = $this->GetSoundsOfProduct1();
 			if(!empty($associated_mp3)){
  				$this->context->smarty->assign(array(
 					'associated_mp3' => $associated_mp3,
