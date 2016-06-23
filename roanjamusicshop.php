@@ -320,11 +320,9 @@ class RoanjaMusicShop extends Module
 		$id_shop = $this->context->shop->id;
 		$id_lang = $this->context->language->id;
 
-		 $associated_mp3_sql = 'SELECT ml.*, b.* , c.reduction, c.reduction_type FROM `'
-			. _DB_PREFIX_ . 'rj_music_lang` AS ml INNER JOIN `'
-			. _DB_PREFIX_ . 'product` AS b ON ml.linked_digital_id != "" AND ml.id_lang='. $id_lang . '  AND ml.id_product = '
-			. (int)Tools::getValue('id_product') . ' AND b.id_product = ml.linked_digital_id LEFT JOIN `'
-			. _DB_PREFIX_ . 'specific_price` AS c ON c.id_product = b.id_product left Join ps_rj_music AS m ON m.id_music = ml.id_music AND m.active = 1 left Join ps_rj_music_shop AS ms ON ms.id_music = ml.id_music AND ms.id_shop = '. $id_shop ;
+		 $associated_mp3_sql = 'SELECT a.* from `' . _DB_PREFIX_ . 'rj_music_lang` as a,`' . _DB_PREFIX_ . 'rj_music_shop` as b where linked_digital_id=' . (int)Tools::getValue('id_product')
+ 		. ' or (linked_digital_id!="" and id_product=' . (int)Tools::getValue('id_product') . ') AND id_lang=' . (int)$id_lang
+ 		. ' AND a.id_music=b.id_music and b.id_shop=' . (int)$id_shop . ' limit 1' ;
 
 		$results= Db::getInstance()->ExecuteS($associated_mp3_sql);
 		if($results){
