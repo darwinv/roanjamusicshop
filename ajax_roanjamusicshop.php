@@ -98,6 +98,7 @@ if(Tools::getValue('action')=='setCookie'){
         $i=count($lista);
     }
     $res=Tools::getValue('song');
+    
     foreach($res as $r=>$valor){
         $lista[$i]['id']=$valor["id_product"];
         $lista[$i]['name']=$valor["mp3_name"];
@@ -107,27 +108,12 @@ if(Tools::getValue('action')=='setCookie'){
         $lista[$i]['youtube']=$valor["url_youtube"];
         $lista[$i]['genero']=$valor["genero"];
         $lista[$i]['author']=$valor["author"];
+        $lista[$i]['linked_digital_id']=$valor["linked_digital_id"];
         $i++;
     }
     setcookie('lista', serialize($lista), time()+3600*24*30,'/');
 }
 if(Tools::getValue('action')=='removeSongs'){
-    $id=(int)Tools::getValue('id');
-    $lista=unserialize($_COOKIE['lista']);
-    $listaId=$home_music->array_columns($lista,"id_music");
-    for($i=0;$i<count($listaId);$i++){
-        if($listaId[$i]==$id){
-            unset($lista[$i]);
-        }
-    }
-    $lista=array_values($lista);
-    if(!empty($lista)){
-        setcookie('lista', serialize($lista), time()+3600*24*30,'/');
-    }else{
-        setcookie('lista', serialize($lista), time()-3600,'/');
-    }
-}
-if(Tools::getValue('action')=='removeSong'){
     $id=(int)Tools::getValue('id');
     $lista=unserialize($_COOKIE['lista']);
     $listaId=$home_music->array_columns($lista,"id_music");
