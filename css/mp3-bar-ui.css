@@ -1046,12 +1046,12 @@ div.content-bar-musicshop{
 a.cart-list-ico {
     float: right;
     width: auto;
-    background-color: #13191C;
+    background-color: #dc2725;
     padding: 0.5em 1em 0.5em 1em;
     margin: 12px;
 }
 a.cart-list-ico:hover {
-    background-color: #39444E !important;
+    background-color: #f82321 !important;
 }
 a.dat-list{
   float: left;
