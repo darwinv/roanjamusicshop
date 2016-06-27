@@ -1108,7 +1108,7 @@ class RoanjaMusicShop extends Module
 	public function displayStatus($id_mp3, $active)
 	{
 $nombre='roanjamusicshop';
-		$title = ((int)$active == 0 ? $this->module->l('Disabled', 'displayAdminProductsExtra') : $this->module->l('Enabled', 'displayAdminProductsExtra'));
+$title = ((int)$active == 0 ? $this->module->l('Disabled', 'displayAdminProductsExtra') : $this->module->l('Enabled', 'displayAdminProductsExtra'));
 		$icon = ((int)$active == 0 ? 'icon-remove' : 'icon-check');
 		$class = ((int)$active == 0 ? 'btn-danger' : 'btn-success');
 		$html = '<a class="btn '.$class.'" href="'.$this->context->link->getAdminLink('AdminModules').
