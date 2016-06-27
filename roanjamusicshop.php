@@ -396,7 +396,7 @@ class RoanjaMusicShop extends Module
 
 	public function hookDisplayProductTabContent()
 	{
-			$associated_mp3 = $this->GetSoundsOfProduct1();
+			$associated_mp3 = $this->GetSoundsOfProduct1();			
 			if(!empty($associated_mp3)){
  				$this->context->smarty->assign(array(
 					'associated_mp3' => $associated_mp3,
