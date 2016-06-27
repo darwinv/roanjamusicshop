@@ -28,7 +28,7 @@
 		<div class="btn-rjm" style="width:100%;"><i class="fa fa-play" aria-hidden="true"></i></div>
 	</a>
 	<a class="{$clase} playlist{$id_music}"  title="Agregar a lista" >
-		<div class="btn-rjm" style="width:100%;"><i class="fa fa-list" aria-hidden="true"></i></div>
+		<div class="btn-rjm" style="width:100%;"></div>
 	</a>
 	{if !empty($url_youtube)}
 	<a class="roanjayt fancybox fancybox.iframe"  title="Ver Video" href="https://www.youtube.com/embed/{$url_youtube}?autoplay=1" >

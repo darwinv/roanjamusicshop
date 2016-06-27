@@ -67,21 +67,21 @@ a .btn-tooltip {
 	min-width: 50px;
     margin-left: -4px;
 }
-button.agregar-lista{
+/*button.agregar-lista{
 	background-image:url(../image/list_add-128.png);
 	width:18px;
 	height:18px;
-}
-img.youtube-btn{
-	/*background-image:url(../image/youtube.png);*/
+}*/
+/*img.youtube-btn{
+	background-image:url(../image/youtube.png);
 	width:18px;
 	height:18px;
-}
-button.quitar-lista{
+}*/
+/*button.quitar-lista{
 		background-image:url(../image/BT_line_remove-128.png);
         width:18px;
         height:18px;
-}
+}*/
 i.quitar-lista2{
     cursor:pointer;
 }
@@ -169,4 +169,18 @@ div.btn-rjm-special:hover {
 }
 .product-block .product-image-container.image .name {
     min-height: 55px;
+}
+a.agregar-lista div {
+    height: 27px;
+    background-image: url(../image/list2.png);
+    background-size: 36%;
+    background-repeat: no-repeat;
+    background-position: 50% 53%;
+}
+a.quitar-lista div {
+    height: 27px;
+    background-image: url(../image/list3.png);
+    background-size: 36%;
+    background-repeat: no-repeat;
+    background-position: 50% 53%;
 }
