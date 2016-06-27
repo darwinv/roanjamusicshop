@@ -356,7 +356,6 @@ class RoanjaMusicShop extends Module
 		 $associated_mp3_sql = 'SELECT a.* from `' . _DB_PREFIX_ . 'rj_music_lang` as a,`' . _DB_PREFIX_ . 'rj_music_shop` as b where linked_digital_id=' . (int)Tools::getValue('id_product')
 		. ' or (linked_digital_id!="" and id_product=' . (int)Tools::getValue('id_product') . ') AND id_lang=' . (int)$id_lang
 		. ' AND a.id_music=b.id_music and b.id_shop=' . (int)$id_shop . '' ;
-
 		$results= Db::getInstance()->ExecuteS($associated_mp3_sql);
 		if($results){
 			$i=0;
@@ -377,7 +376,6 @@ class RoanjaMusicShop extends Module
 				$i++;
 			}
 		}
-
 		return $results;
 	}
 
@@ -396,7 +394,8 @@ class RoanjaMusicShop extends Module
 
 	public function hookDisplayProductTabContent()
 	{
-			$associated_mp3 = $this->GetSoundsOfProduct1();			
+
+			$associated_mp3 = $this->GetSoundsOfProduct1();
 			if(!empty($associated_mp3)){
  				$this->context->smarty->assign(array(
 					'associated_mp3' => $associated_mp3,
@@ -514,6 +513,10 @@ class RoanjaMusicShop extends Module
 	public function GetPriceFormat($price)
 	{
 		return Tools::displayPrice($price,$this->context->currency);
+	}
+	public function GetImageList($link_rewrite,$id_image)
+	{
+		return $this->context->link->getImageLink($link_rewrite, $id_image,'cart_default');
 	}
 	public function headerHTML()
 	{
