@@ -74,21 +74,19 @@ if(Tools::getValue('action')=='getSongs'){
     $id=Tools::getValue('id');
     $id_lang=Configuration::get('PS_LANG_DEFAULT');
     $id_shop=Configuration::get('PS_SHOP_ENABLE');
-    $sql_songs="select a.price,b.* from `" . _DB_PREFIX_ . "product` as a,`" . _DB_PREFIX_ . "rj_music_lang` as b,`" . _DB_PREFIX_ . "rj_music_shop` as c
-    where (`linked_digital_id`=" . (int)$id . " or b.id_product=" .(int)$id . ") and a.id_product=b.id_product
-    and id_lang=" . $id_lang . " AND b.id_music=c.id_music and c.id_shop=" . (int)$id_shop;
+    $sql_songs="select b.* from `" . _DB_PREFIX_ . "rj_music_lang` as b,`" . _DB_PREFIX_ . "rj_music_shop` as c
+    where (`linked_digital_id`=" . (int)$id . " or b.id_product=" .(int)$id . ")
+    and id_lang=" . $id_lang . " AND b.id_music=c.id_music and c.id_shop=" . (int)$id_shop;    
     $res=Db::getInstance()->executeS($sql_songs);
-    $images = Image::getImages((int)$id_lang, (int)$id);
-    $id_image = Product::getCover($id);
-    // get Image by id
-     $image = new Image($id_image['id_image']);
-     // get image full URL
-     $image_url = _PS_BASE_URL_._THEME_PROD_DIR_.$image->getExistingImgPath().".jpg";
-
-    $res[0]['cover']=$image_url;
-
-    $res[0]['price']=$home_music->GetPriceFormat($res[0]['price']);
-
+    $i=0;
+    foreach ($res as $value) {
+        $product = new Product($value['linked_digital_id']);
+        $productLinkReview=$product->link_rewrite;
+        $productImg=$product->getCover($value['linked_digital_id']);
+        $res[$i]['price']=$home_music->GetPriceFormat($product->price);
+        $res[$i]['cover']=$home_music->GetImageList($productLinkReview[1],$productImg["id_image"]);
+        $i++;
+    }
     echo json_encode($res);
 }
 if(Tools::getValue('action')=='setCookie'){
