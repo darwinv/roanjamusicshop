@@ -25,7 +25,6 @@
 
 <div class="panel"><h3><i class="icon-list-ul"></i> {l s='Music list' mod='roanjamusicshop'}
 	</h3>
-	{*$musics|var_dump*}
 	<div id="musicsContent">
 		<div id="musics">
 			{foreach from=$musics item=music}
@@ -43,7 +42,7 @@
 							<div class="btn-group-action pull-right">
 								{$music.status}
 								<a class="btn btn-default"
-									href="{$link->getAdminLink('AdminModules')}&configure=roanjamusicshop&id_music={$music.id_music}">
+									href="{$link->getAdminLink('AdminModules')}&id_product={$id_product}&configure=roanjamusicshop&changeStatus&id_mp3={$music.id_music}">
 									<i class="icon-edit"></i>
 									{l s='Edit' mod='roanjamusicshop'}
 								</a>
