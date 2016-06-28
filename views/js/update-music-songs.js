@@ -30,54 +30,8 @@ document.location.href = "index.php?controller=" + controladorValor + "&token="+
 +"&id_product="+productValor+"&configure=roanjamusicshop"+"&actualizarcancion="+idmusica
 +"&cancion="+nombre_cancion+"&autor="+nombre_autor+"&genero="+nombre_genero;
 
-// $.get(archivo, {
-// controlador:controladorValor,
-// token:tokenValor,
-// product:productValor,
-// configure:'roanjamusicshop',
-// actualizarcancion:idmusica,
-// cancion:nombre_cancion,
-// autor:nombre_autor,
-// genero:nombre_genero }).done(function(data){
-//   alert("dala:"+data);
-// });
-
-
-
-// post(archivo,{controlador:controladorValor,
-// token:tokenValor,
-// product:productValor,
-// configure:'roanjamusicshop',
-// actualizarcancion:idmusica,
-// cancion:nombre_cancion,
-// autor:nombre_autor,
-// genero:nombre_genero});
-
 });
 
-
-function post(path, parameters) {
-  path='index.php'
-    var form = $('<form></form>');
-
-    form.attr("method", "post");
-    form.attr("action", path);
-
-    $.each(parameters, function(key, value) {
-        var field = $('<input></input>');
-
-        field.attr("type", "hidden");
-        field.attr("name", key);
-        field.attr("value", value);
-
-        form.append(field);
-    });
-
-    // The form needs to be a part of the document in
-    // order for us to be able to submit it.
-    $(document.body).append(form);
-    form.submit();
-}
 
 
 });
