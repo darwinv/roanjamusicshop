@@ -364,7 +364,7 @@ class RoanjaMusicShop extends Module
 		if($results){
 			$i=0;
 			foreach ($results as $data)
-			{				
+			{
 				$this->product = new Product($data['linked_digital_id'], false,$this->context->language->id);
 				$results[$i]["price"]=$this->product->price;
 				if(isset($_COOKIE['lista'])){
@@ -400,6 +400,7 @@ class RoanjaMusicShop extends Module
 
 	public function hookDisplayProductTabContent()
 	{
+
 		$associated_mp3 = $this->GetSoundsOfProductList();
 		if(!empty($associated_mp3)){
 				$this->context->smarty->assign(array(
@@ -651,7 +652,6 @@ class RoanjaMusicShop extends Module
 				$music->active = 0;
 			$res = $music->update();
 			$this->clearCache();
-
 
 			if (!$res){
 				$this->_html .= $this->displayError('The configuration could not be updated');
@@ -1022,9 +1022,10 @@ class RoanjaMusicShop extends Module
 		return Db::getInstance(_PS_USE_SQL_SLAVE_)->ExecuteS($get_virtual_products);
 	}
 
-	public function renderList()
+	/* public function renderList()
 	{
 		$musics = $this->getMusic();
+		$valores="heyyy";
 		foreach ($musics as $key => $music)
 		{
 			$musics[$key]['status'] = $this->displayStatus($music['id_music'], $music['active']);
@@ -1040,13 +1041,14 @@ class RoanjaMusicShop extends Module
 				'id_product' => (int)Tools::getValue('id_product'),
 				'link' => $this->context->link,
 				'musics' => $musics,
+				'valores'=>$valores,
 				'music_baseurl' => $this->_path.'mp3/'
 			)
 		);
 
 		return $this->display(__FILE__, 'list.tpl');
 	}
-
+*/
 	public function getMusic($id_product=null,$active = null)
 	{
 		if(is_null($id_product)){
@@ -1058,10 +1060,11 @@ class RoanjaMusicShop extends Module
 
 
 		$sql=
-		"select a.price,b.* from `" . _DB_PREFIX_ . "product` as a,`" . _DB_PREFIX_ . "rj_music_lang` as b,`" . _DB_PREFIX_ . "rj_music_shop` as c
+		"select a.price,b.*,d.active from `" . _DB_PREFIX_ . "product` as a,`" . _DB_PREFIX_ . "rj_music_lang` as b,`" . _DB_PREFIX_ . "rj_music_shop` as c,
+		`" . _DB_PREFIX_ . "rj_music` as d
  	 where (`linked_digital_id`=" . (int)$id_product . " or b.id_product=" .(int)$id_product . ") and a.id_product=b.id_product
- 	 and id_lang=" . $id_lang . " AND b.id_music=c.id_music and c.id_shop=" . (int)$id_shop;
-
+ 	 and id_lang=" . $id_lang . " AND (b.id_music=c.id_music and b.id_music=d.id_music)  and c.id_shop=" . (int)$id_shop;
+	// return $sql;
 		return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
 	}
 
@@ -1104,14 +1107,12 @@ class RoanjaMusicShop extends Module
 
 	public function displayStatus($id_mp3, $active)
 	{
-
-		$title = ((int)$active == 0 ? $this->module->l('Disabled', 'displayAdminProductsExtra') : $this->module->l('Enabled', 'displayAdminProductsExtra'));
+$nombre='roanjamusicshop';
+$title = ((int)$active == 0 ? $this->module->l('Disabled', 'displayAdminProductsExtra') : $this->module->l('Enabled', 'displayAdminProductsExtra'));
 		$icon = ((int)$active == 0 ? 'icon-remove' : 'icon-check');
 		$class = ((int)$active == 0 ? 'btn-danger' : 'btn-success');
 		$html = '<a class="btn '.$class.'" href="'.$this->context->link->getAdminLink('AdminModules').
-			'&configure='.$this->name.'
-				&token='.Tools::getAdminTokenLite('AdminModules').'&id_product='.(int)Tools::getValue('id_product').'
-				&changeStatus&id_mp3='.(int)$id_mp3.'" title="'.$title.'"><i class="'.$icon.'"></i> '.$title.'</a>';
+		'&configure='.$nombre.'&id_product='.(int)Tools::getValue('id_product').'&changeStatus&id_mp3='.(int)$id_mp3.'" title="'.$title.'"><i class="'.$icon.'"></i> '.$title.'</a>';
 		return $html;
 	}
 
