@@ -348,17 +348,26 @@ class RoanjaMusicShop extends Module
 		return $results;
 	}
 
-	public function GetSoundsOfProductList()
+	public function GetSoundsOfProductList($id_product=null,$linked_digital_id=null)
 	{
 		$id_shop = $this->context->shop->id;
 		$id_lang = $this->context->language->id;
+		
+		if(empty($id_product) && empty($linked_digital_id)) {
+			$id_product=(int)Tools::getValue('id_product');
+		}
+		if(!empty($linked_digital_id)) {
+			$filter=' and linked_digital_id="' .$linked_digital_id.'"';
+		}else{
+			$filter=' and linked_digital_id!=""';
+		}
 
 		$associated_mp3_sql = 'SELECT a.*
 		FROM
 		`' . _DB_PREFIX_ . 'rj_music_lang` AS a
 		Inner Join `' . _DB_PREFIX_ . 'rj_music_shop` AS b ON b.id_music = a.id_music
-		where  linked_digital_id!="" and id_product='.(int)Tools::getValue('id_product').' AND id_lang=' . (int)$id_lang
-				. ' AND b.id_shop=' . (int)$id_shop ;
+		where id_product="'.$id_product.'" AND id_lang=' . (int)$id_lang
+				. ' AND b.id_shop=' . (int)$id_shop.$filter ;
 
 		$results= Db::getInstance()->ExecuteS($associated_mp3_sql);
 		if($results){
@@ -410,7 +419,7 @@ class RoanjaMusicShop extends Module
    		}
 	}
 
-	public function  array_columns( array $input, $column_key, $index_key = null ) {
+	public function array_columns( array $input, $column_key, $index_key = null ) {
 		$result = array();
 		foreach( $input as $k => $v )
 				$result[ $index_key ? $v[ $index_key ] : $k ] = $v[ $column_key ];
@@ -1101,7 +1110,6 @@ class RoanjaMusicShop extends Module
 	public function clearCache()
 	{
 		$this->_clearCache('bar-ui.tpl');
-		$this->_clearCache('mp3_button.tpl');
 		$this->_clearCache('mp3_button_special.tpl');
 	}
 

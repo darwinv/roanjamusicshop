@@ -61,7 +61,6 @@ if(Tools::getValue("action") == "setUrlYoutube"){
 if (Tools::getValue('action') == 'updateMusicPosition' && Tools::getValue('musics'))
 {
 	$musics = Tools::getValue('musics');
-
 	foreach ($musics as $position => $id_music)
 		$res = Db::getInstance()->execute('
 			UPDATE `'._DB_PREFIX_.'rj_music` SET `position` = '.(int)$position.'
@@ -72,12 +71,10 @@ if (Tools::getValue('action') == 'updateMusicPosition' && Tools::getValue('music
 }
 if(Tools::getValue('action')=='getSongs'){
     $id=Tools::getValue('id');
-    $id_lang=Configuration::get('PS_LANG_DEFAULT');
-    $id_shop=Configuration::get('PS_SHOP_ENABLE');
-    $sql_songs="select b.* from `" . _DB_PREFIX_ . "rj_music_lang` as b,`" . _DB_PREFIX_ . "rj_music_shop` as c
-    where (`linked_digital_id`=" . (int)$id . " or b.id_product=" .(int)$id . ")
-    and id_lang=" . $id_lang . " AND b.id_music=c.id_music and c.id_shop=" . (int)$id_shop;    
-    $res=Db::getInstance()->executeS($sql_songs);
+
+    $linked_digital_id=(Tools::getValue('linked_digital_id'))?:null;
+
+    $res=$home_music->GetSoundsOfProductList($id,$linked_digital_id);
     $i=0;
     foreach ($res as $value) {
         $product = new Product($value['linked_digital_id']);
@@ -98,7 +95,6 @@ if(Tools::getValue('action')=='setCookie'){
         $i=count($lista);
     }
     $res=Tools::getValue('song');
-    
     foreach($res as $r=>$valor){
         $lista[$i]['id']=$valor["id_product"];
         $lista[$i]['name']=$valor["mp3_name"];
@@ -113,16 +109,22 @@ if(Tools::getValue('action')=='setCookie'){
     }
     setcookie('lista', serialize($lista), time()+3600*24*30,'/');
 }
-if(Tools::getValue('action')=='removeSongs'){
-    $id=(int)Tools::getValue('id');
-    $lista=unserialize($_COOKIE['lista']);
-    $listaId=$home_music->array_columns($lista,"id_music");
-    for($i=0;$i<count($listaId);$i++){
-        if($listaId[$i]==$id){
-            unset($lista[$i]);
-        }
+if(Tools::getValue('action')=='removeSong'){
+    $id=Tools::getValue('id');
+    $typeRemove=Tools::getValue('typeRemove');
+
+    if($typeRemove=='allsongs'){
+        $field='id';
+    }elseif($typeRemove=='song'){
+        $field='linked_digital_id';
     }
-    $lista=array_values($lista);
+    $lista=unserialize($_COOKIE['lista']);
+    
+    foreach ($lista as $key => $value) {
+        if($value[$field]==$id){
+            unset($lista[$key]);var_dump("seeee".$key);
+        }
+    }var_dump($lista);
     if(!empty($lista)){
         setcookie('lista', serialize($lista), time()+3600*24*30,'/');
     }else{

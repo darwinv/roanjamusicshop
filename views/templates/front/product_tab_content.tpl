@@ -61,33 +61,30 @@
         <div class="sm2-row">
 
           <div class="sm2-inline-element buk-track-plus">
-            <span class="buk-track-counter">{counter}</span>
+            <span class="buk-track-counter">{counter}</span>  
 
             <span class="sm2-col buk-track-command">
-              <a data-idmusic="{$items.id_music}" data-idproduct="{$items.id_product}"  data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}" ><div class="btn-rjm-list btn-action"><i class="fa fa-play" aria-hidden="true"></i></div>
+
+              <a data-tabContent="yes" data-idmusic="{$items.linked_digital_id}"  data-idproduct="{$items.id_product}" data-linkeddigitalid="{$items.linked_digital_id}"   data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}" ><div class="btn-rjm-list btn-action"><i class="fa fa-play" aria-hidden="true"></i></div>
               </a>
-              <a class="{$items.clase} playlist{$items.id_music}" title="Agregar a lista" >
+
+              <a class="{$items.clase} playlist{$items.linked_digital_id}" title="Agregar a lista" >
                 <div class="btn-rjm-list btn-action"><i class="fa fa-list" aria-hidden="true"></i>
                 </div>
               </a>
+
               {if !empty($items.url_youtube)}
                   <a class="youtube roanjayt fancybox fancybox.iframe"  title="Ver Video" href="https://www.youtube.com/embed/{$items.url_youtube}?autoplay=1" >
                     <div class="btn-rjm-list btn-youtube">
                       <i class="fa fa-play" aria-hidden="true"></i>
                     </div>
                   </a>
-              {else}
-                <a class="youtube noYoutube">
-                  <div class="btn-rjm-list btn-youtube">
-                    <i class="fa fa-play" aria-hidden="true"></i>
-                  </div>
-                </a>
               {/if}
             </span>
           </div>
           <div class="buk-track-meta-parent">
             <div class="sm2-inline-element buk-track-title">
-              <a data-idmusic="{$items.id_music}" data-idproduct="{$items.id_product}"  data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button pointer" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}">
+              <a data-idmusic="{$items.linked_digital_id}" data-idproduct="{$items.id_product}" data-linkeddigitalid="{$items.linked_digital_id}"  data-href="{$modules_dir}roanjamusicshop/mp3/{$items.mp3_name}" class="sm2_button pointer" title="{$items.mp3_title}" data-youtube="{if !empty($items.url_youtube)}{$items.url_youtube}{/if}">
                <span class="list-titlesound"  ><b>{$items.mp3_title}</b></span>
               </a>
             </div>
