@@ -43,8 +43,8 @@ class RoanjaMusic extends ObjectModel
 		'multilang' => true,
 		'fields' => array(
 			'active' =>			array('type' => self::TYPE_BOOL, 'validate' => 'isBool', 'required' => true),
-			'position' =>		array('type' => self::TYPE_INT, 'validate' => 'isunsignedInt', 'required' => true),	
-			
+			'position' =>		array('type' => self::TYPE_INT, 'validate' => 'isunsignedInt', 'required' => true),
+
 			// Lang fields
 			'mp3_name' =>		array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCleanHtml', 'required' => true, 'size' => 255),
 			'mp3_title' =>		array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCleanHtml', 'required' => true, 'size' => 255),
@@ -62,7 +62,7 @@ class RoanjaMusic extends ObjectModel
 	}
 
 	public function add($autodate = true, $null_values = false)
-	{ 
+	{
 		$context = Context::getContext();
 		$id_shop = $context->shop->id;
 
@@ -96,6 +96,17 @@ class RoanjaMusic extends ObjectModel
 		$res &= parent::delete();
 		return $res;
 	}
+
+public function updateMusic($id_music,$cancion=null,$autor=null,$genero=null){
+$res=Db::getInstance()->update('rj_music_lang' , array(
+    'mp3_title' =>pSQL($cancion),
+    'author'  => pSQL($autor),
+		'genero' => pSQL($genero)
+		),
+		"id_music= "."'$id_music'"
+	);
+	return $res;
+}
 
 	public function reOrderPositions()
 	{

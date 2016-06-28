@@ -24,13 +24,13 @@
 *}
 <div class="panel"><h3><i class="icon-list-ul"></i> {l s='Music list' mod='roanjamusicshop'}
 	</h3>
-	<div id="musicsContent">
+	<div id="musicsContent" data-urlaux='{$link->getAdminLink('AdminModules')}&id_product={$id_product}'>
 		<div id="musics">
 			{foreach from=$musics item=music}
 				<div id="musics_{$music.id_music}" class="panel">
 					<div class="row">
 						<div class="col-lg-1">
-							<span><i class="icon-arrows "></i></span>
+							<span><i class="icon-arrows"></i></span>
 						</div>
 						<div class="col-md-3">
 							<audio controls>
@@ -57,13 +57,16 @@
 							<div class="">
 								<h4 class="pull-left">
 	<div class="col-md-4">
-		{l s='Music Title' mod='roanjamusicshop'}	: <input type="text"  value="{$music.mp3_title}" >
+		{l s='Music Title' mod='roanjamusicshop'}	:
+		 <input type="text" name="cancion" class="nomb_cancion_{$music.id_music}" value="{$music.mp3_title}" >
 	 </div>
 	 <div class="col-md-4">
-		{l s='Author' mod='roanjamusicshop'}:<input type="text"  value="{$music.author}" >
+		{l s='Author' mod='roanjamusicshop'}:
+		<input type="text" name="autor" class="nomb_autor_{$music.id_music}" value="{$music.author}" >
 		</div>
 		<div class="col-md-4">
-						{l s='Genre' mod='roanjamusicshop'} : <input type="text" value="{$music.genero}" >
+						{l s='Genre' mod='roanjamusicshop'} :
+						 <input type="text" name="genero" class="nomb_genero_{$music.id_music}" value="{$music.genero}" >
 		</div>
 									{if $music.is_shared}
 										<div>
@@ -77,7 +80,8 @@
 						</div>
 <div class="row">
 	<div class="col-md-1 pull-right">
-<a class="btn btn-default">	<i class="icon-save"></i>&nbsp;{l s='Save' mod='roanjamusicshop'} </a>
+<a class="btn btn-default update-nombres" data-idcancion="{$music.id_music}">
+	<i class="icon-save"></i>&nbsp;{l s='Save' mod='roanjamusicshop'} </a>
 	</div>
 </div>
 				</div>
@@ -85,3 +89,4 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="{$pc_base_dir}views/js/update-music-songs.js"></script>
