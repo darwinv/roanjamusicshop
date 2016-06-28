@@ -202,13 +202,13 @@ class RoanjaMusicShop extends Module
 
 		/* Validate & process */
 		if (Tools::isSubmit('submitMusic') || Tools::isSubmit('deleteroanjamusicshop') ||
-			Tools::isSubmit('changeStatus')
-		)
+			Tools::isSubmit('changeStatus') || Tools::isSubmit('actualizarcancion')	)
 		{
 			if ($this->_postValidation())
 			{
+					$controller = $this->getHookController('displayAdminProductsExtra');
 				$this->_postProcess();
-				$this->_html .= $this->renderForm();
+				$this->_html .= $this->renderForm()	. $controller->run();
 			}
 
 			$this->clearCache();
@@ -741,6 +741,19 @@ class RoanjaMusicShop extends Module
 			}
 
 		}
+elseif(Tools::isSubmit('actualizarcancion')){
+
+		$music = new RoanjaMusic();
+		$res = $music->updateMusic((int)Tools::getValue('actualizarcancion'),Tools::getValue('cancion'),Tools::getValue('autor'),Tools::getValue('genero'));
+		$this->clearCache();
+	if(!$res){
+		$this->_html .= $this->displayError('Could not delete.');
+	  }
+		else{
+			Tools::redirectAdmin($this->context->link->getAdminLink('AdminProducts',false).'&id_product='.(int)Tools::getValue('id_product').'&updateproduct&key_tab=ModuleRoanjamusicshop&conf=1&token='.Tools::getAdminTokenLite('AdminProducts'));
+		}
+
+}
 
 		/* Display errors if needed */
 		if (count($errors))
@@ -844,7 +857,6 @@ class RoanjaMusicShop extends Module
 		//echo "<script src='" . $this->_path . "js/admin.js'></script>"; //ojo cambiar
 
 			$controller = $this->getHookController('displayAdminProductsExtra');
-			$lista_music=  $controller->run();
 					$this->_html .= $this->headerHTML();
 		return $this->_html .= $this->prepareForm()  . $controller->run();
 	}
