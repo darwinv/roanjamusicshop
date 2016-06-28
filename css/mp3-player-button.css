@@ -92,7 +92,7 @@ div.btn-bar-rjm {
 div.btn-rjm {
 		width: 20%;
 		float: left;
-		height: 90%;
+		height: 1.9em;
 		padding: 4px;
 		cursor: pointer;
 		text-align: center;
@@ -171,14 +171,14 @@ div.btn-rjm-special:hover {
     min-height: 55px;
 }
 a.agregar-lista div {
-    height: 27px;
+    height: 1.9em;
     background-image: url(../image/list2.png);
     background-size: 36%;
     background-repeat: no-repeat;
     background-position: 50% 53%;
 }
 a.quitar-lista div {
-    height: 27px;
+    height: 1.9em;
     background-image: url(../image/list3.png);
     background-size: 36%;
     background-repeat: no-repeat;
