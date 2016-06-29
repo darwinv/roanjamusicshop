@@ -27,9 +27,9 @@
 	<div id="musicsContent" data-urlaux='{$link->getAdminLink('AdminModules')}&id_product={$id_product}'>
 		<div id="musics">
 			{foreach from=$musics item=music}
-				<div id="musics_{$music.id_music}" class="panel portlet">
-					<div class="row">
-						<div class="col-lg-1 sortable-header">
+				<div id="musics_{$music.id_music}" class="panel">
+					<div class="row" style="margin-bottom: 2%;">
+						<div class="col-lg-1">
 							<span><i class="icon-arrows"></i></span>
 						</div>
 						<div class="col-md-3">
@@ -53,20 +53,21 @@
 								</a>
 							</div>
 					</div>
-						<div class="row">
-							<div class="">
-								<h4 class="pull-left">
+						<div class="row text-center">
+							<div class="container-fluid" style="width: 85%;" >
+								<h4 class="">
 	<div class="col-md-4">
-		{l s='Music Title' mod='roanjamusicshop'}	:
-		 <input type="text" name="cancion" class="nomb_cancion_{$music.id_music}" value="{$music.mp3_title}" >
+		<span style="display: block; margin-bottom: 4%;">{l s='Music Title' mod='roanjamusicshop'}	: </span>
+
+		 <input type="text" name="cancion" class="nomb_cancion_{$music.id_music} inputs_rmusic" value="{$music.mp3_title}" >
 	 </div>
 	 <div class="col-md-4">
-		{l s='Author' mod='roanjamusicshop'}:
-		<input type="text" name="autor" class="nomb_autor_{$music.id_music}" value="{$music.author}" >
+	<span style="display: block; margin-bottom: 4%;">	{l s='Author' mod='roanjamusicshop'}: </span>
+		<input type="text" name="autor" class="nomb_autor_{$music.id_music} inputs_rmusic" value="{$music.author}" >
 		</div>
 		<div class="col-md-4">
-						{l s='Genre' mod='roanjamusicshop'} :
-						 <input type="text" name="genero" class="nomb_genero_{$music.id_music}" value="{$music.genero}" >
+	<span style="display: block; margin-bottom: 4%;">{l s='Genre' mod='roanjamusicshop'} :</span>
+						 <input type="text" name="genero" class="nomb_genero_{$music.id_music} inputs_rmusic" value="{$music.genero}" >
 		</div>
 									{if $music.is_shared}
 										<div>
@@ -78,7 +79,7 @@
 								</h4>
 							</div>
 						</div>
-<div class="row">
+<div class="row panel-footer" style="height: inherit;">
 	<div class="col-md-1 pull-right">
 <a class="btn btn-default update-nombres" data-idcancion="{$music.id_music}">
 	<i class="icon-save"></i>&nbsp;{l s='Save' mod='roanjamusicshop'} </a>
