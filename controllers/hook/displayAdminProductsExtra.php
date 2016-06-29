@@ -11,7 +11,7 @@ class RoanjaMusicShopDisplayAdminProductsExtraController
 	}
 
 	public function run()
-	{
+	{ 
 
     $musics = RoanjaMusicShop::getMusic();
 //  $valores=$musics;
@@ -44,4 +44,5 @@ $action_url = $this->context->link->getAdminLink('AdminRoanjaMusicShop', true);
 
 		return $this->module->display($this->file, 'list.tpl');
 	}
+
 }

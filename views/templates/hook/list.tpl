@@ -27,9 +27,9 @@
 	<div id="musicsContent" data-urlaux='{$link->getAdminLink('AdminModules')}&id_product={$id_product}'>
 		<div id="musics">
 			{foreach from=$musics item=music}
-				<div id="musics_{$music.id_music}" class="panel">
+				<div id="musics_{$music.id_music}" class="panel portlet">
 					<div class="row">
-						<div class="col-lg-1">
+						<div class="col-lg-1 sortable-header">
 							<span><i class="icon-arrows"></i></span>
 						</div>
 						<div class="col-md-3">

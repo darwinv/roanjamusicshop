@@ -314,41 +314,9 @@ class RoanjaMusicShop extends Module
 											'oculto' => $oculto));
 		return $this->display(__FILE__, 'bar-ui.tpl');
 	}
+ 
 
-	public function GetSoundsOfProduct()
-	{
-		$id_shop = $this->context->shop->id;
-		$id_lang = $this->context->language->id;
-
-		 $associated_mp3_sql = 'SELECT a.* from `' . _DB_PREFIX_ . 'rj_music_lang` as a,`' . _DB_PREFIX_ . 'rj_music_shop` as b where linked_digital_id=' . (int)Tools::getValue('id_product')
- 		. ' or (linked_digital_id!="" and id_product=' . (int)Tools::getValue('id_product') . ') AND id_lang=' . (int)$id_lang
- 		. ' AND a.id_music=b.id_music and b.id_shop=' . (int)$id_shop . ' limit 1' ;
-
-		$results= Db::getInstance()->ExecuteS($associated_mp3_sql);
-		if($results){
-			$i=0;
-			foreach ($results as $data)
-			{
-				if(isset($_COOKIE['lista'])){
-					$lista=unserialize($_COOKIE['lista']);
-					$lista=$this->array_columns($lista,"id");
-					if(in_array($data['id_product'],$lista)){
-						$clase="quitar-lista";
-					}else{
-						$clase="agregar-lista";
-					}
-				}else{
-					$clase="agregar-lista";
-				}
-				$results[$i]["clase"]=$clase;
-				$i++;
-			}
-		}
-
-		return $results;
-	}
-
-	public function GetSoundsOfProductList($id_product=null,$linked_digital_id=null)
+	public function GetSoundsOfProductList($id_product=null,$linked_digital_id=null,$limit=null)
 	{
 		$id_shop = $this->context->shop->id;
 		$id_lang = $this->context->language->id;
@@ -361,13 +329,17 @@ class RoanjaMusicShop extends Module
 		}else{
 			$filter=' and linked_digital_id!=""';
 		}
+		if(empty($limit)){
+			$limit='';
+		}
 
 		$associated_mp3_sql = 'SELECT a.*
 		FROM
 		`' . _DB_PREFIX_ . 'rj_music_lang` AS a
 		Inner Join `' . _DB_PREFIX_ . 'rj_music_shop` AS b ON b.id_music = a.id_music
+		Inner Join `' . _DB_PREFIX_ . 'rj_music` AS c  ON c.id_music = a.id_music and c.active="1"
 		where id_product="'.$id_product.'" AND id_lang=' . (int)$id_lang
-				. ' AND b.id_shop=' . (int)$id_shop.$filter ;
+				. ' AND b.id_shop=' . (int)$id_shop.$filter.' ORDER BY c.`position` ASC '.$limit;
 
 		$results= Db::getInstance()->ExecuteS($associated_mp3_sql);
 		if($results){
@@ -398,7 +370,7 @@ class RoanjaMusicShop extends Module
 	public function hookdisplayRightColumnProduct()
 	{
 		$this->context->controller->addCSS($this->_path.'css/mp3-productDetail.css', 'all');
-			$associated_mp3 = $this->GetSoundsOfProduct();
+			$associated_mp3 = $this->GetSoundsOfProductList(null,null,'LIMIT 1');
 			if(!empty($associated_mp3)){
  				$this->context->smarty->assign(array(
 					'associated_mp3' => $associated_mp3,
@@ -429,18 +401,12 @@ class RoanjaMusicShop extends Module
 	public function hookDisplayProductListReviews($params){
 		$id_product = (int)$params['product']['id_product'];
 		$this->context = Context::getContext();
-		$id_shop = $this->context->shop->id;
-		$id_lang = $this->context->language->id;
 
-		$id_sql='SELECT a.* from `' . _DB_PREFIX_ . 'rj_music_lang` as a,`' . _DB_PREFIX_ . 'rj_music_shop` as b where linked_digital_id=' . (int)$id_product
-		. ' or (linked_digital_id!="" and id_product=' . (int)$id_product . ') AND id_lang=' . (int)$id_lang
-		. ' AND a.id_music=b.id_music and b.id_shop=' . (int)$id_shop . ' limit 1';
-		$item_mp3=Db::getInstance()->ExecuteS($id_sql);
+		$item_mp3=$this->GetSoundsOfProductList($id_product,null,'LIMIT 1');
 
 		$this->product = new Product($id_product, false,$this->context->language->id);
-			$precioconv=Tools::convertPrice($this->product->price, $this->context->currency);
-		$arrdata["price"]=number_format($precioconv, 2, ",", "");
-		$arrdata['sign']=$this->context->currency->sign;
+
+		$price=$this->GetPriceFormat($this->product->price);
 
 		if(!empty($item_mp3)){
 			if(isset($_COOKIE['lista'])){
@@ -468,7 +434,7 @@ class RoanjaMusicShop extends Module
 				'mp3_name' => $item_mp3[0]["mp3_name"],
 				'mp3_title' => $item_mp3[0]["mp3_title"],
 				'url_youtube' => $item_mp3[0]["url_youtube"],
-				'precio' => $arrdata["price"].$arrdata['sign'],
+				'precio' => $price,
 				'clase' => $clase,
 				'style_width'=>$style_width
 			));
@@ -533,34 +499,6 @@ class RoanjaMusicShop extends Module
 	{
 		return $this->context->link->getImageLink($link_rewrite, $id_image,'cart_default');
 	}
-	public function headerHTML()
-	{
-		if (Tools::getValue('controller') != 'AdminModules' && Tools::getValue('configure') != $this->name)
-			return;
-
-		$this->context->controller->addJqueryUI('ui.sortable');
-		$html = '<script type="text/javascript">
-					$(function() {
-						var $myMusics = $("#musics");
-						$myMusics.sortable({
-							opacity: 0.6,
-							cursor: "move",
-							update: function() {
-								var order = $(this).sortable("serialize") + "&action=updateMusicPosition";
-								$.post("'.$this->context->shop->physical_uri.$this->context->shop->virtual_uri.'modules/'.$this->name.'/ajax_'.$this->name.'.php?secure_key='.$this->secure_key.'", order);
-								}
-							});
-						$myMusics.hover(function() {
-							$(this).css("cursor","move");
-							},
-							function() {
-							$(this).css("cursor","auto");
-						});
-					});
-				</script>';
-		return $html;
-	}
-
 	public function getNextPosition()
 	{
 		$row = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow('
@@ -860,7 +798,38 @@ elseif(Tools::isSubmit('actualizarcancion')){
 					$this->_html .= $this->headerHTML();
 		return $this->_html .= $this->prepareForm()  . $controller->run();
 	}
+	public function headerHTML()
+	{
+		
+		if (Tools::getValue('controller') != 'AdminProducts' && Tools::getValue('controller') != 'AdminModules' && Tools::getValue('configure') != $this->name)
+			return;
 
+		$htmlScript='';
+		$ui_path = Media::getJqueryUIPath('ui.sortable', 'base',true);
+		$urlScipt = array_pop($ui_path['js']);
+		$htmlScript .= '<script type="text/javascript" src="'.$urlScipt.'"></script>';
+		$htmlScript.= '<script type="text/javascript">
+		$(function() {
+			var $myMP3 = $("#musics");
+			$myMP3.sortable({
+				opacity: 0.6,
+				cursor: "move",
+				update: function() {
+				var order = $(this).sortable("serialize") + "&action=updateMusicPosition";
+				$.post("'.$this->context->shop->physical_uri.$this->context->shop->virtual_uri.'modules/'.$this->name.'/ajax_'.$this->name.'.php?secure_key='.$this->secure_key.'", order);
+				}
+			});
+			$myMP3.hover(function() {
+				$(this).css("cursor","move");
+			},
+			function() {
+				$(this).css("cursor","auto");
+			}); 
+		});
+		</script>';
+
+		return $htmlScript;
+	}
 /*	public function hookDisplayAdminProductsExtra()
 	{
 		//echo "<script src='" . $this->_path . "js/admin.js'></script>"; //ojo cambiar

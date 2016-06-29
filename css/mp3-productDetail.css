@@ -253,6 +253,7 @@
 .content-tab-musicshop .list-music-shop .buk-track-plus {
     width: 150px;
     float: left;
+    margin-top: 3px;
 }
 
 .content-tab-musicshop .list-music-shop .bucket-track-header-meta,

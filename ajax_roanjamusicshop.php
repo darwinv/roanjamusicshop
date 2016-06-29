@@ -122,12 +122,22 @@ if(Tools::getValue('action')=='removeSong'){
     
     foreach ($lista as $key => $value) {
         if($value[$field]==$id){
-            unset($lista[$key]);var_dump("seeee".$key);
+            unset($lista[$key]);
         }
-    }var_dump($lista);
+    }
     if(!empty($lista)){
         setcookie('lista', serialize($lista), time()+3600*24*30,'/');
     }else{
         setcookie('lista', serialize($lista), time()-3600,'/');
     }
+}
+if (Tools::getValue('action') == 'updateSlidesPosition' && Tools::getValue('musics'))
+{
+    $musics = Tools::getValue('musics');
+    foreach ($musics as $position => $id_musics)
+        $res = Db::getInstance()->execute('
+            UPDATE `'._DB_PREFIX_.'rj_music` SET `position` = '.(int)$position.'
+            WHERE `id_music` = '.(int)$id_musics
+        );
+    $home_music->clearCache();
 }

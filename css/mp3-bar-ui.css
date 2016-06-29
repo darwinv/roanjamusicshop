@@ -888,7 +888,9 @@
  font-size: 90%;
  vertical-align: middle;
 }
-
+.sm2-playlist-bd a.exclusive.ajax_add_to_cart_button {
+  text-align: center;
+}
 .sm2-playlist-wrapper ul li a.sm2-exclude {
  display: inline-block;
 }
