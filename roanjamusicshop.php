@@ -792,8 +792,6 @@ elseif(Tools::isSubmit('actualizarcancion')){
 
 	public function hookDisplayAdminProductsExtra()
 	{
-		//echo "<script src='" . $this->_path . "js/admin.js'></script>"; //ojo cambiar
-
 			$controller = $this->getHookController('displayAdminProductsExtra');
 					$this->_html .= $this->headerHTML();
 		return $this->_html .= $this->prepareForm()  . $controller->run();
@@ -830,16 +828,6 @@ elseif(Tools::isSubmit('actualizarcancion')){
 
 		return $htmlScript;
 	}
-/*	public function hookDisplayAdminProductsExtra()
-	{
-		//echo "<script src='" . $this->_path . "js/admin.js'></script>"; //ojo cambiar
-
-		//	$controller = $this->getHookController('displayAdminProductsExtra');
-			//$lista_music=  $controller->run();
-					$this->_html .= $this->headerHTML();
-		return $this->_html .= $this->prepareForm()  . $this->renderList();
-	}
-*/
 	public function prepareForm()
 	{
 
@@ -1011,34 +999,6 @@ elseif(Tools::isSubmit('actualizarcancion')){
 
 		return Db::getInstance(_PS_USE_SQL_SLAVE_)->ExecuteS($get_virtual_products);
 	}
-
-	/* public function renderList()
-	{
-		$musics = $this->getMusic();
-		$valores="heyyy";
-		foreach ($musics as $key => $music)
-		{
-			$musics[$key]['status'] = $this->displayStatus($music['id_music'], $music['active']);
-			$associated_shop_ids = RoanjaMusic::getAssociatedIdsShop((int)$music['id_music']);
-			if ($associated_shop_ids && count($associated_shop_ids) > 1)
-				$musics[$key]['is_shared'] = true;
-			else
-				$musics[$key]['is_shared'] = false;
-		}
-
-		$this->context->smarty->assign(
-			array(
-				'id_product' => (int)Tools::getValue('id_product'),
-				'link' => $this->context->link,
-				'musics' => $musics,
-				'valores'=>$valores,
-				'music_baseurl' => $this->_path.'mp3/'
-			)
-		);
-
-		return $this->display(__FILE__, 'list.tpl');
-	}
-*/
 	public function getMusic($id_product=null,$active = null)
 	{
 		if(is_null($id_product)){

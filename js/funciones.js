@@ -70,7 +70,9 @@ $(document).ready(function(){
           dataType:"html",
           success:function(data){
               $("#barra").find(".sm2-playlist-bd>." +typeRemove+"-"+ id).remove();
-              window.sm2BarPlayers[0].dom.playlistContainer.style.height="auto";
+              var heightList=window.sm2BarPlayers[0].dom.playlistContainer.style.height;
+              if(heightList!='0px')
+                window.sm2BarPlayers[0].dom.playlistContainer.style.height="auto";
           }
       });
       //$("#barra").find(actual2).remove();
