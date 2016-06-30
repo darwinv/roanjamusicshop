@@ -1,5 +1,4 @@
 <div id="barra" name="barra" class="sm2-bar-ui full-width fixed {$oculto}" data-ruta="{$modules_dir}">
-
  <div class="bd sm2-main-controls">
   <div class="sm2-inline-texture"></div>
   <div class="sm2-inline-gradient"></div>
@@ -93,7 +92,7 @@
      </li>
         {if !empty($lista)}
           {foreach $lista as $lis=>$valor}
-            <li class="{$valor.id} item-list" data-id="{$valor.id_music}">
+            <li class="allsongs-{$valor.id} song-{$valor.linked_digital_id} item-list" data-idmusic="{$valor.linked_digital_id}">
               <a href="{$modules_dir}roanjamusicshop/mp3/{$valor.name}" class="dat-list" data-youtube="{if !empty($valor.youtube)}{$valor.youtube}{/if}">
                   {assign var='img' value=Product::getCover($valor.linked_digital_id)}
                   <img  class="img-responsive img-list" itemprop="image" src="{$link->getImageLink($valor.linked_digital_id, $img.id_image, 'small_default')|escape:'html':'UTF-8'}" />

@@ -43,13 +43,15 @@
       {l s='Artists' mod='prestasmusicshop'}</span><span class="value">{$associated_mp3.0.author}</span></li>
   <li class="interior-release-chart-content-item">
     <span class="category">
-      {l s='Gender' mod='prestasmusicshop'}</span><span class="value">{$associated_mp3.0.genero}</span></li>
+      {l s='Genre' mod='prestasmusicshop'}</span><span class="value">{$associated_mp3.0.genero}</span></li>
   <li>
     <span class="sm2-col buk-track-command">
-      <a data-idmusic="{$associated_mp3.0.id_music}"data-idproduct="{$associated_mp3.0.id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$associated_mp3.0.mp3_name}" class="sm2_button" title="{$associated_mp3.0.mp3_title}" data-youtube="{if !empty($associated_mp3.0.url_youtube)}{$associated_mp3.0.url_youtube}{/if}" ><div class="btn-rjm-list btn-action"><i class="fa fa-play" aria-hidden="true"></i></div>
+      <a data-idmusic="{$associated_mp3.0.id_product}"data-idproduct="{$associated_mp3.0.id_product}" data-href="{$modules_dir}roanjamusicshop/mp3/{$associated_mp3.0.mp3_name}" class="sm2_button" title="{$associated_mp3.0.mp3_title}" data-youtube="{if !empty($associated_mp3.0.url_youtube)}{$associated_mp3.0.url_youtube}{/if}" ><div class="btn-rjm-list btn-action"><i class="fa fa-play" aria-hidden="true"></i></div>
       </a>
+
       <a class="{$associated_mp3.0.clase} playlist{$associated_mp3.0.id_music}" title="Agregar a lista" >
         <div class="btn-rjm-list btn-action">
+
         </div>
       </a>
       {if !empty($associated_mp3.0.url_youtube)}
@@ -58,12 +60,6 @@
               <i class="fa fa-play" aria-hidden="true"></i>
             </div>
           </a>
-      {else}
-        <a class="youtube noYoutube">
-          <div class="btn-rjm-list btn-youtube">
-            <i class="fa fa-play" aria-hidden="true"></i>
-          </div>
-        </a>
       {/if}
     </span>
   </li>

@@ -4,11 +4,12 @@ $(document).ready(function(){
       var actual=$(this).parent().find("a").first();
       var act=$(this);
       var id=actual.data("idproduct");
+      var linked_digital_id=actual.data("linkeddigitalid");
       var id_music=actual.data("idmusic");
       var ruta=$("#barra").data("ruta");
       $.ajax({
           url:ruta + "roanjamusicshop/ajax_roanjamusicshop.php",
-          data:{action:"getSongs",id:id},
+          data:{action:"getSongs",id:id,linked_digital_id:linked_digital_id},
           type:"POST",
           dataType:"json",
           success:function(data){
@@ -16,7 +17,7 @@ $(document).ready(function(){
             var song=ruta + "roanjamusicshop/mp3/" + data[i]['mp3_name'];
             var title=data[i]['mp3_title'];
             var price=data[i]['price'];
-            var newsong="<li class='" + data[i]['id_music'] + " item-list' data-idmusic='" + data[i]['id_music'] + "'>";
+            var newsong="<li class='allsongs-"+ data[i]['id_product']+" song-"+ data[i]['linked_digital_id']+" item-list' data-idmusic='" + data[i]['linked_digital_id'] + "'>";
             newsong+="<a href='" + song + "' class='dat-list' data-youtube='" + data[i]['url_youtube'] + "'>";
             newsong+="<img class='img-responsive img-list' itemprop='image' src='"+ data[i]['cover'] +"' />";
             newsong+="<p class='p-list'><span class='list-titlesound'><b>" + title + "</b></span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>" + data[i]['genero'] + "</span><br><span class='list-author'>"+ data[i]['author'] + " </span></p></a>";
@@ -26,7 +27,7 @@ $(document).ready(function(){
             $("#barra").find(".sm2-playlist-wrapper").find(".sm2-playlist-bd").append(newsong);
              window.sm2BarPlayers[0].actions.menu(true);
            }
-           $(".playlist"+id_music).addClass("quitar-lista")
+           $(".playlist"+id_music).addClass("quitar-lista");
            $(".playlist"+id_music).removeClass("agregar-lista");
 
            if($("div#barra").hasClass("hidden"))
@@ -39,7 +40,7 @@ $(document).ready(function(){
                dataType:"html",
                success:function(data){
 
-             }
+              }
            });
           }
       });
@@ -48,27 +49,35 @@ $(document).ready(function(){
       e.preventDefault();
       var actual2=$(this).parent();
       var actual=$(this).parent().find("a").first();
-      var act=$(this);
       var id2=actual2.data("idmusic");
       var id=actual.data("idmusic");
+      var tabContent=actual.data("tabcontent");
+      var typeRemove;
+      
       if (id==undefined || id==""){
-      id=id2;
+        id=id2;
+        typeRemove='song';
+      }else if(tabContent=="yes"){
+        typeRemove='song';
+      }else{
+        typeRemove='allsongs';
       }
       var ruta=$("#barra").data("ruta");
       $.ajax({
           url:ruta + "roanjamusicshop/ajax_roanjamusicshop.php",
-          data:{action:"removeSong",id:id},
+          data:{action:"removeSong",id:id,typeRemove:typeRemove},
           type:"POST",
           dataType:"html",
           success:function(data){
-              $("#barra").find(".sm2-playlist-bd>." + id).remove();
-              window.sm2BarPlayers[0].dom.playlistContainer.style.height="auto";
+              $("#barra").find(".sm2-playlist-bd>." +typeRemove+"-"+ id).remove();
+              var heightList=window.sm2BarPlayers[0].dom.playlistContainer.style.height;
+              if(heightList!='0px')
+                window.sm2BarPlayers[0].dom.playlistContainer.style.height="auto";
           }
       });
       //$("#barra").find(actual2).remove();
         $(".playlist"+id).addClass("agregar-lista");
         $(".playlist"+id).removeClass("quitar-lista");
-
    });
 
 

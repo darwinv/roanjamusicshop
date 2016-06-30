@@ -888,7 +888,9 @@
  font-size: 90%;
  vertical-align: middle;
 }
-
+.sm2-playlist-bd a.exclusive.ajax_add_to_cart_button {
+  text-align: center;
+}
 .sm2-playlist-wrapper ul li a.sm2-exclude {
  display: inline-block;
 }
@@ -1045,10 +1047,10 @@ div.content-bar-musicshop{
 }
 a.cart-list-ico {
     float: right;
-    width: auto;
+    min-width: 110px;
     background-color: #dc2725;
-    padding: 0.5em 1em 0.5em 1em;
-    margin: 12px;
+    padding: 0.4em 0.5em 0.4em 0.5em;
+    margin: 12px 3px;
 }
 a.cart-list-ico:hover {
     background-color: #f82321 !important;
@@ -1056,7 +1058,7 @@ a.cart-list-ico:hover {
 a.dat-list{
   float: left;
   /*width: 70%;*/
-  width: calc(100% - 180px);
+  width: calc(100% - 200px);
 }
 li.item-list{
   height: 60px;
