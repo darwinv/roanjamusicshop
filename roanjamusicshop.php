@@ -541,10 +541,21 @@ class RoanjaMusicShop extends Module
 			{
 				if (Tools::strlen(Tools::getValue('mp3_title_'.$language['id_lang'])) > 255)
 					$errors[] = $this->l('The title is too long.');
+
+					if (Tools::strlen(Tools::getValue('mp3_title_'.$language['id_lang'])) == 0)
+					$errors[] = $this->l('The title is not set.');
+
+					if (Tools::strlen(Tools::getValue('author_'.$language['id_lang'])) == 0)
+					$errors[] = $this->l('The author is not set.');
 				if (Tools::strlen(Tools::getValue('author_'.$language['id_lang'])) > 255)
-					$errors[] = $this->l('The caption is too long.');
+					$errors[] = $this->l('The author is too long.');
+
 				if (Tools::strlen(Tools::getValue('genero_'.$language['id_lang'])) > 255)
 					$errors[] = $this->l('The URL is too long.');
+
+					if (Tools::strlen(Tools::getValue('genero_'.$language['id_lang'])) == 0)
+					$errors[] = $this->l('The genre is not set.');
+
 				if (Tools::strlen(Tools::getValue('url_youtube_'.$language['id_lang'])) > 255)
 					$errors[] = $this->l('The URL is too long.');
 				if (Tools::getValue('mp3_name_'.$language['id_lang']) != null && !Validate::isFileName(Tools::getValue('mp3_name_'.$language['id_lang'])))
@@ -555,18 +566,18 @@ class RoanjaMusicShop extends Module
 
 			/* Checks title/url/legend/description for default lang */
 			$id_lang_default = (int)Configuration::get('PS_LANG_DEFAULT');
-			if (Tools::strlen(Tools::getValue('mp3_title_'.$id_lang_default)) == 0)
-				$errors[] = $this->l('The title is not set.');
-			if (Tools::strlen(Tools::getValue('author_'.$id_lang_default)) == 0)
-				$errors[] = $this->l('The caption is not set.');
-			if (Tools::strlen(Tools::getValue('genero_'.$id_lang_default)) == 0)
-				$errors[] = $this->l('The URL is not set.');
-			if (Tools::strlen(Tools::getValue('url_youtube_'.$id_lang_default)) == 0)
-				$errors[] = $this->l('The URL is not set.');
-			if (!Tools::isSubmit('has_music') && (!isset($_FILES['mp3_name_'.$id_lang_default]) || empty($_FILES['mp3_name_'.$id_lang_default]['tmp_name'])))
-				$errors[] = $this->l('The music is not set.');
-			if (Tools::getValue('mp3_name_old_'.$id_lang_default) && !Validate::isFileName(Tools::getValue('mp3_name_old_'.$id_lang_default)))
-				$errors[] = $this->l('The image is not set.');
+			// if (Tools::strlen(Tools::getValue('mp3_title_'.$id_lang_default)) == 0)
+			// 	$errors[] = $this->l('The title is not set.');
+			// if (Tools::strlen(Tools::getValue('author_'.$id_lang_default)) == 0)
+			// 	$errors[] = $this->l('The caption is not set.');
+			// if (Tools::strlen(Tools::getValue('genero_'.$id_lang_default)) == 0)
+			// 	$errors[] = $this->l('The URL is not set.');
+			// if (Tools::strlen(Tools::getValue('url_youtube_'.$id_lang_default)) == 0)
+			// 	$errors[] = $this->l('The URL is not set.');
+			// if (!Tools::isSubmit('has_music') && (!isset($_FILES['mp3_name_'.$id_lang_default]) || empty($_FILES['mp3_name_'.$id_lang_default]['tmp_name'])))
+			// 	$errors[] = $this->l('The music is not set.');
+			// if (Tools::getValue('mp3_name_old_'.$id_lang_default) && !Validate::isFileName(Tools::getValue('mp3_name_old_'.$id_lang_default)))
+			// 	$errors[] = $this->l('The image is not set.');
 		} /* Validation for deletion */
 		elseif (Tools::isSubmit('delete_id_music') && (!Validate::isInt(Tools::getValue('delete_id_music')) || !$this->musicExists((int)Tools::getValue('delete_id_music'))))
 			$errors[] = $this->l('Invalid music ID');
@@ -864,28 +875,28 @@ elseif(Tools::isSubmit('actualizarcancion')){
 					),
 					array(
 						'type' => 'text',
-						'label' => $this->l('Music Title'),
+						'label' => $this->l('* Music Title'),
 						'name' => 'mp3_title',
 						'required' => false,
 						'lang' => true,
 					),
 					array(
 						'type' => 'text',
-						'label' => $this->l('Author'),
+						'label' => $this->l('* Author'),
 						'name' => 'author',
 						'required' => false,
 						'lang' => true,
 					),
 					array(
 						'type' => 'text',
-						'label' => $this->l('Genre'),
+						'label' => $this->l('* Genre'),
 						'name' => 'genero',
 						'required' => false,
 						'lang' => true,
 					),
 					array(
 						'type' => 'text',
-						'label' => $this->l('Url Youtube'),
+						'label' => $this->l('Url Youtube' ),
 						'name' => 'url_youtube',
 						'desc' => $this->l('Id url youtube https://www.youtube.com/watch?v=   (fLexgOxsZu0)'),
 						'lang' => true,
