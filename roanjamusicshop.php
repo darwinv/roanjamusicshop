@@ -314,13 +314,13 @@ class RoanjaMusicShop extends Module
 											'oculto' => $oculto));
 		return $this->display(__FILE__, 'bar-ui.tpl');
 	}
- 
+
 
 	public function GetSoundsOfProductList($id_product=null,$linked_digital_id=null,$limit=null)
 	{
 		$id_shop = $this->context->shop->id;
 		$id_lang = $this->context->language->id;
-		
+
 		if(empty($id_product) && empty($linked_digital_id)) {
 			$id_product=(int)Tools::getValue('id_product');
 		}
@@ -798,7 +798,7 @@ elseif(Tools::isSubmit('actualizarcancion')){
 	}
 	public function headerHTML()
 	{
-		
+
 		if (Tools::getValue('controller') != 'AdminProducts' && Tools::getValue('controller') != 'AdminModules' && Tools::getValue('configure') != $this->name)
 			return;
 
@@ -822,7 +822,7 @@ elseif(Tools::isSubmit('actualizarcancion')){
 			},
 			function() {
 				$(this).css("cursor","auto");
-			}); 
+			});
 		});
 		</script>';
 
@@ -995,7 +995,7 @@ elseif(Tools::isSubmit('actualizarcancion')){
 								 LEFT JOIN `'._DB_PREFIX_.'product` p ON p.`id_product` = wp.`id_product`
 								 '.Shop::addSqlAssociation('product', 'p').'
 								 LEFT JOIN `'._DB_PREFIX_.'product_lang` pl ON pl.`id_product` = wp.`id_product`'.Shop::addSqlRestrictionOnLang('pl').'
-								 WHERE pl.`id_lang` = '.(int)($id_lang);
+								 WHERE pl.`id_lang` = '.(int)($id_lang) .' order by wp.`id_product` desc';
 
 		return Db::getInstance(_PS_USE_SQL_SLAVE_)->ExecuteS($get_virtual_products);
 	}
