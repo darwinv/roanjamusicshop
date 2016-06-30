@@ -48,9 +48,9 @@
   <div class="sm2-playlist-wrapper list-music-shop">
     <div class="bd sm2-main-controls">
       <div class="bucket-track-header-meta">
-        <p class="sm2-inline-element buk-track-title">Título</p>
-        <p class="sm2-inline-element buk-track-artists">Artistas</p>
-        <p class="sm2-inline-element buk-track-genre">Género</p>
+        <p class="sm2-inline-element buk-track-title">{l s='Title' mod='roanjamusicshop'}</p>
+        <p class="sm2-inline-element buk-track-artists">{l s='Artists' mod='roanjamusicshop'}</p>
+        <p class="sm2-inline-element buk-track-genre">{l s='Genre' mod='roanjamusicshop'}</p>
         <p class="sm2-inline-element buk-track-cash"></p>
       </div>
     </div>

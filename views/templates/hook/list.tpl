@@ -40,11 +40,6 @@
 
 							<div class="btn-group-action pull-right">
 								{$music.status}
-								<!-- <a class="btn btn-default"
-									href="{$link->getAdminLink('AdminModules')}&id_product={$id_product}&configure=roanjamusicshop&changeStatus&id_mp3={$music.id_music}">
-									<i class="icon-edit"></i>
-									{l s='Edit' mod='roanjamusicshop'}
-								</a> -->
 								{*<button type="submit" name="deleteroanjamusicshop" class="btn btn-danger"><i class="icon-trash"></i> {l s='Delete' mod='roanjamusicshop'}</button>*}
 								<a class="btn btn-default"
 									href="{$link->getAdminLink('AdminModules')}&id_product={$id_product}&configure=roanjamusicshop&deleteroanjamusicshop={$music.id_music}">
