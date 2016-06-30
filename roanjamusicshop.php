@@ -605,7 +605,7 @@ class RoanjaMusicShop extends Module
 			}
 			else{
 				$this->_html .= ($res ? $this->displayConfirmation($this->l('Configuration updated')) : $this->displayError($this->l('The configuration could not be updated.')));
-				Tools::redirectAdmin($this->context->link->getAdminLink('AdminProducts',false).'&id_product='.(int)Tools::getValue('id_product').'&updateproduct&key_tab=ModuleRoanjamusicshop&conf=1&token='.Tools::getAdminTokenLite('AdminProducts'));
+				Tools::redirectAdmin($this->context->link->getAdminLink('AdminProducts',false).'&id_product='.(int)Tools::getValue('id_product').'&updateproduct&key_tab=ModuleRoanjamusicshop&conf=4&token='.Tools::getAdminTokenLite('AdminProducts'));
 			}
 		}
 		elseif (Tools::isSubmit('submitMusic'))
@@ -688,7 +688,7 @@ elseif(Tools::isSubmit('actualizarcancion')){
 		$this->_html .= $this->displayError('Could not delete.');
 	  }
 		else{
-			Tools::redirectAdmin($this->context->link->getAdminLink('AdminProducts',false).'&id_product='.(int)Tools::getValue('id_product').'&updateproduct&key_tab=ModuleRoanjamusicshop&conf=1&token='.Tools::getAdminTokenLite('AdminProducts'));
+			Tools::redirectAdmin($this->context->link->getAdminLink('AdminProducts',false).'&id_product='.(int)Tools::getValue('id_product').'&updateproduct&key_tab=ModuleRoanjamusicshop&conf=4&token='.Tools::getAdminTokenLite('AdminProducts'));
 		}
 
 }
@@ -871,28 +871,28 @@ elseif(Tools::isSubmit('actualizarcancion')){
 						'type' => 'file',
 						'label' => $this->l('Select a file'),
 						'name' => 'mp3_name',
-						'required' => true,
+						'required' => false,
 						'desc' => sprintf($this->l('Maximum music size: %s.'), ini_get('upload_max_filesize'))
 					),
 					array(
 						'type' => 'text',
 						'label' => $this->l('Music Title'),
 						'name' => 'mp3_title',
-						'required' => true,
+						'required' => false,
 						'lang' => true,
 					),
 					array(
 						'type' => 'text',
 						'label' => $this->l('Author'),
 						'name' => 'author',
-						'required' => true,
+						'required' => false,
 						'lang' => true,
 					),
 					array(
 						'type' => 'text',
 						'label' => $this->l('Genre'),
 						'name' => 'genero',
-						'required' => true,
+						'required' => false,
 						'lang' => true,
 					),
 					array(
