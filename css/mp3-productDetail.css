@@ -310,12 +310,18 @@
     font: 700 1.077em "SourceSans",Arial,sans-serif;
   }
   .content-right-musicshop .btn-rjm-list {
-    padding: 5px 10px;
+   /* padding: 5px 10px;
     font: 1.3em 'beatniks';
     cursor: pointer;
     margin-right: 5px;
     text-align: center;
-    display: inline-block;
+    display: inline-block;*/
+    float: left;
+    height: 1.9em;
+    padding: 4px;
+    cursor: pointer;
+    text-align: center;
+    width: 10%;
   }
   .content-right-musicshop div.btn-rjm-list.btn-action:hover, .content-right-musicshop .buk-track-command > a:hover {
     -webkit-filter: drop-shadow(0 0 8px #e8e4e5);
