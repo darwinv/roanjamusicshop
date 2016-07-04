@@ -326,7 +326,7 @@
   .content-right-musicshop div.btn-rjm-list.btn-action:hover, .content-right-musicshop .buk-track-command > a:hover {
     -webkit-filter: drop-shadow(0 0 8px #e8e4e5);
     color: black;
-    filter: drop-shadow(0 0 8px #e8e4e5);
+    webkit-filter: drop-shadow(0 0 8px #e8e4e5);
   }
   @media screen and (min-width: 1150px){
     h1 {
