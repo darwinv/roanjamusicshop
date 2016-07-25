@@ -61,7 +61,7 @@ class RoanjaMusicShop extends Module
 			$this->registerHook('displayAdminProductsExtra') &&
 			$this->registerHook('displayRightColumnProduct') &&
 			$this->registerHook('displayProductTabContent') &&
-			$this->registerHook('actionProductUpdate') &&
+			$this->registerHook('actionProductSave') &&
 			$this->registerHook('displayProductListReviews')&&
 			$this->registerHook('displayProductSpecial')&&
 			$this->registerHook('displayFooter') &&
@@ -597,7 +597,6 @@ class RoanjaMusicShop extends Module
 
 	public function _postProcess()
 	{
-
 		$errors = array();
 		$shop_context = Shop::getContext();
 
@@ -728,7 +727,7 @@ elseif(Tools::isSubmit('actualizarcancion')){
 			return $controller;
 		}
 
-	public function hookActionProductUpdate()
+	public function hookActionProductSave()
 	{
 		$errors = array();
 		$shop_context = Shop::getContext();
@@ -794,10 +793,16 @@ elseif(Tools::isSubmit('actualizarcancion')){
 
 		if (count($errors))
 			$this->_html .= $this->displayError(implode('<br />', $errors));
-		elseif (Tools::isSubmit('submitMusic') && Tools::getValue('id_mp3'))
+		elseif (Tools::isSubmit('submitMusic') && Tools::getValue('id_mp3')){ 
+			// var_dump("dentro de hookActionProductUpdate del modulo");
+			// die();
 			Tools::redirectAdmin($this->context->link->getAdminLink('AdminProducts').'&id_product='.(int)Tools::getValue('id_product').'&updateproduct&conf=4&key_tab=Module'.$this->name.$this->token);
-		elseif (Tools::isSubmit('submitMusic'))
+			}
+		elseif (Tools::isSubmit('submitMusic')){ 
+			// var_dump("dentro de hookActionProductUpdate del modulo 2");
+			// die();
 			Tools::redirectAdmin($this->context->link->getAdminLink('AdminProducts').'&id_product='.(int)Tools::getValue('id_product').'&updateproduct&conf=3&key_tab=ModuleRoanjamusicshop'.$this->token);
+			}
 	}
 
 
@@ -843,8 +848,9 @@ elseif(Tools::isSubmit('actualizarcancion')){
 	{
 
 		$virtual_products = $this->getVirtualProducts ();
-		$product = new Product((int)Tools::getValue('id_product'));
-
+		
+$product = new Product((int)Tools::getValue('id_product'));
+//var_dump($product);
 		$fields_form = array(
 			'form' => array(
 				'legend' => array(
@@ -894,9 +900,15 @@ elseif(Tools::isSubmit('actualizarcancion')){
 						'required' => false,
 						'lang' => true,
 					),
+					// array(
+					// 	'type' => 'hidden',
+					// 	'name' => 'link_rewrite',
+					// 	'label'=>$this->l('link'),
+					// 	//'lang' => true,
+					// ),
 					array(
 						'type' => 'text',
-						'label' => $this->l('Url Youtube' ),
+						'label' => $this->l('Url Youtube'),
 						'name' => 'url_youtube',
 						'desc' => $this->l('Id url youtube https://www.youtube.com/watch?v=   (fLexgOxsZu0)'),
 						'lang' => true,
@@ -927,6 +939,9 @@ elseif(Tools::isSubmit('actualizarcancion')){
 		);
 		if (Tools::isSubmit('id_music') && $this->musicExists((int)Tools::getValue('id_music')))
 		{
+
+
+
 			$music = new RoanjaMusic((int)Tools::getValue('id_music'));
 			$fields_form['form']['input'][] = array('type' => 'hidden', 'name' => 'id_music');
 			$fields_form['form']['mp3_name'] = $music->mp3_name;
@@ -940,8 +955,27 @@ elseif(Tools::isSubmit('actualizarcancion')){
 			if ($has_music)
 				$fields_form['form']['input'][] = array('type' => 'hidden', 'name' => 'has_music');
 		}
+
+		$default_language = new Language((int)Configuration::get('PS_LANG_DEFAULT'));
+		
+		
+
+		$languages = Language::getLanguages(false);
+
+		//$contador=1;
+		 foreach ($languages as $lang)
+		 {
+		 $fields_form['form']['input'][] = array('type' => 'hidden', 'name' => 'link_rewrite_'.(int)$lang['id_lang']);
+		 $fields_form['form']['input'][] = array('type' => 'hidden', 'name' => 'name_'.(int)$lang['id_lang']);	
+		 //$contador++;
+		 }
+
+
 		$fields_form['form']['input'][] = array('type' => 'hidden', 'name' => 'submitMusic', 'value' =>'1');
 		$fields_form['form']['input'][] = array('type' => 'hidden', 'name' => 'productId', 'value' =>(int)Tools::getValue('id_product'));
+		$fields_form['form']['input'][] = array('type' => 'hidden', 'name' => 'categoryBox[]');
+		$fields_form['form']['input'][] = array('type' => 'hidden', 'name' => 'id_category_default');
+		//<input type="hidden" name="submitted_tabs[]" value="belvg_samplemodule" />
 		$helper = new HelperForm();
 		$helper->show_toolbar = false;
 		$helper->table = $this->table;
@@ -970,7 +1004,7 @@ elseif(Tools::isSubmit('actualizarcancion')){
 		$languages = Language::getLanguages(false);
 
 		if (count($languages) > 1)
-			return $this->getMultiLanguageInfoMsg().$helper->generateForm(array($fields_form));
+			return $helper->generateForm(array($fields_form));
 		else
 			return $helper->generateForm(array($fields_form));
 	}
@@ -988,8 +1022,9 @@ elseif(Tools::isSubmit('actualizarcancion')){
 			else
 				$fields_value['mp3_title'][(int)$lang['id_lang']] = Tools::getValue('mp3_title_'.(int)$lang['id_lang'], '');
 
+		
+		
 		$fields_value['id_music'] = $id_music;
-
 		return $fields_value;
 	}
 
@@ -1032,6 +1067,10 @@ elseif(Tools::isSubmit('actualizarcancion')){
 	public function getAddFieldsValues()
 	{
 		$fields = array();
+		$product = new Product((int)Tools::getValue('id_product'));
+		//var_dump($product->id_category_default);
+	 // var_dump(Tools::getValue('id_category_default'));
+	  $categorias=Product::getProductCategories($product->id);
 
 		if (Tools::isSubmit('id_mp3') && $this->musicExists((int)Tools::getValue('id_mp3')))
 		{
@@ -1054,8 +1093,18 @@ elseif(Tools::isSubmit('actualizarcancion')){
 			$fields['genero'][$lang['id_lang']] = Tools::getValue('genero_'.(int)$lang['id_lang'], $music->genero[$lang['id_lang']]);
 			$fields['url_youtube'][$lang['id_lang']] = Tools::getValue('url_youtube_'.(int)$lang['id_lang'], $music->genero[$lang['id_lang']]);
 			$fields['id_product'] = (int)Tools::getValue('id_product');
+			$fields['link_rewrite_'.$lang['id_lang']] =Tools::getValue('link_rewrite_'.(int)$lang['id_lang'], $product->link_rewrite[$lang['id_lang']]);
+			$fields['name_'.$lang['id_lang']] =Tools::getValue('name'.(int)$lang['id_lang'], $product->name[$lang['id_lang']]);
 			$fields['linked_digital_id'] = Tools::getValue('virtual_prod_assoc');
+			$fields['id_category_default']=$product->id_category_default;
 		}
+
+		foreach($categorias as $key => $value) {
+		$fields['categoryBox[]']=$categorias[$key];	# code...
+		}
+		
+		
+		//$fields['link_rewrite_1']='ali-primera';
 		return $fields;
 	}
 
